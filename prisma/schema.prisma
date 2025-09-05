@@ -1,0 +1,180 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  Super_Admin
+  Admin
+  User
+}
+
+/// Enum for record sync status (example values)
+enum SyncStatus {
+  PENDING
+  SYNCED
+  FAILED
+}
+
+/// Enum for invoice status
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+}
+
+/// Tenant (organization) table
+model Tenant {
+  id        Int      @id @default(autoincrement())
+  name      String
+  // Relations to other entities
+  users     User[]
+  vendors   Vendor[]
+  customers Customer[]
+  items     Item[]
+  invoices  Invoice[]
+  payments  Payment[]
+  invoiceItems InvoiceItem[] // Opposite relation for InvoiceItem.tenant
+  // Audit fields
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// User accounts (belongs to a Tenant)
+model User {
+  id        Int      @id @default(autoincrement())
+  tenantId  Int
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  name      String
+  email     String   @unique
+  password  String
+  role      UserType @default(User)
+  // Common metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  syncStatus SyncStatus @default(PENDING)
+}
+
+/// Vendor (supplier) for bills/purchases (belongs to a Tenant)
+model Vendor {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  name        String
+  email       String?
+  phone       String?
+  address     String?
+  // e.g. tax or registration number
+  taxId       String?  
+  // Common metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  syncStatus  SyncStatus @default(PENDING)
+}
+
+/// Customer (client) for sales (belongs to a Tenant)
+model Customer {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  name        String
+  email       String?
+  phone       String?
+  address     String?
+  invoices    Invoice[] // Opposite relation field for Invoice.customer
+  // Common metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  syncStatus  SyncStatus @default(PENDING)
+}
+
+/// Inventory items/products (belongs to a Tenant)
+model Item {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  name        String
+  sku         String?   // stock keeping unit or code
+  description String?
+  unitPrice   Float
+  // e.g. current stock quantity for inventory
+  quantity    Float    @default(0)
+  invoiceItems InvoiceItem[] // Opposite relation for InvoiceItem.item
+  // Common metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  syncStatus  SyncStatus @default(PENDING)
+}
+
+/// Sales invoices (belongs to a Tenant, for a Customer)
+model Invoice {
+  id           Int           @id @default(autoincrement())
+  tenantId     Int
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  // Invoice number (unique per tenant)
+  invoiceNumber String
+  date         DateTime      // invoice issue date
+  dueDate      DateTime?
+  status       InvoiceStatus @default(DRAFT)
+  currency     String        // e.g. "USD", based on tenant setting
+  total        Float
+  // Relations
+  customerId   Int
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  items        InvoiceItem[]
+  payments     Payment[]
+  // Common metadata
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  syncStatus   SyncStatus    @default(PENDING)
+
+  @@unique([invoiceNumber, tenantId]) // unique invoice numbers per tenant
+}
+
+/// Line items on an invoice
+model InvoiceItem {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  invoiceId   Int
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  itemId      Int
+  item        Item     @relation(fields: [itemId], references: [id])
+  description String?
+  quantity    Float
+  unitPrice   Float
+  lineTotal   Float    // typically quantity * unitPrice (stored or computed)
+  // Common metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  syncStatus  SyncStatus @default(PENDING)
+}
+
+/// Payments towards invoices
+model Payment {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  invoiceId   Int
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  date        DateTime
+  paidDate    DateTime // date payment was made/received
+  amount      Float
+  method      String
+  reference   String?  // e.g. transaction id, check number
+  // Common metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  syncStatus  SyncStatus @default(PENDING)
+}
