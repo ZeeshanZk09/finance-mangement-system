@@ -2,9 +2,12 @@
 
 import { Actor } from '@/types/userTypes';
 import prisma from '../prisma';
-import { createInvoiceItemSchema, updateInvoiceItemSchema } from '@/utils/invoiceItemValidator';
-import { prismaErrorHandler, requireTenantMatch } from '@/utils/userHelper';
-import { recalcInvoiceTotals } from '@/utils/invoiceItemHelper';
+import {
+  createInvoiceItemSchema,
+  updateInvoiceItemSchema,
+} from '@/utils/validators/invoiceItemValidator';
+import { prismaErrorHandler, requireTenantMatch } from '@/utils/helpers/userHelper';
+import { recalcInvoiceTotals } from '@/utils/helpers/invoiceItemHelper';
 
 /**
  * Actor type for permission/tenant scoping checks.

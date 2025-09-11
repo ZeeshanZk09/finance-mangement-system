@@ -75,7 +75,7 @@ export default function SideBar() {
         open
           ? 'translate-x-0 opacity-100 pointer-events-auto'
           : '-translate-x-full hidden opacity-0 pointer-events-none'
-      } backdrop-blur-xs bg-[#5e5d5d]`}
+      } backdrop-blur-xs bg-[#5e5d5d] `}
       onClick={() => setOpen(!open)}
     >
       {/* Sidebar panel */}

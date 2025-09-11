@@ -2,7 +2,7 @@
 
 import { createPaymentSchema, updatePaymentSchema } from '@/utils/paymentValidator';
 import prisma from '../prisma';
-import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/userHelper';
+import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelper';
 import { Actor } from '@/types/userTypes';
 
 /**
@@ -79,49 +79,71 @@ export async function createPayment(
     }
 
     // Create payment inside transaction and update invoice status/metadata accordingly
-    const result = await prisma.$transaction(async (tx) => {
-      const payment = await tx.payment.create({
-        data: {
-          invoiceId: parsed.invoiceId,
-          reference: parsed.reference,
-          date: parsed.date,
-          paidDate: parsed.paidDate,
-          tenantId: parsed.tenantId,
-          amount: parsed.amount,
-          method: parsed.method,
-          syncStatus: parsed.syncStatus ?? 'PENDING',
-        },
-      });
+    const result = await prisma.$transaction(
+      async (tx: {
+        payment: {
+          create: (arg0: {
+            data: {
+              invoiceId: number;
+              reference: string;
+              date: Date;
+              paidDate: Date;
+              tenantId: number;
+              amount: number;
+              method: string;
+              syncStatus: 'PENDING' | 'SYNCED' | 'FAILED';
+            };
+          }) => any;
+          aggregate: (arg0: {
+            where: { invoiceId: number; tenantId: number };
+            _sum: { amount: boolean };
+          }) => any;
+        };
+        invoice: { update: (arg0: { where: { id: number }; data: { status?: any } }) => any };
+      }) => {
+        const payment = await tx.payment.create({
+          data: {
+            invoiceId: parsed.invoiceId,
+            reference: parsed.reference,
+            date: parsed.date,
+            paidDate: parsed.paidDate,
+            tenantId: parsed.tenantId,
+            amount: parsed.amount,
+            method: parsed.method,
+            syncStatus: parsed.syncStatus ?? 'PENDING',
+          },
+        });
 
-      // Recompute total paid for invoice
-      const paymentsAgg = await tx.payment.aggregate({
-        where: { invoiceId: parsed.invoiceId, tenantId: parsed.tenantId },
-        _sum: { amount: true },
-      });
-      const totalPaid = paymentsAgg._sum.amount ?? 0;
-      const invoiceTotal = invoice.total ?? 0;
+        // Recompute total paid for invoice
+        const paymentsAgg = await tx.payment.aggregate({
+          where: { invoiceId: parsed.invoiceId, tenantId: parsed.tenantId },
+          _sum: { amount: true },
+        });
+        const totalPaid = paymentsAgg._sum.amount ?? 0;
+        const invoiceTotal = invoice.total ?? 0;
 
-      // Update invoice status if needed
-      const newStatus =
-        totalPaid >= invoiceTotal && invoiceTotal > 0
-          ? 'PAID'
-          : invoice.status === 'DRAFT'
-          ? 'SENT'
-          : invoice.status;
+        // Update invoice status if needed
+        const newStatus =
+          totalPaid >= invoiceTotal && invoiceTotal > 0
+            ? 'PAID'
+            : invoice.status === 'DRAFT'
+            ? 'SENT'
+            : invoice.status;
 
-      await tx.invoice.update({
-        where: { id: parsed.invoiceId },
-        data: {
-          // update status only if it changes
-          ...(newStatus !== invoice.status ? { status: newStatus as any } : {}),
-          // optionally update metadata fields (e.g., updatedAt by default)
-        },
-      });
+        await tx.invoice.update({
+          where: { id: parsed.invoiceId },
+          data: {
+            // update status only if it changes
+            ...(newStatus !== invoice.status ? { status: newStatus as any } : {}),
+            // optionally update metadata fields (e.g., updatedAt by default)
+          },
+        });
 
-      return payment;
-    });
+        return payment;
+      }
+    );
 
-    return result;
+    return result(invoice);
   } catch (err) {
     prismaErrorHandler(err);
   }
@@ -235,47 +257,71 @@ export async function updatePayment(
     if (actor) requireTenantMatch(actor, existing.tenantId);
 
     // apply update in a transaction and recompute invoice status if amount changed
-    const updated = await prisma.$transaction(async (tx) => {
-      const updatedPayment = await tx.payment.update({
-        where: { id },
-        data: {
-          ...(parsed.reference ? { reference: parsed.reference } : {}),
-          ...(parsed.paidDate ? { paidDate: parsed.paidDate } : {}),
-          ...(parsed.date ? { date: parsed.date } : {}),
-          ...(parsed.amount !== undefined ? { amount: parsed.amount } : {}),
-          ...(parsed.method ? { method: parsed.method } : {}),
-          ...(parsed.syncStatus ? { syncStatus: parsed.syncStatus } : {}),
-        },
-      });
+    const updated = await prisma.$transaction(
+      async (tx: {
+        payment: {
+          update: (arg0: {
+            where: { id: number };
+            data: {
+              syncStatus?: 'PENDING' | 'SYNCED' | 'FAILED' | undefined;
+              method?: string | undefined;
+              amount?: number | undefined;
+              date?: Date | undefined;
+              paidDate?: Date | undefined;
+              reference?: string | undefined;
+            };
+          }) => any;
+          aggregate: (arg0: {
+            where: { invoiceId: any; tenantId: any };
+            _sum: { amount: boolean };
+          }) => any;
+        };
+        invoice: {
+          findUnique: (arg0: { where: { id: any } }) => any;
+          update: (arg0: { where: { id: any }; data: { status: any } }) => any;
+        };
+      }) => {
+        const updatedPayment = await tx.payment.update({
+          where: { id },
+          data: {
+            ...(parsed.reference ? { reference: parsed.reference } : {}),
+            ...(parsed.paidDate ? { paidDate: parsed.paidDate } : {}),
+            ...(parsed.date ? { date: parsed.date } : {}),
+            ...(parsed.amount !== undefined ? { amount: parsed.amount } : {}),
+            ...(parsed.method ? { method: parsed.method } : {}),
+            ...(parsed.syncStatus ? { syncStatus: parsed.syncStatus } : {}),
+          },
+        });
 
-      // If amount changed, recalculate invoice totals and possibly invoice status
-      if (parsed.amount !== undefined) {
-        const invoice = await tx.invoice.findUnique({ where: { id: existing.invoiceId } });
-        if (invoice) {
-          const paymentsAgg = await tx.payment.aggregate({
-            where: { invoiceId: invoice.id, tenantId: invoice.tenantId },
-            _sum: { amount: true },
-          });
-          const totalPaid = paymentsAgg._sum.amount ?? 0;
-          const invoiceTotal = invoice.total ?? 0;
-          const newStatus =
-            totalPaid >= invoiceTotal && invoiceTotal > 0
-              ? 'PAID'
-              : invoice.status === 'DRAFT'
-              ? 'SENT'
-              : invoice.status;
-
-          if (newStatus !== invoice.status) {
-            await tx.invoice.update({
-              where: { id: invoice.id },
-              data: { status: newStatus as any },
+        // If amount changed, recalculate invoice totals and possibly invoice status
+        if (parsed.amount !== undefined) {
+          const invoice = await tx.invoice.findUnique({ where: { id: existing.invoiceId } });
+          if (invoice) {
+            const paymentsAgg = await tx.payment.aggregate({
+              where: { invoiceId: invoice.id, tenantId: invoice.tenantId },
+              _sum: { amount: true },
             });
+            const totalPaid = paymentsAgg._sum.amount ?? 0;
+            const invoiceTotal = invoice.total ?? 0;
+            const newStatus =
+              totalPaid >= invoiceTotal && invoiceTotal > 0
+                ? 'PAID'
+                : invoice.status === 'DRAFT'
+                ? 'SENT'
+                : invoice.status;
+
+            if (newStatus !== invoice.status) {
+              await tx.invoice.update({
+                where: { id: invoice.id },
+                data: { status: newStatus as any },
+              });
+            }
           }
         }
-      }
 
-      return updatedPayment;
-    });
+        return updatedPayment;
+      }
+    );
 
     return updated;
   } catch (err) {
@@ -298,34 +344,48 @@ export async function deletePayment(id: number, actor?: Actor) {
       requireAdmin(actor);
     }
 
-    const result = await prisma.$transaction(async (tx) => {
-      const deleted = await tx.payment.delete({ where: { id } });
+    const result = await prisma.$transaction(
+      async (tx: {
+        payment: {
+          delete: (arg0: { where: { id: number } }) => any;
+          aggregate: (arg0: {
+            where: { invoiceId: any; tenantId: any };
+            _sum: { amount: boolean };
+          }) => any;
+        };
+        invoice: {
+          findUnique: (arg0: { where: { id: any } }) => any;
+          update: (arg0: { where: { id: any }; data: { status: any } }) => any;
+        };
+      }) => {
+        const deleted = await tx.payment.delete({ where: { id } });
 
-      // Recompute invoice totals and status
-      const invoice = await tx.invoice.findUnique({ where: { id: deleted.invoiceId } });
-      if (invoice) {
-        const paymentsAgg = await tx.payment.aggregate({
-          where: { invoiceId: invoice.id, tenantId: invoice.tenantId },
-          _sum: { amount: true },
-        });
-        const totalPaid = paymentsAgg._sum.amount ?? 0;
-        const invoiceTotal = invoice.total ?? 0;
-        const newStatus =
-          totalPaid >= invoiceTotal && invoiceTotal > 0
-            ? 'PAID'
-            : invoice.status === 'DRAFT'
-            ? 'DRAFT'
-            : 'SENT';
-        if (newStatus !== invoice.status) {
-          await tx.invoice.update({
-            where: { id: invoice.id },
-            data: { status: newStatus as any },
+        // Recompute invoice totals and status
+        const invoice = await tx.invoice.findUnique({ where: { id: deleted.invoiceId } });
+        if (invoice) {
+          const paymentsAgg = await tx.payment.aggregate({
+            where: { invoiceId: invoice.id, tenantId: invoice.tenantId },
+            _sum: { amount: true },
           });
+          const totalPaid = paymentsAgg._sum.amount ?? 0;
+          const invoiceTotal = invoice.total ?? 0;
+          const newStatus =
+            totalPaid >= invoiceTotal && invoiceTotal > 0
+              ? 'PAID'
+              : invoice.status === 'DRAFT'
+              ? 'DRAFT'
+              : 'SENT';
+          if (newStatus !== invoice.status) {
+            await tx.invoice.update({
+              where: { id: invoice.id },
+              data: { status: newStatus as any },
+            });
+          }
         }
-      }
 
-      return deleted;
-    });
+        return deleted;
+      }
+    );
 
     return result;
   } catch (err) {

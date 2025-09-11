@@ -2,13 +2,13 @@
 
 import { Actor } from '@/types/userTypes';
 import prisma from '../prisma';
-import { createVendorSchema, updateVendorSchema } from '@/utils/vendorValidator';
+import { createVendorSchema, updateVendorSchema } from '@/utils/validators/vendorValidator';
 import {
   ensureTenantExists,
   prismaErrorHandler,
   requireAdmin,
   requireTenantMatch,
-} from '@/utils/userHelper';
+} from '@/utils/helpers/userHelper';
 
 /**
  * Actor = calling user identity (optional). Used for tenant scoping and role checks.

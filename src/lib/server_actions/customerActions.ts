@@ -3,13 +3,13 @@
 import { Actor } from '@/types/userTypes';
 import prisma from '../prisma';
 import { z } from 'zod';
-import { createCustomerSchema, updateCustomerSchema } from '@/utils/customerValidator';
+import { createCustomerSchema, updateCustomerSchema } from '@/utils/validators/customerValidator';
 import {
   ensureTenantExists,
   prismaErrorHandler,
   requireAdmin,
   requireTenantMatch,
-} from '@/utils/userHelper';
+} from '@/utils/helpers/userHelper';
 
 /**
  * Actor type for permission/tenant scoping and role checks.

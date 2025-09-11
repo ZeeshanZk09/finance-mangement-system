@@ -15,44 +15,64 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 /**
  * Model Tenant
- * Tenant (organization) table
+ * TENANTS
  */
 export type Tenant = $Result.DefaultSelection<Prisma.$TenantPayload>
 /**
  * Model User
- * User accounts (belongs to a Tenant)
+ * USERS
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Session
+ * SESSIONS
+ */
+export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
+/**
  * Model Vendor
- * Vendor (supplier) for bills/purchases (belongs to a Tenant)
+ * VENDORS
  */
 export type Vendor = $Result.DefaultSelection<Prisma.$VendorPayload>
 /**
  * Model Customer
- * Customer (client) for sales (belongs to a Tenant)
+ * CUSTOMERS
  */
 export type Customer = $Result.DefaultSelection<Prisma.$CustomerPayload>
 /**
  * Model Item
- * Inventory items/products (belongs to a Tenant)
+ * ITEMS (inventory)
  */
 export type Item = $Result.DefaultSelection<Prisma.$ItemPayload>
 /**
+ * Model Package
+ * PACKAGES (previously "Packages")
+ */
+export type Package = $Result.DefaultSelection<Prisma.$PackagePayload>
+/**
+ * Model PackageSubscription
+ * PACKAGE SUBSCRIPTIONS (which tenant is on which package)
+ */
+export type PackageSubscription = $Result.DefaultSelection<Prisma.$PackageSubscriptionPayload>
+/**
  * Model Invoice
- * Sales invoices (belongs to a Tenant, for a Customer)
+ * INVOICES
  */
 export type Invoice = $Result.DefaultSelection<Prisma.$InvoicePayload>
 /**
  * Model InvoiceItem
- * Line items on an invoice
+ * INVOICE ITEMS (line items)
  */
 export type InvoiceItem = $Result.DefaultSelection<Prisma.$InvoiceItemPayload>
 /**
  * Model Payment
- * Payments towards invoices
+ * PAYMENTS
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
+/**
+ * Model AuditLog
+ * AUDIT LOG (for security / admin tracking)
+ */
+export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
 
 /**
  * Enums
@@ -79,10 +99,130 @@ export type SyncStatus = (typeof SyncStatus)[keyof typeof SyncStatus]
 export const InvoiceStatus: {
   DRAFT: 'DRAFT',
   SENT: 'SENT',
-  PAID: 'PAID'
+  PARTIALLY_PAID: 'PARTIALLY_PAID',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
 };
 
 export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]
+
+
+export const PaymentMethod: {
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  CREDIT_CARD: 'CREDIT_CARD',
+  DEBIT_CARD: 'DEBIT_CARD',
+  CASH: 'CASH',
+  CHEQUE: 'CHEQUE',
+  ONLINE: 'ONLINE',
+  OTHER: 'OTHER'
+};
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+export const PaymentStatus: {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+};
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const SubscriptionStatus: {
+  TRIAL: 'TRIAL',
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  CANCELED: 'CANCELED'
+};
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
+export const packageName: {
+  Free: 'Free',
+  Basic: 'Basic',
+  Pro: 'Pro',
+  Enterprise: 'Enterprise'
+};
+
+export type packageName = (typeof packageName)[keyof typeof packageName]
+
+
+export const FreeFeatures: {
+  Invoicing: 'Invoicing',
+  Customer_Management: 'Customer_Management',
+  Vendor_Management: 'Vendor_Management',
+  Notifications_and_Reminders: 'Notifications_and_Reminders',
+  Mobile_Access: 'Mobile_Access',
+  Free_Trials: 'Free_Trials',
+  Money_Back_Guarantees: 'Money_Back_Guarantees'
+};
+
+export type FreeFeatures = (typeof FreeFeatures)[keyof typeof FreeFeatures]
+
+
+export const BasicFeatures: {
+  Inventory_Management: 'Inventory_Management',
+  Payment_Tracking: 'Payment_Tracking',
+  Tax_Management: 'Tax_Management',
+  Reporting_and_Analytics: 'Reporting_and_Analytics',
+  Expense_Tracking: 'Expense_Tracking',
+  Purchase_Orders: 'Purchase_Orders',
+  User_Roles_and_Permissions: 'User_Roles_and_Permissions',
+  Data_Import_and_Export: 'Data_Import_and_Export',
+  Community_Access: 'Community_Access'
+};
+
+export type BasicFeatures = (typeof BasicFeatures)[keyof typeof BasicFeatures]
+
+
+export const ProFeatures: {
+  Multi_Currency_Support: 'Multi_Currency_Support',
+  Recurring_Invoices: 'Recurring_Invoices',
+  Project_Management: 'Project_Management',
+  Time_Tracking: 'Time_Tracking',
+  Integrations: 'Integrations',
+  Custom_Branding: 'Custom_Branding',
+  API_Access: 'API_Access',
+  Dashboards: 'Dashboards',
+  Custom_Reports: 'Custom_Reports',
+  Barcoding: 'Barcoding',
+  Warehouse_Management: 'Warehouse_Management',
+  Shipping_Integration: 'Shipping_Integration',
+  E_Commerce_Integration: 'E_Commerce_Integration',
+  CRM_Integration: 'CRM_Integration',
+  Budgeting: 'Budgeting',
+  Forecasting: 'Forecasting'
+};
+
+export type ProFeatures = (typeof ProFeatures)[keyof typeof ProFeatures]
+
+
+export const EnterpriseFeatures: {
+  Role_Based_Access_Control: 'Role_Based_Access_Control',
+  Single_Sign_On: 'Single_Sign_On',
+  Two_Factor_Authentication: 'Two_Factor_Authentication',
+  Data_Encryption: 'Data_Encryption',
+  Audit_Trails: 'Audit_Trails',
+  Cloud_Backups: 'Cloud_Backups',
+  Multi_Language_Support: 'Multi_Language_Support',
+  Document_Storage: 'Document_Storage',
+  Compliance_Features: 'Compliance_Features',
+  Advanced_Security_Features: 'Advanced_Security_Features',
+  Dedicated_Account_Manager: 'Dedicated_Account_Manager',
+  Service_Level_Agreements: 'Service_Level_Agreements',
+  Priority_Support: 'Priority_Support',
+  White_Labeling: 'White_Labeling',
+  Custom_Workflows: 'Custom_Workflows',
+  Approval_Processes: 'Approval_Processes',
+  Data_Migration_Support: 'Data_Migration_Support',
+  Performance_Guarantees: 'Performance_Guarantees',
+  Uptime_Guarantees: 'Uptime_Guarantees'
+};
+
+export type EnterpriseFeatures = (typeof EnterpriseFeatures)[keyof typeof EnterpriseFeatures]
 
 }
 
@@ -97,6 +237,38 @@ export const SyncStatus: typeof $Enums.SyncStatus
 export type InvoiceStatus = $Enums.InvoiceStatus
 
 export const InvoiceStatus: typeof $Enums.InvoiceStatus
+
+export type PaymentMethod = $Enums.PaymentMethod
+
+export const PaymentMethod: typeof $Enums.PaymentMethod
+
+export type PaymentStatus = $Enums.PaymentStatus
+
+export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type SubscriptionStatus = $Enums.SubscriptionStatus
+
+export const SubscriptionStatus: typeof $Enums.SubscriptionStatus
+
+export type packageName = $Enums.packageName
+
+export const packageName: typeof $Enums.packageName
+
+export type FreeFeatures = $Enums.FreeFeatures
+
+export const FreeFeatures: typeof $Enums.FreeFeatures
+
+export type BasicFeatures = $Enums.BasicFeatures
+
+export const BasicFeatures: typeof $Enums.BasicFeatures
+
+export type ProFeatures = $Enums.ProFeatures
+
+export const ProFeatures: typeof $Enums.ProFeatures
+
+export type EnterpriseFeatures = $Enums.EnterpriseFeatures
+
+export const EnterpriseFeatures: typeof $Enums.EnterpriseFeatures
 
 /**
  * ##  Prisma Client ʲˢ
@@ -237,6 +409,16 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.session`: Exposes CRUD operations for the **Session** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sessions
+    * const sessions = await prisma.session.findMany()
+    * ```
+    */
+  get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.vendor`: Exposes CRUD operations for the **Vendor** model.
     * Example usage:
     * ```ts
@@ -267,6 +449,26 @@ export class PrismaClient<
   get item(): Prisma.ItemDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.package`: Exposes CRUD operations for the **Package** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Packages
+    * const packages = await prisma.package.findMany()
+    * ```
+    */
+  get package(): Prisma.PackageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.packageSubscription`: Exposes CRUD operations for the **PackageSubscription** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PackageSubscriptions
+    * const packageSubscriptions = await prisma.packageSubscription.findMany()
+    * ```
+    */
+  get packageSubscription(): Prisma.PackageSubscriptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.invoice`: Exposes CRUD operations for the **Invoice** model.
     * Example usage:
     * ```ts
@@ -295,6 +497,16 @@ export class PrismaClient<
     * ```
     */
   get payment(): Prisma.PaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AuditLogs
+    * const auditLogs = await prisma.auditLog.findMany()
+    * ```
+    */
+  get auditLog(): Prisma.AuditLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -353,8 +565,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.15.0
-   * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+   * Prisma Client JS version: 6.16.0
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
     client: string
@@ -737,12 +949,16 @@ export namespace Prisma {
   export const ModelName: {
     Tenant: 'Tenant',
     User: 'User',
+    Session: 'Session',
     Vendor: 'Vendor',
     Customer: 'Customer',
     Item: 'Item',
+    Package: 'Package',
+    PackageSubscription: 'PackageSubscription',
     Invoice: 'Invoice',
     InvoiceItem: 'InvoiceItem',
-    Payment: 'Payment'
+    Payment: 'Payment',
+    AuditLog: 'AuditLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -761,7 +977,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "tenant" | "user" | "vendor" | "customer" | "item" | "invoice" | "invoiceItem" | "payment"
+      modelProps: "tenant" | "user" | "session" | "vendor" | "customer" | "item" | "package" | "packageSubscription" | "invoice" | "invoiceItem" | "payment" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -910,6 +1126,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Session: {
+        payload: Prisma.$SessionPayload<ExtArgs>
+        fields: Prisma.SessionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+          }
+          findFirst: {
+            args: Prisma.SessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+          }
+          findMany: {
+            args: Prisma.SessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
+          }
+          create: {
+            args: Prisma.SessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+          }
+          createMany: {
+            args: Prisma.SessionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SessionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
+          }
+          delete: {
+            args: Prisma.SessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+          }
+          update: {
+            args: Prisma.SessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SessionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SessionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SessionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+          }
+          aggregate: {
+            args: Prisma.SessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSession>
+          }
+          groupBy: {
+            args: Prisma.SessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SessionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SessionCountArgs<ExtArgs>
+            result: $Utils.Optional<SessionCountAggregateOutputType> | number
           }
         }
       }
@@ -1135,6 +1425,154 @@ export namespace Prisma {
           }
         }
       }
+      Package: {
+        payload: Prisma.$PackagePayload<ExtArgs>
+        fields: Prisma.PackageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PackageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PackageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>
+          }
+          findFirst: {
+            args: Prisma.PackageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PackageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>
+          }
+          findMany: {
+            args: Prisma.PackageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>[]
+          }
+          create: {
+            args: Prisma.PackageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>
+          }
+          createMany: {
+            args: Prisma.PackageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PackageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>[]
+          }
+          delete: {
+            args: Prisma.PackageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>
+          }
+          update: {
+            args: Prisma.PackageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>
+          }
+          deleteMany: {
+            args: Prisma.PackageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PackageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PackageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>[]
+          }
+          upsert: {
+            args: Prisma.PackageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackagePayload>
+          }
+          aggregate: {
+            args: Prisma.PackageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePackage>
+          }
+          groupBy: {
+            args: Prisma.PackageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PackageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PackageCountArgs<ExtArgs>
+            result: $Utils.Optional<PackageCountAggregateOutputType> | number
+          }
+        }
+      }
+      PackageSubscription: {
+        payload: Prisma.$PackageSubscriptionPayload<ExtArgs>
+        fields: Prisma.PackageSubscriptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PackageSubscriptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PackageSubscriptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>
+          }
+          findFirst: {
+            args: Prisma.PackageSubscriptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PackageSubscriptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>
+          }
+          findMany: {
+            args: Prisma.PackageSubscriptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>[]
+          }
+          create: {
+            args: Prisma.PackageSubscriptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>
+          }
+          createMany: {
+            args: Prisma.PackageSubscriptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PackageSubscriptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>[]
+          }
+          delete: {
+            args: Prisma.PackageSubscriptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>
+          }
+          update: {
+            args: Prisma.PackageSubscriptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.PackageSubscriptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PackageSubscriptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PackageSubscriptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.PackageSubscriptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PackageSubscriptionPayload>
+          }
+          aggregate: {
+            args: Prisma.PackageSubscriptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePackageSubscription>
+          }
+          groupBy: {
+            args: Prisma.PackageSubscriptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PackageSubscriptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PackageSubscriptionCountArgs<ExtArgs>
+            result: $Utils.Optional<PackageSubscriptionCountAggregateOutputType> | number
+          }
+        }
+      }
       Invoice: {
         payload: Prisma.$InvoicePayload<ExtArgs>
         fields: Prisma.InvoiceFieldRefs
@@ -1357,6 +1795,80 @@ export namespace Prisma {
           }
         }
       }
+      AuditLog: {
+        payload: Prisma.$AuditLogPayload<ExtArgs>
+        fields: Prisma.AuditLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AuditLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AuditLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          findFirst: {
+            args: Prisma.AuditLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AuditLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          findMany: {
+            args: Prisma.AuditLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+          }
+          create: {
+            args: Prisma.AuditLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          createMany: {
+            args: Prisma.AuditLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AuditLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+          }
+          delete: {
+            args: Prisma.AuditLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          update: {
+            args: Prisma.AuditLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.AuditLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AuditLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AuditLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.AuditLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          aggregate: {
+            args: Prisma.AuditLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuditLog>
+          }
+          groupBy: {
+            args: Prisma.AuditLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuditLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AuditLogCountArgs<ExtArgs>
+            result: $Utils.Optional<AuditLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1433,6 +1945,10 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
+    /**
      * Global configuration for omitting model fields by default.
      * 
      * @example
@@ -1451,12 +1967,16 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     tenant?: TenantOmit
     user?: UserOmit
+    session?: SessionOmit
     vendor?: VendorOmit
     customer?: CustomerOmit
     item?: ItemOmit
+    package?: PackageOmit
+    packageSubscription?: PackageSubscriptionOmit
     invoice?: InvoiceOmit
     invoiceItem?: InvoiceItemOmit
     payment?: PaymentOmit
+    auditLog?: AuditLogOmit
   }
 
   /* Types for Logging */
@@ -1538,22 +2058,28 @@ export namespace Prisma {
 
   export type TenantCountOutputType = {
     users: number
+    packages: number
     vendors: number
     customers: number
     items: number
     invoices: number
     payments: number
-    invoiceItems: number
+    subscription: number
+    userSession: number
+    InvoiceItem: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | TenantCountOutputTypeCountUsersArgs
+    packages?: boolean | TenantCountOutputTypeCountPackagesArgs
     vendors?: boolean | TenantCountOutputTypeCountVendorsArgs
     customers?: boolean | TenantCountOutputTypeCountCustomersArgs
     items?: boolean | TenantCountOutputTypeCountItemsArgs
     invoices?: boolean | TenantCountOutputTypeCountInvoicesArgs
     payments?: boolean | TenantCountOutputTypeCountPaymentsArgs
-    invoiceItems?: boolean | TenantCountOutputTypeCountInvoiceItemsArgs
+    subscription?: boolean | TenantCountOutputTypeCountSubscriptionArgs
+    userSession?: boolean | TenantCountOutputTypeCountUserSessionArgs
+    InvoiceItem?: boolean | TenantCountOutputTypeCountInvoiceItemArgs
   }
 
   // Custom InputTypes
@@ -1572,6 +2098,13 @@ export namespace Prisma {
    */
   export type TenantCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountPackagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PackageWhereInput
   }
 
   /**
@@ -1612,8 +2145,53 @@ export namespace Prisma {
   /**
    * TenantCountOutputType without action
    */
-  export type TenantCountOutputTypeCountInvoiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TenantCountOutputTypeCountSubscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PackageSubscriptionWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountUserSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountInvoiceItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvoiceItemWhereInput
+  }
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    sessions: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
   }
 
 
@@ -1676,6 +2254,37 @@ export namespace Prisma {
    */
   export type ItemCountOutputTypeCountInvoiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvoiceItemWhereInput
+  }
+
+
+  /**
+   * Count Type PackageCountOutputType
+   */
+
+  export type PackageCountOutputType = {
+    subscription: number
+  }
+
+  export type PackageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subscription?: boolean | PackageCountOutputTypeCountSubscriptionArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PackageCountOutputType without action
+   */
+  export type PackageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageCountOutputType
+     */
+    select?: PackageCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PackageCountOutputType without action
+   */
+  export type PackageCountOutputTypeCountSubscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PackageSubscriptionWhereInput
   }
 
 
@@ -1746,22 +2355,29 @@ export namespace Prisma {
   export type TenantMinAggregateOutputType = {
     id: number | null
     name: string | null
+    slug: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
   }
 
   export type TenantMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    slug: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
   }
 
   export type TenantCountAggregateOutputType = {
     id: number
     name: number
+    slug: number
+    settings: number
     createdAt: number
     updatedAt: number
+    deletedAt: number
     _all: number
   }
 
@@ -1777,22 +2393,29 @@ export namespace Prisma {
   export type TenantMinAggregateInputType = {
     id?: true
     name?: true
+    slug?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
   }
 
   export type TenantMaxAggregateInputType = {
     id?: true
     name?: true
+    slug?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
   }
 
   export type TenantCountAggregateInputType = {
     id?: true
     name?: true
+    slug?: true
+    settings?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
     _all?: true
   }
 
@@ -1885,8 +2508,11 @@ export namespace Prisma {
   export type TenantGroupByOutputType = {
     id: number
     name: string
+    slug: string
+    settings: JsonValue | null
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     _count: TenantCountAggregateOutputType | null
     _avg: TenantAvgAggregateOutputType | null
     _sum: TenantSumAggregateOutputType | null
@@ -1911,48 +2537,66 @@ export namespace Prisma {
   export type TenantSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    slug?: boolean
+    settings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
     users?: boolean | Tenant$usersArgs<ExtArgs>
+    packages?: boolean | Tenant$packagesArgs<ExtArgs>
     vendors?: boolean | Tenant$vendorsArgs<ExtArgs>
     customers?: boolean | Tenant$customersArgs<ExtArgs>
     items?: boolean | Tenant$itemsArgs<ExtArgs>
     invoices?: boolean | Tenant$invoicesArgs<ExtArgs>
     payments?: boolean | Tenant$paymentsArgs<ExtArgs>
-    invoiceItems?: boolean | Tenant$invoiceItemsArgs<ExtArgs>
+    subscription?: boolean | Tenant$subscriptionArgs<ExtArgs>
+    userSession?: boolean | Tenant$userSessionArgs<ExtArgs>
+    InvoiceItem?: boolean | Tenant$InvoiceItemArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
   export type TenantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    slug?: boolean
+    settings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["tenant"]>
 
   export type TenantSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    slug?: boolean
+    settings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["tenant"]>
 
   export type TenantSelectScalar = {
     id?: boolean
     name?: boolean
+    slug?: boolean
+    settings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }
 
-  export type TenantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+  export type TenantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "settings" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["tenant"]>
   export type TenantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Tenant$usersArgs<ExtArgs>
+    packages?: boolean | Tenant$packagesArgs<ExtArgs>
     vendors?: boolean | Tenant$vendorsArgs<ExtArgs>
     customers?: boolean | Tenant$customersArgs<ExtArgs>
     items?: boolean | Tenant$itemsArgs<ExtArgs>
     invoices?: boolean | Tenant$invoicesArgs<ExtArgs>
     payments?: boolean | Tenant$paymentsArgs<ExtArgs>
-    invoiceItems?: boolean | Tenant$invoiceItemsArgs<ExtArgs>
+    subscription?: boolean | Tenant$subscriptionArgs<ExtArgs>
+    userSession?: boolean | Tenant$userSessionArgs<ExtArgs>
+    InvoiceItem?: boolean | Tenant$InvoiceItemArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1962,18 +2606,24 @@ export namespace Prisma {
     name: "Tenant"
     objects: {
       users: Prisma.$UserPayload<ExtArgs>[]
+      packages: Prisma.$PackagePayload<ExtArgs>[]
       vendors: Prisma.$VendorPayload<ExtArgs>[]
       customers: Prisma.$CustomerPayload<ExtArgs>[]
       items: Prisma.$ItemPayload<ExtArgs>[]
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
-      invoiceItems: Prisma.$InvoiceItemPayload<ExtArgs>[]
+      subscription: Prisma.$PackageSubscriptionPayload<ExtArgs>[]
+      userSession: Prisma.$SessionPayload<ExtArgs>[]
+      InvoiceItem: Prisma.$InvoiceItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      slug: string
+      settings: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
+      deletedAt: Date | null
     }, ExtArgs["result"]["tenant"]>
     composites: {}
   }
@@ -2369,12 +3019,15 @@ export namespace Prisma {
   export interface Prisma__TenantClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends Tenant$usersArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    packages<T extends Tenant$packagesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$packagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     vendors<T extends Tenant$vendorsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$vendorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     customers<T extends Tenant$customersArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$customersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     items<T extends Tenant$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     invoices<T extends Tenant$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends Tenant$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    invoiceItems<T extends Tenant$invoiceItemsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$invoiceItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoiceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    subscription<T extends Tenant$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$subscriptionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userSession<T extends Tenant$userSessionArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$userSessionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    InvoiceItem<T extends Tenant$InvoiceItemArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$InvoiceItemArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoiceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2406,8 +3059,11 @@ export namespace Prisma {
   interface TenantFieldRefs {
     readonly id: FieldRef<"Tenant", 'Int'>
     readonly name: FieldRef<"Tenant", 'String'>
+    readonly slug: FieldRef<"Tenant", 'String'>
+    readonly settings: FieldRef<"Tenant", 'Json'>
     readonly createdAt: FieldRef<"Tenant", 'DateTime'>
     readonly updatedAt: FieldRef<"Tenant", 'DateTime'>
+    readonly deletedAt: FieldRef<"Tenant", 'DateTime'>
   }
     
 
@@ -2820,6 +3476,30 @@ export namespace Prisma {
   }
 
   /**
+   * Tenant.packages
+   */
+  export type Tenant$packagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    where?: PackageWhereInput
+    orderBy?: PackageOrderByWithRelationInput | PackageOrderByWithRelationInput[]
+    cursor?: PackageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PackageScalarFieldEnum | PackageScalarFieldEnum[]
+  }
+
+  /**
    * Tenant.vendors
    */
   export type Tenant$vendorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2940,9 +3620,57 @@ export namespace Prisma {
   }
 
   /**
-   * Tenant.invoiceItems
+   * Tenant.subscription
    */
-  export type Tenant$invoiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Tenant$subscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    where?: PackageSubscriptionWhereInput
+    orderBy?: PackageSubscriptionOrderByWithRelationInput | PackageSubscriptionOrderByWithRelationInput[]
+    cursor?: PackageSubscriptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PackageSubscriptionScalarFieldEnum | PackageSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.userSession
+   */
+  export type Tenant$userSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.InvoiceItem
+   */
+  export type Tenant$InvoiceItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the InvoiceItem
      */
@@ -3011,6 +3739,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     role: $Enums.UserType | null
+    lastSeenAt: Date | null
+    locale: string | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     syncStatus: $Enums.SyncStatus | null
@@ -3023,6 +3754,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     role: $Enums.UserType | null
+    lastSeenAt: Date | null
+    locale: string | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     syncStatus: $Enums.SyncStatus | null
@@ -3035,6 +3769,9 @@ export namespace Prisma {
     email: number
     password: number
     role: number
+    lastSeenAt: number
+    locale: number
+    isActive: number
     createdAt: number
     updatedAt: number
     syncStatus: number
@@ -3059,6 +3796,9 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
+    lastSeenAt?: true
+    locale?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     syncStatus?: true
@@ -3071,6 +3811,9 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
+    lastSeenAt?: true
+    locale?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     syncStatus?: true
@@ -3083,6 +3826,9 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
+    lastSeenAt?: true
+    locale?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     syncStatus?: true
@@ -3177,11 +3923,14 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: number
-    tenantId: number
+    tenantId: number | null
     name: string
     email: string
     password: string
     role: $Enums.UserType
+    lastSeenAt: Date | null
+    locale: string | null
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     syncStatus: $Enums.SyncStatus
@@ -3213,10 +3962,15 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    lastSeenAt?: boolean
+    locale?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     syncStatus?: boolean
-    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    tenant?: boolean | User$tenantArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3226,10 +3980,13 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    lastSeenAt?: boolean
+    locale?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     syncStatus?: boolean
-    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    tenant?: boolean | User$tenantArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3239,10 +3996,13 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    lastSeenAt?: boolean
+    locale?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     syncStatus?: boolean
-    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    tenant?: boolean | User$tenantArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -3252,34 +4012,43 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    lastSeenAt?: boolean
+    locale?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     syncStatus?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "name" | "email" | "password" | "role" | "createdAt" | "updatedAt" | "syncStatus", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "name" | "email" | "password" | "role" | "lastSeenAt" | "locale" | "isActive" | "createdAt" | "updatedAt" | "syncStatus", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    tenant?: boolean | User$tenantArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    tenant?: boolean | User$tenantArgs<ExtArgs>
   }
   export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    tenant?: boolean | User$tenantArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      tenant: Prisma.$TenantPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+      sessions: Prisma.$SessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      tenantId: number
+      tenantId: number | null
       name: string
       email: string
       password: string
       role: $Enums.UserType
+      lastSeenAt: Date | null
+      locale: string | null
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
       syncStatus: $Enums.SyncStatus
@@ -3677,7 +4446,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tenant<T extends User$tenantArgs<ExtArgs> = {}>(args?: Subset<T, User$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3713,6 +4483,9 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserType'>
+    readonly lastSeenAt: FieldRef<"User", 'DateTime'>
+    readonly locale: FieldRef<"User", 'String'>
+    readonly isActive: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly syncStatus: FieldRef<"User", 'SyncStatus'>
@@ -4112,6 +4885,49 @@ export namespace Prisma {
   }
 
   /**
+   * User.tenant
+   */
+  export type User$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tenant
+     */
+    omit?: TenantOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * User.sessions
+   */
+  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4127,6 +4943,1166 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Session
+   */
+
+  export type AggregateSession = {
+    _count: SessionCountAggregateOutputType | null
+    _avg: SessionAvgAggregateOutputType | null
+    _sum: SessionSumAggregateOutputType | null
+    _min: SessionMinAggregateOutputType | null
+    _max: SessionMaxAggregateOutputType | null
+  }
+
+  export type SessionAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    tenantId: number | null
+  }
+
+  export type SessionSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    tenantId: number | null
+  }
+
+  export type SessionMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    tenantId: number | null
+    sessionToken: string | null
+    expires: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SessionMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    tenantId: number | null
+    sessionToken: string | null
+    expires: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SessionCountAggregateOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    sessionToken: number
+    expires: number
+    ipAddress: number
+    userAgent: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SessionAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+  }
+
+  export type SessionSumAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+  }
+
+  export type SessionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    sessionToken?: true
+    expires?: true
+    ipAddress?: true
+    userAgent?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SessionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    sessionToken?: true
+    expires?: true
+    ipAddress?: true
+    userAgent?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SessionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tenantId?: true
+    sessionToken?: true
+    expires?: true
+    ipAddress?: true
+    userAgent?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Session to aggregate.
+     */
+    where?: SessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sessions to fetch.
+     */
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sessions
+    **/
+    _count?: true | SessionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SessionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SessionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SessionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SessionMaxAggregateInputType
+  }
+
+  export type GetSessionAggregateType<T extends SessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSession]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSession[P]>
+      : GetScalarType<T[P], AggregateSession[P]>
+  }
+
+
+
+
+  export type SessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithAggregationInput | SessionOrderByWithAggregationInput[]
+    by: SessionScalarFieldEnum[] | SessionScalarFieldEnum
+    having?: SessionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SessionCountAggregateInputType | true
+    _avg?: SessionAvgAggregateInputType
+    _sum?: SessionSumAggregateInputType
+    _min?: SessionMinAggregateInputType
+    _max?: SessionMaxAggregateInputType
+  }
+
+  export type SessionGroupByOutputType = {
+    id: number
+    userId: number
+    tenantId: number
+    sessionToken: string
+    expires: Date
+    ipAddress: string | null
+    userAgent: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SessionCountAggregateOutputType | null
+    _avg: SessionAvgAggregateOutputType | null
+    _sum: SessionSumAggregateOutputType | null
+    _min: SessionMinAggregateOutputType | null
+    _max: SessionMaxAggregateOutputType | null
+  }
+
+  type GetSessionGroupByPayload<T extends SessionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SessionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SessionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SessionGroupByOutputType[P]>
+            : GetScalarType<T[P], SessionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    sessionToken?: boolean
+    expires?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["session"]>
+
+  export type SessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    sessionToken?: boolean
+    expires?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["session"]>
+
+  export type SessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    sessionToken?: boolean
+    expires?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["session"]>
+
+  export type SessionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tenantId?: boolean
+    sessionToken?: boolean
+    expires?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "tenantId" | "sessionToken" | "expires" | "ipAddress" | "userAgent" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
+  export type SessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type SessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type SessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $SessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Session"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      tenantId: number
+      sessionToken: string
+      expires: Date
+      ipAddress: string | null
+      userAgent: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["session"]>
+    composites: {}
+  }
+
+  type SessionGetPayload<S extends boolean | null | undefined | SessionDefaultArgs> = $Result.GetResult<Prisma.$SessionPayload, S>
+
+  type SessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SessionCountAggregateInputType | true
+    }
+
+  export interface SessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Session'], meta: { name: 'Session' } }
+    /**
+     * Find zero or one Session that matches the filter.
+     * @param {SessionFindUniqueArgs} args - Arguments to find a Session
+     * @example
+     * // Get one Session
+     * const session = await prisma.session.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SessionFindUniqueArgs>(args: SelectSubset<T, SessionFindUniqueArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Session that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SessionFindUniqueOrThrowArgs} args - Arguments to find a Session
+     * @example
+     * // Get one Session
+     * const session = await prisma.session.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SessionFindUniqueOrThrowArgs>(args: SelectSubset<T, SessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Session that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionFindFirstArgs} args - Arguments to find a Session
+     * @example
+     * // Get one Session
+     * const session = await prisma.session.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SessionFindFirstArgs>(args?: SelectSubset<T, SessionFindFirstArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Session that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionFindFirstOrThrowArgs} args - Arguments to find a Session
+     * @example
+     * // Get one Session
+     * const session = await prisma.session.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SessionFindFirstOrThrowArgs>(args?: SelectSubset<T, SessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sessions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sessions
+     * const sessions = await prisma.session.findMany()
+     * 
+     * // Get first 10 Sessions
+     * const sessions = await prisma.session.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sessionWithIdOnly = await prisma.session.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SessionFindManyArgs>(args?: SelectSubset<T, SessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Session.
+     * @param {SessionCreateArgs} args - Arguments to create a Session.
+     * @example
+     * // Create one Session
+     * const Session = await prisma.session.create({
+     *   data: {
+     *     // ... data to create a Session
+     *   }
+     * })
+     * 
+     */
+    create<T extends SessionCreateArgs>(args: SelectSubset<T, SessionCreateArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sessions.
+     * @param {SessionCreateManyArgs} args - Arguments to create many Sessions.
+     * @example
+     * // Create many Sessions
+     * const session = await prisma.session.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SessionCreateManyArgs>(args?: SelectSubset<T, SessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sessions and returns the data saved in the database.
+     * @param {SessionCreateManyAndReturnArgs} args - Arguments to create many Sessions.
+     * @example
+     * // Create many Sessions
+     * const session = await prisma.session.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sessions and only return the `id`
+     * const sessionWithIdOnly = await prisma.session.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SessionCreateManyAndReturnArgs>(args?: SelectSubset<T, SessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Session.
+     * @param {SessionDeleteArgs} args - Arguments to delete one Session.
+     * @example
+     * // Delete one Session
+     * const Session = await prisma.session.delete({
+     *   where: {
+     *     // ... filter to delete one Session
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SessionDeleteArgs>(args: SelectSubset<T, SessionDeleteArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Session.
+     * @param {SessionUpdateArgs} args - Arguments to update one Session.
+     * @example
+     * // Update one Session
+     * const session = await prisma.session.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SessionUpdateArgs>(args: SelectSubset<T, SessionUpdateArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sessions.
+     * @param {SessionDeleteManyArgs} args - Arguments to filter Sessions to delete.
+     * @example
+     * // Delete a few Sessions
+     * const { count } = await prisma.session.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SessionDeleteManyArgs>(args?: SelectSubset<T, SessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sessions
+     * const session = await prisma.session.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SessionUpdateManyArgs>(args: SelectSubset<T, SessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sessions and returns the data updated in the database.
+     * @param {SessionUpdateManyAndReturnArgs} args - Arguments to update many Sessions.
+     * @example
+     * // Update many Sessions
+     * const session = await prisma.session.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sessions and only return the `id`
+     * const sessionWithIdOnly = await prisma.session.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SessionUpdateManyAndReturnArgs>(args: SelectSubset<T, SessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Session.
+     * @param {SessionUpsertArgs} args - Arguments to update or create a Session.
+     * @example
+     * // Update or create a Session
+     * const session = await prisma.session.upsert({
+     *   create: {
+     *     // ... data to create a Session
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Session we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SessionUpsertArgs>(args: SelectSubset<T, SessionUpsertArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionCountArgs} args - Arguments to filter Sessions to count.
+     * @example
+     * // Count the number of Sessions
+     * const count = await prisma.session.count({
+     *   where: {
+     *     // ... the filter for the Sessions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SessionCountArgs>(
+      args?: Subset<T, SessionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SessionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Session.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SessionAggregateArgs>(args: Subset<T, SessionAggregateArgs>): Prisma.PrismaPromise<GetSessionAggregateType<T>>
+
+    /**
+     * Group by Session.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SessionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SessionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SessionGroupByArgs['orderBy'] }
+        : { orderBy?: SessionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Session model
+   */
+  readonly fields: SessionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Session.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Session model
+   */
+  interface SessionFieldRefs {
+    readonly id: FieldRef<"Session", 'Int'>
+    readonly userId: FieldRef<"Session", 'Int'>
+    readonly tenantId: FieldRef<"Session", 'Int'>
+    readonly sessionToken: FieldRef<"Session", 'String'>
+    readonly expires: FieldRef<"Session", 'DateTime'>
+    readonly ipAddress: FieldRef<"Session", 'String'>
+    readonly userAgent: FieldRef<"Session", 'String'>
+    readonly createdAt: FieldRef<"Session", 'DateTime'>
+    readonly updatedAt: FieldRef<"Session", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Session findUnique
+   */
+  export type SessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * Filter, which Session to fetch.
+     */
+    where: SessionWhereUniqueInput
+  }
+
+  /**
+   * Session findUniqueOrThrow
+   */
+  export type SessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * Filter, which Session to fetch.
+     */
+    where: SessionWhereUniqueInput
+  }
+
+  /**
+   * Session findFirst
+   */
+  export type SessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * Filter, which Session to fetch.
+     */
+    where?: SessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sessions to fetch.
+     */
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sessions.
+     */
+    cursor?: SessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sessions.
+     */
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * Session findFirstOrThrow
+   */
+  export type SessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * Filter, which Session to fetch.
+     */
+    where?: SessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sessions to fetch.
+     */
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sessions.
+     */
+    cursor?: SessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sessions.
+     */
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * Session findMany
+   */
+  export type SessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * Filter, which Sessions to fetch.
+     */
+    where?: SessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sessions to fetch.
+     */
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sessions.
+     */
+    cursor?: SessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sessions.
+     */
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * Session create
+   */
+  export type SessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Session.
+     */
+    data: XOR<SessionCreateInput, SessionUncheckedCreateInput>
+  }
+
+  /**
+   * Session createMany
+   */
+  export type SessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sessions.
+     */
+    data: SessionCreateManyInput | SessionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Session createManyAndReturn
+   */
+  export type SessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sessions.
+     */
+    data: SessionCreateManyInput | SessionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Session update
+   */
+  export type SessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Session.
+     */
+    data: XOR<SessionUpdateInput, SessionUncheckedUpdateInput>
+    /**
+     * Choose, which Session to update.
+     */
+    where: SessionWhereUniqueInput
+  }
+
+  /**
+   * Session updateMany
+   */
+  export type SessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sessions.
+     */
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyInput>
+    /**
+     * Filter which Sessions to update
+     */
+    where?: SessionWhereInput
+    /**
+     * Limit how many Sessions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Session updateManyAndReturn
+   */
+  export type SessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * The data used to update Sessions.
+     */
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyInput>
+    /**
+     * Filter which Sessions to update
+     */
+    where?: SessionWhereInput
+    /**
+     * Limit how many Sessions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Session upsert
+   */
+  export type SessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Session to update in case it exists.
+     */
+    where: SessionWhereUniqueInput
+    /**
+     * In case the Session found by the `where` argument doesn't exist, create a new Session with this data.
+     */
+    create: XOR<SessionCreateInput, SessionUncheckedCreateInput>
+    /**
+     * In case the Session was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SessionUpdateInput, SessionUncheckedUpdateInput>
+  }
+
+  /**
+   * Session delete
+   */
+  export type SessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    /**
+     * Filter which Session to delete.
+     */
+    where: SessionWhereUniqueInput
+  }
+
+  /**
+   * Session deleteMany
+   */
+  export type SessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sessions to delete
+     */
+    where?: SessionWhereInput
+    /**
+     * Limit how many Sessions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Session without action
+   */
+  export type SessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
   }
 
 
@@ -6484,15 +8460,15 @@ export namespace Prisma {
   export type ItemAvgAggregateOutputType = {
     id: number | null
     tenantId: number | null
-    unitPrice: number | null
-    quantity: number | null
+    unitPrice: Decimal | null
+    quantity: Decimal | null
   }
 
   export type ItemSumAggregateOutputType = {
     id: number | null
     tenantId: number | null
-    unitPrice: number | null
-    quantity: number | null
+    unitPrice: Decimal | null
+    quantity: Decimal | null
   }
 
   export type ItemMinAggregateOutputType = {
@@ -6501,8 +8477,8 @@ export namespace Prisma {
     name: string | null
     sku: string | null
     description: string | null
-    unitPrice: number | null
-    quantity: number | null
+    unitPrice: Decimal | null
+    quantity: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
     syncStatus: $Enums.SyncStatus | null
@@ -6514,8 +8490,8 @@ export namespace Prisma {
     name: string | null
     sku: string | null
     description: string | null
-    unitPrice: number | null
-    quantity: number | null
+    unitPrice: Decimal | null
+    quantity: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
     syncStatus: $Enums.SyncStatus | null
@@ -6682,8 +8658,8 @@ export namespace Prisma {
     name: string
     sku: string | null
     description: string | null
-    unitPrice: number
-    quantity: number
+    unitPrice: Decimal
+    quantity: Decimal
     createdAt: Date
     updatedAt: Date
     syncStatus: $Enums.SyncStatus
@@ -6790,8 +8766,8 @@ export namespace Prisma {
       name: string
       sku: string | null
       description: string | null
-      unitPrice: number
-      quantity: number
+      unitPrice: Prisma.Decimal
+      quantity: Prisma.Decimal
       createdAt: Date
       updatedAt: Date
       syncStatus: $Enums.SyncStatus
@@ -7225,8 +9201,8 @@ export namespace Prisma {
     readonly name: FieldRef<"Item", 'String'>
     readonly sku: FieldRef<"Item", 'String'>
     readonly description: FieldRef<"Item", 'String'>
-    readonly unitPrice: FieldRef<"Item", 'Float'>
-    readonly quantity: FieldRef<"Item", 'Float'>
+    readonly unitPrice: FieldRef<"Item", 'Decimal'>
+    readonly quantity: FieldRef<"Item", 'Decimal'>
     readonly createdAt: FieldRef<"Item", 'DateTime'>
     readonly updatedAt: FieldRef<"Item", 'DateTime'>
     readonly syncStatus: FieldRef<"Item", 'SyncStatus'>
@@ -7669,6 +9645,2410 @@ export namespace Prisma {
 
 
   /**
+   * Model Package
+   */
+
+  export type AggregatePackage = {
+    _count: PackageCountAggregateOutputType | null
+    _avg: PackageAvgAggregateOutputType | null
+    _sum: PackageSumAggregateOutputType | null
+    _min: PackageMinAggregateOutputType | null
+    _max: PackageMaxAggregateOutputType | null
+  }
+
+  export type PackageAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    price: Decimal | null
+    durationDays: number | null
+  }
+
+  export type PackageSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    price: Decimal | null
+    durationDays: number | null
+  }
+
+  export type PackageMinAggregateOutputType = {
+    id: number | null
+    name: $Enums.packageName | null
+    tenantId: number | null
+    price: Decimal | null
+    durationDays: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PackageMaxAggregateOutputType = {
+    id: number | null
+    name: $Enums.packageName | null
+    tenantId: number | null
+    price: Decimal | null
+    durationDays: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PackageCountAggregateOutputType = {
+    id: number
+    name: number
+    tenantId: number
+    price: number
+    durationDays: number
+    freeFeatures: number
+    basicFeatures: number
+    proFeatures: number
+    enterpriseFeatures: number
+    metadata: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PackageAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    price?: true
+    durationDays?: true
+  }
+
+  export type PackageSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    price?: true
+    durationDays?: true
+  }
+
+  export type PackageMinAggregateInputType = {
+    id?: true
+    name?: true
+    tenantId?: true
+    price?: true
+    durationDays?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PackageMaxAggregateInputType = {
+    id?: true
+    name?: true
+    tenantId?: true
+    price?: true
+    durationDays?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PackageCountAggregateInputType = {
+    id?: true
+    name?: true
+    tenantId?: true
+    price?: true
+    durationDays?: true
+    freeFeatures?: true
+    basicFeatures?: true
+    proFeatures?: true
+    enterpriseFeatures?: true
+    metadata?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PackageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Package to aggregate.
+     */
+    where?: PackageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Packages to fetch.
+     */
+    orderBy?: PackageOrderByWithRelationInput | PackageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PackageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Packages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Packages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Packages
+    **/
+    _count?: true | PackageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PackageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PackageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PackageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PackageMaxAggregateInputType
+  }
+
+  export type GetPackageAggregateType<T extends PackageAggregateArgs> = {
+        [P in keyof T & keyof AggregatePackage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePackage[P]>
+      : GetScalarType<T[P], AggregatePackage[P]>
+  }
+
+
+
+
+  export type PackageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PackageWhereInput
+    orderBy?: PackageOrderByWithAggregationInput | PackageOrderByWithAggregationInput[]
+    by: PackageScalarFieldEnum[] | PackageScalarFieldEnum
+    having?: PackageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PackageCountAggregateInputType | true
+    _avg?: PackageAvgAggregateInputType
+    _sum?: PackageSumAggregateInputType
+    _min?: PackageMinAggregateInputType
+    _max?: PackageMaxAggregateInputType
+  }
+
+  export type PackageGroupByOutputType = {
+    id: number
+    name: $Enums.packageName
+    tenantId: number
+    price: Decimal
+    durationDays: number
+    freeFeatures: $Enums.FreeFeatures[]
+    basicFeatures: $Enums.BasicFeatures[]
+    proFeatures: $Enums.ProFeatures[]
+    enterpriseFeatures: $Enums.EnterpriseFeatures[]
+    metadata: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PackageCountAggregateOutputType | null
+    _avg: PackageAvgAggregateOutputType | null
+    _sum: PackageSumAggregateOutputType | null
+    _min: PackageMinAggregateOutputType | null
+    _max: PackageMaxAggregateOutputType | null
+  }
+
+  type GetPackageGroupByPayload<T extends PackageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PackageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PackageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PackageGroupByOutputType[P]>
+            : GetScalarType<T[P], PackageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PackageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    tenantId?: boolean
+    price?: boolean
+    durationDays?: boolean
+    freeFeatures?: boolean
+    basicFeatures?: boolean
+    proFeatures?: boolean
+    enterpriseFeatures?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    subscription?: boolean | Package$subscriptionArgs<ExtArgs>
+    _count?: boolean | PackageCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["package"]>
+
+  export type PackageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    tenantId?: boolean
+    price?: boolean
+    durationDays?: boolean
+    freeFeatures?: boolean
+    basicFeatures?: boolean
+    proFeatures?: boolean
+    enterpriseFeatures?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["package"]>
+
+  export type PackageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    tenantId?: boolean
+    price?: boolean
+    durationDays?: boolean
+    freeFeatures?: boolean
+    basicFeatures?: boolean
+    proFeatures?: boolean
+    enterpriseFeatures?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["package"]>
+
+  export type PackageSelectScalar = {
+    id?: boolean
+    name?: boolean
+    tenantId?: boolean
+    price?: boolean
+    durationDays?: boolean
+    freeFeatures?: boolean
+    basicFeatures?: boolean
+    proFeatures?: boolean
+    enterpriseFeatures?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PackageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "tenantId" | "price" | "durationDays" | "freeFeatures" | "basicFeatures" | "proFeatures" | "enterpriseFeatures" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["package"]>
+  export type PackageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    subscription?: boolean | Package$subscriptionArgs<ExtArgs>
+    _count?: boolean | PackageCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PackageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type PackageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $PackagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Package"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      subscription: Prisma.$PackageSubscriptionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: $Enums.packageName
+      tenantId: number
+      price: Prisma.Decimal
+      durationDays: number
+      freeFeatures: $Enums.FreeFeatures[]
+      basicFeatures: $Enums.BasicFeatures[]
+      proFeatures: $Enums.ProFeatures[]
+      enterpriseFeatures: $Enums.EnterpriseFeatures[]
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["package"]>
+    composites: {}
+  }
+
+  type PackageGetPayload<S extends boolean | null | undefined | PackageDefaultArgs> = $Result.GetResult<Prisma.$PackagePayload, S>
+
+  type PackageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PackageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PackageCountAggregateInputType | true
+    }
+
+  export interface PackageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Package'], meta: { name: 'Package' } }
+    /**
+     * Find zero or one Package that matches the filter.
+     * @param {PackageFindUniqueArgs} args - Arguments to find a Package
+     * @example
+     * // Get one Package
+     * const package = await prisma.package.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PackageFindUniqueArgs>(args: SelectSubset<T, PackageFindUniqueArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Package that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PackageFindUniqueOrThrowArgs} args - Arguments to find a Package
+     * @example
+     * // Get one Package
+     * const package = await prisma.package.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PackageFindUniqueOrThrowArgs>(args: SelectSubset<T, PackageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Package that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageFindFirstArgs} args - Arguments to find a Package
+     * @example
+     * // Get one Package
+     * const package = await prisma.package.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PackageFindFirstArgs>(args?: SelectSubset<T, PackageFindFirstArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Package that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageFindFirstOrThrowArgs} args - Arguments to find a Package
+     * @example
+     * // Get one Package
+     * const package = await prisma.package.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PackageFindFirstOrThrowArgs>(args?: SelectSubset<T, PackageFindFirstOrThrowArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Packages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Packages
+     * const packages = await prisma.package.findMany()
+     * 
+     * // Get first 10 Packages
+     * const packages = await prisma.package.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const packageWithIdOnly = await prisma.package.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PackageFindManyArgs>(args?: SelectSubset<T, PackageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Package.
+     * @param {PackageCreateArgs} args - Arguments to create a Package.
+     * @example
+     * // Create one Package
+     * const Package = await prisma.package.create({
+     *   data: {
+     *     // ... data to create a Package
+     *   }
+     * })
+     * 
+     */
+    create<T extends PackageCreateArgs>(args: SelectSubset<T, PackageCreateArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Packages.
+     * @param {PackageCreateManyArgs} args - Arguments to create many Packages.
+     * @example
+     * // Create many Packages
+     * const package = await prisma.package.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PackageCreateManyArgs>(args?: SelectSubset<T, PackageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Packages and returns the data saved in the database.
+     * @param {PackageCreateManyAndReturnArgs} args - Arguments to create many Packages.
+     * @example
+     * // Create many Packages
+     * const package = await prisma.package.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Packages and only return the `id`
+     * const packageWithIdOnly = await prisma.package.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PackageCreateManyAndReturnArgs>(args?: SelectSubset<T, PackageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Package.
+     * @param {PackageDeleteArgs} args - Arguments to delete one Package.
+     * @example
+     * // Delete one Package
+     * const Package = await prisma.package.delete({
+     *   where: {
+     *     // ... filter to delete one Package
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PackageDeleteArgs>(args: SelectSubset<T, PackageDeleteArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Package.
+     * @param {PackageUpdateArgs} args - Arguments to update one Package.
+     * @example
+     * // Update one Package
+     * const package = await prisma.package.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PackageUpdateArgs>(args: SelectSubset<T, PackageUpdateArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Packages.
+     * @param {PackageDeleteManyArgs} args - Arguments to filter Packages to delete.
+     * @example
+     * // Delete a few Packages
+     * const { count } = await prisma.package.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PackageDeleteManyArgs>(args?: SelectSubset<T, PackageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Packages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Packages
+     * const package = await prisma.package.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PackageUpdateManyArgs>(args: SelectSubset<T, PackageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Packages and returns the data updated in the database.
+     * @param {PackageUpdateManyAndReturnArgs} args - Arguments to update many Packages.
+     * @example
+     * // Update many Packages
+     * const package = await prisma.package.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Packages and only return the `id`
+     * const packageWithIdOnly = await prisma.package.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PackageUpdateManyAndReturnArgs>(args: SelectSubset<T, PackageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Package.
+     * @param {PackageUpsertArgs} args - Arguments to update or create a Package.
+     * @example
+     * // Update or create a Package
+     * const package = await prisma.package.upsert({
+     *   create: {
+     *     // ... data to create a Package
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Package we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PackageUpsertArgs>(args: SelectSubset<T, PackageUpsertArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Packages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageCountArgs} args - Arguments to filter Packages to count.
+     * @example
+     * // Count the number of Packages
+     * const count = await prisma.package.count({
+     *   where: {
+     *     // ... the filter for the Packages we want to count
+     *   }
+     * })
+    **/
+    count<T extends PackageCountArgs>(
+      args?: Subset<T, PackageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PackageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Package.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PackageAggregateArgs>(args: Subset<T, PackageAggregateArgs>): Prisma.PrismaPromise<GetPackageAggregateType<T>>
+
+    /**
+     * Group by Package.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PackageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PackageGroupByArgs['orderBy'] }
+        : { orderBy?: PackageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PackageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPackageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Package model
+   */
+  readonly fields: PackageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Package.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PackageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    subscription<T extends Package$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, Package$subscriptionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Package model
+   */
+  interface PackageFieldRefs {
+    readonly id: FieldRef<"Package", 'Int'>
+    readonly name: FieldRef<"Package", 'packageName'>
+    readonly tenantId: FieldRef<"Package", 'Int'>
+    readonly price: FieldRef<"Package", 'Decimal'>
+    readonly durationDays: FieldRef<"Package", 'Int'>
+    readonly freeFeatures: FieldRef<"Package", 'FreeFeatures[]'>
+    readonly basicFeatures: FieldRef<"Package", 'BasicFeatures[]'>
+    readonly proFeatures: FieldRef<"Package", 'ProFeatures[]'>
+    readonly enterpriseFeatures: FieldRef<"Package", 'EnterpriseFeatures[]'>
+    readonly metadata: FieldRef<"Package", 'Json'>
+    readonly createdAt: FieldRef<"Package", 'DateTime'>
+    readonly updatedAt: FieldRef<"Package", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Package findUnique
+   */
+  export type PackageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * Filter, which Package to fetch.
+     */
+    where: PackageWhereUniqueInput
+  }
+
+  /**
+   * Package findUniqueOrThrow
+   */
+  export type PackageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * Filter, which Package to fetch.
+     */
+    where: PackageWhereUniqueInput
+  }
+
+  /**
+   * Package findFirst
+   */
+  export type PackageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * Filter, which Package to fetch.
+     */
+    where?: PackageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Packages to fetch.
+     */
+    orderBy?: PackageOrderByWithRelationInput | PackageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Packages.
+     */
+    cursor?: PackageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Packages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Packages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Packages.
+     */
+    distinct?: PackageScalarFieldEnum | PackageScalarFieldEnum[]
+  }
+
+  /**
+   * Package findFirstOrThrow
+   */
+  export type PackageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * Filter, which Package to fetch.
+     */
+    where?: PackageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Packages to fetch.
+     */
+    orderBy?: PackageOrderByWithRelationInput | PackageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Packages.
+     */
+    cursor?: PackageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Packages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Packages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Packages.
+     */
+    distinct?: PackageScalarFieldEnum | PackageScalarFieldEnum[]
+  }
+
+  /**
+   * Package findMany
+   */
+  export type PackageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * Filter, which Packages to fetch.
+     */
+    where?: PackageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Packages to fetch.
+     */
+    orderBy?: PackageOrderByWithRelationInput | PackageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Packages.
+     */
+    cursor?: PackageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Packages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Packages.
+     */
+    skip?: number
+    distinct?: PackageScalarFieldEnum | PackageScalarFieldEnum[]
+  }
+
+  /**
+   * Package create
+   */
+  export type PackageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Package.
+     */
+    data: XOR<PackageCreateInput, PackageUncheckedCreateInput>
+  }
+
+  /**
+   * Package createMany
+   */
+  export type PackageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Packages.
+     */
+    data: PackageCreateManyInput | PackageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Package createManyAndReturn
+   */
+  export type PackageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * The data used to create many Packages.
+     */
+    data: PackageCreateManyInput | PackageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Package update
+   */
+  export type PackageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Package.
+     */
+    data: XOR<PackageUpdateInput, PackageUncheckedUpdateInput>
+    /**
+     * Choose, which Package to update.
+     */
+    where: PackageWhereUniqueInput
+  }
+
+  /**
+   * Package updateMany
+   */
+  export type PackageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Packages.
+     */
+    data: XOR<PackageUpdateManyMutationInput, PackageUncheckedUpdateManyInput>
+    /**
+     * Filter which Packages to update
+     */
+    where?: PackageWhereInput
+    /**
+     * Limit how many Packages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Package updateManyAndReturn
+   */
+  export type PackageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * The data used to update Packages.
+     */
+    data: XOR<PackageUpdateManyMutationInput, PackageUncheckedUpdateManyInput>
+    /**
+     * Filter which Packages to update
+     */
+    where?: PackageWhereInput
+    /**
+     * Limit how many Packages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Package upsert
+   */
+  export type PackageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Package to update in case it exists.
+     */
+    where: PackageWhereUniqueInput
+    /**
+     * In case the Package found by the `where` argument doesn't exist, create a new Package with this data.
+     */
+    create: XOR<PackageCreateInput, PackageUncheckedCreateInput>
+    /**
+     * In case the Package was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PackageUpdateInput, PackageUncheckedUpdateInput>
+  }
+
+  /**
+   * Package delete
+   */
+  export type PackageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+    /**
+     * Filter which Package to delete.
+     */
+    where: PackageWhereUniqueInput
+  }
+
+  /**
+   * Package deleteMany
+   */
+  export type PackageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Packages to delete
+     */
+    where?: PackageWhereInput
+    /**
+     * Limit how many Packages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Package.subscription
+   */
+  export type Package$subscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    where?: PackageSubscriptionWhereInput
+    orderBy?: PackageSubscriptionOrderByWithRelationInput | PackageSubscriptionOrderByWithRelationInput[]
+    cursor?: PackageSubscriptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PackageSubscriptionScalarFieldEnum | PackageSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * Package without action
+   */
+  export type PackageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Package
+     */
+    select?: PackageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Package
+     */
+    omit?: PackageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PackageSubscription
+   */
+
+  export type AggregatePackageSubscription = {
+    _count: PackageSubscriptionCountAggregateOutputType | null
+    _avg: PackageSubscriptionAvgAggregateOutputType | null
+    _sum: PackageSubscriptionSumAggregateOutputType | null
+    _min: PackageSubscriptionMinAggregateOutputType | null
+    _max: PackageSubscriptionMaxAggregateOutputType | null
+  }
+
+  export type PackageSubscriptionAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    packageId: number | null
+    seats: number | null
+  }
+
+  export type PackageSubscriptionSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    packageId: number | null
+    seats: number | null
+  }
+
+  export type PackageSubscriptionMinAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    packageId: number | null
+    status: $Enums.SubscriptionStatus | null
+    seats: number | null
+    autoRenew: boolean | null
+    startsAt: Date | null
+    endsAt: Date | null
+    trialEndsAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PackageSubscriptionMaxAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    packageId: number | null
+    status: $Enums.SubscriptionStatus | null
+    seats: number | null
+    autoRenew: boolean | null
+    startsAt: Date | null
+    endsAt: Date | null
+    trialEndsAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PackageSubscriptionCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    packageId: number
+    status: number
+    seats: number
+    autoRenew: number
+    startsAt: number
+    endsAt: number
+    trialEndsAt: number
+    metadata: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PackageSubscriptionAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    packageId?: true
+    seats?: true
+  }
+
+  export type PackageSubscriptionSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    packageId?: true
+    seats?: true
+  }
+
+  export type PackageSubscriptionMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    packageId?: true
+    status?: true
+    seats?: true
+    autoRenew?: true
+    startsAt?: true
+    endsAt?: true
+    trialEndsAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PackageSubscriptionMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    packageId?: true
+    status?: true
+    seats?: true
+    autoRenew?: true
+    startsAt?: true
+    endsAt?: true
+    trialEndsAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PackageSubscriptionCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    packageId?: true
+    status?: true
+    seats?: true
+    autoRenew?: true
+    startsAt?: true
+    endsAt?: true
+    trialEndsAt?: true
+    metadata?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PackageSubscriptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PackageSubscription to aggregate.
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PackageSubscriptions to fetch.
+     */
+    orderBy?: PackageSubscriptionOrderByWithRelationInput | PackageSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PackageSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PackageSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PackageSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PackageSubscriptions
+    **/
+    _count?: true | PackageSubscriptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PackageSubscriptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PackageSubscriptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PackageSubscriptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PackageSubscriptionMaxAggregateInputType
+  }
+
+  export type GetPackageSubscriptionAggregateType<T extends PackageSubscriptionAggregateArgs> = {
+        [P in keyof T & keyof AggregatePackageSubscription]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePackageSubscription[P]>
+      : GetScalarType<T[P], AggregatePackageSubscription[P]>
+  }
+
+
+
+
+  export type PackageSubscriptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PackageSubscriptionWhereInput
+    orderBy?: PackageSubscriptionOrderByWithAggregationInput | PackageSubscriptionOrderByWithAggregationInput[]
+    by: PackageSubscriptionScalarFieldEnum[] | PackageSubscriptionScalarFieldEnum
+    having?: PackageSubscriptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PackageSubscriptionCountAggregateInputType | true
+    _avg?: PackageSubscriptionAvgAggregateInputType
+    _sum?: PackageSubscriptionSumAggregateInputType
+    _min?: PackageSubscriptionMinAggregateInputType
+    _max?: PackageSubscriptionMaxAggregateInputType
+  }
+
+  export type PackageSubscriptionGroupByOutputType = {
+    id: number
+    tenantId: number
+    packageId: number
+    status: $Enums.SubscriptionStatus
+    seats: number
+    autoRenew: boolean
+    startsAt: Date
+    endsAt: Date
+    trialEndsAt: Date | null
+    metadata: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PackageSubscriptionCountAggregateOutputType | null
+    _avg: PackageSubscriptionAvgAggregateOutputType | null
+    _sum: PackageSubscriptionSumAggregateOutputType | null
+    _min: PackageSubscriptionMinAggregateOutputType | null
+    _max: PackageSubscriptionMaxAggregateOutputType | null
+  }
+
+  type GetPackageSubscriptionGroupByPayload<T extends PackageSubscriptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PackageSubscriptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PackageSubscriptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PackageSubscriptionGroupByOutputType[P]>
+            : GetScalarType<T[P], PackageSubscriptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PackageSubscriptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    packageId?: boolean
+    status?: boolean
+    seats?: boolean
+    autoRenew?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    trialEndsAt?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    package?: boolean | PackageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["packageSubscription"]>
+
+  export type PackageSubscriptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    packageId?: boolean
+    status?: boolean
+    seats?: boolean
+    autoRenew?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    trialEndsAt?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    package?: boolean | PackageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["packageSubscription"]>
+
+  export type PackageSubscriptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    packageId?: boolean
+    status?: boolean
+    seats?: boolean
+    autoRenew?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    trialEndsAt?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    package?: boolean | PackageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["packageSubscription"]>
+
+  export type PackageSubscriptionSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    packageId?: boolean
+    status?: boolean
+    seats?: boolean
+    autoRenew?: boolean
+    startsAt?: boolean
+    endsAt?: boolean
+    trialEndsAt?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PackageSubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "packageId" | "status" | "seats" | "autoRenew" | "startsAt" | "endsAt" | "trialEndsAt" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["packageSubscription"]>
+  export type PackageSubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    package?: boolean | PackageDefaultArgs<ExtArgs>
+  }
+  export type PackageSubscriptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    package?: boolean | PackageDefaultArgs<ExtArgs>
+  }
+  export type PackageSubscriptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    package?: boolean | PackageDefaultArgs<ExtArgs>
+  }
+
+  export type $PackageSubscriptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PackageSubscription"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      package: Prisma.$PackagePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantId: number
+      packageId: number
+      status: $Enums.SubscriptionStatus
+      seats: number
+      autoRenew: boolean
+      startsAt: Date
+      endsAt: Date
+      trialEndsAt: Date | null
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["packageSubscription"]>
+    composites: {}
+  }
+
+  type PackageSubscriptionGetPayload<S extends boolean | null | undefined | PackageSubscriptionDefaultArgs> = $Result.GetResult<Prisma.$PackageSubscriptionPayload, S>
+
+  type PackageSubscriptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PackageSubscriptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PackageSubscriptionCountAggregateInputType | true
+    }
+
+  export interface PackageSubscriptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PackageSubscription'], meta: { name: 'PackageSubscription' } }
+    /**
+     * Find zero or one PackageSubscription that matches the filter.
+     * @param {PackageSubscriptionFindUniqueArgs} args - Arguments to find a PackageSubscription
+     * @example
+     * // Get one PackageSubscription
+     * const packageSubscription = await prisma.packageSubscription.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PackageSubscriptionFindUniqueArgs>(args: SelectSubset<T, PackageSubscriptionFindUniqueArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PackageSubscription that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PackageSubscriptionFindUniqueOrThrowArgs} args - Arguments to find a PackageSubscription
+     * @example
+     * // Get one PackageSubscription
+     * const packageSubscription = await prisma.packageSubscription.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PackageSubscriptionFindUniqueOrThrowArgs>(args: SelectSubset<T, PackageSubscriptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PackageSubscription that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionFindFirstArgs} args - Arguments to find a PackageSubscription
+     * @example
+     * // Get one PackageSubscription
+     * const packageSubscription = await prisma.packageSubscription.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PackageSubscriptionFindFirstArgs>(args?: SelectSubset<T, PackageSubscriptionFindFirstArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PackageSubscription that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionFindFirstOrThrowArgs} args - Arguments to find a PackageSubscription
+     * @example
+     * // Get one PackageSubscription
+     * const packageSubscription = await prisma.packageSubscription.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PackageSubscriptionFindFirstOrThrowArgs>(args?: SelectSubset<T, PackageSubscriptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PackageSubscriptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PackageSubscriptions
+     * const packageSubscriptions = await prisma.packageSubscription.findMany()
+     * 
+     * // Get first 10 PackageSubscriptions
+     * const packageSubscriptions = await prisma.packageSubscription.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const packageSubscriptionWithIdOnly = await prisma.packageSubscription.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PackageSubscriptionFindManyArgs>(args?: SelectSubset<T, PackageSubscriptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PackageSubscription.
+     * @param {PackageSubscriptionCreateArgs} args - Arguments to create a PackageSubscription.
+     * @example
+     * // Create one PackageSubscription
+     * const PackageSubscription = await prisma.packageSubscription.create({
+     *   data: {
+     *     // ... data to create a PackageSubscription
+     *   }
+     * })
+     * 
+     */
+    create<T extends PackageSubscriptionCreateArgs>(args: SelectSubset<T, PackageSubscriptionCreateArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PackageSubscriptions.
+     * @param {PackageSubscriptionCreateManyArgs} args - Arguments to create many PackageSubscriptions.
+     * @example
+     * // Create many PackageSubscriptions
+     * const packageSubscription = await prisma.packageSubscription.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PackageSubscriptionCreateManyArgs>(args?: SelectSubset<T, PackageSubscriptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PackageSubscriptions and returns the data saved in the database.
+     * @param {PackageSubscriptionCreateManyAndReturnArgs} args - Arguments to create many PackageSubscriptions.
+     * @example
+     * // Create many PackageSubscriptions
+     * const packageSubscription = await prisma.packageSubscription.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PackageSubscriptions and only return the `id`
+     * const packageSubscriptionWithIdOnly = await prisma.packageSubscription.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PackageSubscriptionCreateManyAndReturnArgs>(args?: SelectSubset<T, PackageSubscriptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PackageSubscription.
+     * @param {PackageSubscriptionDeleteArgs} args - Arguments to delete one PackageSubscription.
+     * @example
+     * // Delete one PackageSubscription
+     * const PackageSubscription = await prisma.packageSubscription.delete({
+     *   where: {
+     *     // ... filter to delete one PackageSubscription
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PackageSubscriptionDeleteArgs>(args: SelectSubset<T, PackageSubscriptionDeleteArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PackageSubscription.
+     * @param {PackageSubscriptionUpdateArgs} args - Arguments to update one PackageSubscription.
+     * @example
+     * // Update one PackageSubscription
+     * const packageSubscription = await prisma.packageSubscription.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PackageSubscriptionUpdateArgs>(args: SelectSubset<T, PackageSubscriptionUpdateArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PackageSubscriptions.
+     * @param {PackageSubscriptionDeleteManyArgs} args - Arguments to filter PackageSubscriptions to delete.
+     * @example
+     * // Delete a few PackageSubscriptions
+     * const { count } = await prisma.packageSubscription.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PackageSubscriptionDeleteManyArgs>(args?: SelectSubset<T, PackageSubscriptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PackageSubscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PackageSubscriptions
+     * const packageSubscription = await prisma.packageSubscription.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PackageSubscriptionUpdateManyArgs>(args: SelectSubset<T, PackageSubscriptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PackageSubscriptions and returns the data updated in the database.
+     * @param {PackageSubscriptionUpdateManyAndReturnArgs} args - Arguments to update many PackageSubscriptions.
+     * @example
+     * // Update many PackageSubscriptions
+     * const packageSubscription = await prisma.packageSubscription.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PackageSubscriptions and only return the `id`
+     * const packageSubscriptionWithIdOnly = await prisma.packageSubscription.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PackageSubscriptionUpdateManyAndReturnArgs>(args: SelectSubset<T, PackageSubscriptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PackageSubscription.
+     * @param {PackageSubscriptionUpsertArgs} args - Arguments to update or create a PackageSubscription.
+     * @example
+     * // Update or create a PackageSubscription
+     * const packageSubscription = await prisma.packageSubscription.upsert({
+     *   create: {
+     *     // ... data to create a PackageSubscription
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PackageSubscription we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PackageSubscriptionUpsertArgs>(args: SelectSubset<T, PackageSubscriptionUpsertArgs<ExtArgs>>): Prisma__PackageSubscriptionClient<$Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PackageSubscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionCountArgs} args - Arguments to filter PackageSubscriptions to count.
+     * @example
+     * // Count the number of PackageSubscriptions
+     * const count = await prisma.packageSubscription.count({
+     *   where: {
+     *     // ... the filter for the PackageSubscriptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends PackageSubscriptionCountArgs>(
+      args?: Subset<T, PackageSubscriptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PackageSubscriptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PackageSubscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PackageSubscriptionAggregateArgs>(args: Subset<T, PackageSubscriptionAggregateArgs>): Prisma.PrismaPromise<GetPackageSubscriptionAggregateType<T>>
+
+    /**
+     * Group by PackageSubscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PackageSubscriptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PackageSubscriptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PackageSubscriptionGroupByArgs['orderBy'] }
+        : { orderBy?: PackageSubscriptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PackageSubscriptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPackageSubscriptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PackageSubscription model
+   */
+  readonly fields: PackageSubscriptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PackageSubscription.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PackageSubscriptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    package<T extends PackageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PackageDefaultArgs<ExtArgs>>): Prisma__PackageClient<$Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PackageSubscription model
+   */
+  interface PackageSubscriptionFieldRefs {
+    readonly id: FieldRef<"PackageSubscription", 'Int'>
+    readonly tenantId: FieldRef<"PackageSubscription", 'Int'>
+    readonly packageId: FieldRef<"PackageSubscription", 'Int'>
+    readonly status: FieldRef<"PackageSubscription", 'SubscriptionStatus'>
+    readonly seats: FieldRef<"PackageSubscription", 'Int'>
+    readonly autoRenew: FieldRef<"PackageSubscription", 'Boolean'>
+    readonly startsAt: FieldRef<"PackageSubscription", 'DateTime'>
+    readonly endsAt: FieldRef<"PackageSubscription", 'DateTime'>
+    readonly trialEndsAt: FieldRef<"PackageSubscription", 'DateTime'>
+    readonly metadata: FieldRef<"PackageSubscription", 'Json'>
+    readonly createdAt: FieldRef<"PackageSubscription", 'DateTime'>
+    readonly updatedAt: FieldRef<"PackageSubscription", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PackageSubscription findUnique
+   */
+  export type PackageSubscriptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PackageSubscription to fetch.
+     */
+    where: PackageSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PackageSubscription findUniqueOrThrow
+   */
+  export type PackageSubscriptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PackageSubscription to fetch.
+     */
+    where: PackageSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PackageSubscription findFirst
+   */
+  export type PackageSubscriptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PackageSubscription to fetch.
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PackageSubscriptions to fetch.
+     */
+    orderBy?: PackageSubscriptionOrderByWithRelationInput | PackageSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PackageSubscriptions.
+     */
+    cursor?: PackageSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PackageSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PackageSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PackageSubscriptions.
+     */
+    distinct?: PackageSubscriptionScalarFieldEnum | PackageSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * PackageSubscription findFirstOrThrow
+   */
+  export type PackageSubscriptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PackageSubscription to fetch.
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PackageSubscriptions to fetch.
+     */
+    orderBy?: PackageSubscriptionOrderByWithRelationInput | PackageSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PackageSubscriptions.
+     */
+    cursor?: PackageSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PackageSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PackageSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PackageSubscriptions.
+     */
+    distinct?: PackageSubscriptionScalarFieldEnum | PackageSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * PackageSubscription findMany
+   */
+  export type PackageSubscriptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PackageSubscriptions to fetch.
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PackageSubscriptions to fetch.
+     */
+    orderBy?: PackageSubscriptionOrderByWithRelationInput | PackageSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PackageSubscriptions.
+     */
+    cursor?: PackageSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PackageSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PackageSubscriptions.
+     */
+    skip?: number
+    distinct?: PackageSubscriptionScalarFieldEnum | PackageSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * PackageSubscription create
+   */
+  export type PackageSubscriptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PackageSubscription.
+     */
+    data: XOR<PackageSubscriptionCreateInput, PackageSubscriptionUncheckedCreateInput>
+  }
+
+  /**
+   * PackageSubscription createMany
+   */
+  export type PackageSubscriptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PackageSubscriptions.
+     */
+    data: PackageSubscriptionCreateManyInput | PackageSubscriptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PackageSubscription createManyAndReturn
+   */
+  export type PackageSubscriptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many PackageSubscriptions.
+     */
+    data: PackageSubscriptionCreateManyInput | PackageSubscriptionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PackageSubscription update
+   */
+  export type PackageSubscriptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PackageSubscription.
+     */
+    data: XOR<PackageSubscriptionUpdateInput, PackageSubscriptionUncheckedUpdateInput>
+    /**
+     * Choose, which PackageSubscription to update.
+     */
+    where: PackageSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PackageSubscription updateMany
+   */
+  export type PackageSubscriptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PackageSubscriptions.
+     */
+    data: XOR<PackageSubscriptionUpdateManyMutationInput, PackageSubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which PackageSubscriptions to update
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * Limit how many PackageSubscriptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PackageSubscription updateManyAndReturn
+   */
+  export type PackageSubscriptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to update PackageSubscriptions.
+     */
+    data: XOR<PackageSubscriptionUpdateManyMutationInput, PackageSubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which PackageSubscriptions to update
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * Limit how many PackageSubscriptions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PackageSubscription upsert
+   */
+  export type PackageSubscriptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PackageSubscription to update in case it exists.
+     */
+    where: PackageSubscriptionWhereUniqueInput
+    /**
+     * In case the PackageSubscription found by the `where` argument doesn't exist, create a new PackageSubscription with this data.
+     */
+    create: XOR<PackageSubscriptionCreateInput, PackageSubscriptionUncheckedCreateInput>
+    /**
+     * In case the PackageSubscription was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PackageSubscriptionUpdateInput, PackageSubscriptionUncheckedUpdateInput>
+  }
+
+  /**
+   * PackageSubscription delete
+   */
+  export type PackageSubscriptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter which PackageSubscription to delete.
+     */
+    where: PackageSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PackageSubscription deleteMany
+   */
+  export type PackageSubscriptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PackageSubscriptions to delete
+     */
+    where?: PackageSubscriptionWhereInput
+    /**
+     * Limit how many PackageSubscriptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PackageSubscription without action
+   */
+  export type PackageSubscriptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PackageSubscription
+     */
+    select?: PackageSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PackageSubscription
+     */
+    omit?: PackageSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackageSubscriptionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Invoice
    */
 
@@ -7683,14 +12063,24 @@ export namespace Prisma {
   export type InvoiceAvgAggregateOutputType = {
     id: number | null
     tenantId: number | null
-    total: number | null
+    currencyRate: Decimal | null
+    subtotal: Decimal | null
+    tax: Decimal | null
+    total: Decimal | null
+    amountPaid: Decimal | null
+    balanceDue: Decimal | null
     customerId: number | null
   }
 
   export type InvoiceSumAggregateOutputType = {
     id: number | null
     tenantId: number | null
-    total: number | null
+    currencyRate: Decimal | null
+    subtotal: Decimal | null
+    tax: Decimal | null
+    total: Decimal | null
+    amountPaid: Decimal | null
+    balanceDue: Decimal | null
     customerId: number | null
   }
 
@@ -7698,11 +12088,18 @@ export namespace Prisma {
     id: number | null
     tenantId: number | null
     invoiceNumber: string | null
+    invoicePrefix: string | null
     date: Date | null
     dueDate: Date | null
     status: $Enums.InvoiceStatus | null
     currency: string | null
-    total: number | null
+    currencyRate: Decimal | null
+    subtotal: Decimal | null
+    tax: Decimal | null
+    total: Decimal | null
+    amountPaid: Decimal | null
+    balanceDue: Decimal | null
+    note: string | null
     customerId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7713,11 +12110,18 @@ export namespace Prisma {
     id: number | null
     tenantId: number | null
     invoiceNumber: string | null
+    invoicePrefix: string | null
     date: Date | null
     dueDate: Date | null
     status: $Enums.InvoiceStatus | null
     currency: string | null
-    total: number | null
+    currencyRate: Decimal | null
+    subtotal: Decimal | null
+    tax: Decimal | null
+    total: Decimal | null
+    amountPaid: Decimal | null
+    balanceDue: Decimal | null
+    note: string | null
     customerId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7728,11 +12132,18 @@ export namespace Prisma {
     id: number
     tenantId: number
     invoiceNumber: number
+    invoicePrefix: number
     date: number
     dueDate: number
     status: number
     currency: number
+    currencyRate: number
+    subtotal: number
+    tax: number
     total: number
+    amountPaid: number
+    balanceDue: number
+    note: number
     customerId: number
     createdAt: number
     updatedAt: number
@@ -7744,14 +12155,24 @@ export namespace Prisma {
   export type InvoiceAvgAggregateInputType = {
     id?: true
     tenantId?: true
+    currencyRate?: true
+    subtotal?: true
+    tax?: true
     total?: true
+    amountPaid?: true
+    balanceDue?: true
     customerId?: true
   }
 
   export type InvoiceSumAggregateInputType = {
     id?: true
     tenantId?: true
+    currencyRate?: true
+    subtotal?: true
+    tax?: true
     total?: true
+    amountPaid?: true
+    balanceDue?: true
     customerId?: true
   }
 
@@ -7759,11 +12180,18 @@ export namespace Prisma {
     id?: true
     tenantId?: true
     invoiceNumber?: true
+    invoicePrefix?: true
     date?: true
     dueDate?: true
     status?: true
     currency?: true
+    currencyRate?: true
+    subtotal?: true
+    tax?: true
     total?: true
+    amountPaid?: true
+    balanceDue?: true
+    note?: true
     customerId?: true
     createdAt?: true
     updatedAt?: true
@@ -7774,11 +12202,18 @@ export namespace Prisma {
     id?: true
     tenantId?: true
     invoiceNumber?: true
+    invoicePrefix?: true
     date?: true
     dueDate?: true
     status?: true
     currency?: true
+    currencyRate?: true
+    subtotal?: true
+    tax?: true
     total?: true
+    amountPaid?: true
+    balanceDue?: true
+    note?: true
     customerId?: true
     createdAt?: true
     updatedAt?: true
@@ -7789,11 +12224,18 @@ export namespace Prisma {
     id?: true
     tenantId?: true
     invoiceNumber?: true
+    invoicePrefix?: true
     date?: true
     dueDate?: true
     status?: true
     currency?: true
+    currencyRate?: true
+    subtotal?: true
+    tax?: true
     total?: true
+    amountPaid?: true
+    balanceDue?: true
+    note?: true
     customerId?: true
     createdAt?: true
     updatedAt?: true
@@ -7891,11 +12333,18 @@ export namespace Prisma {
     id: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix: string | null
     date: Date
     dueDate: Date | null
     status: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate: Decimal | null
+    subtotal: Decimal
+    tax: Decimal
+    total: Decimal
+    amountPaid: Decimal
+    balanceDue: Decimal
+    note: string | null
     customerId: number
     createdAt: Date
     updatedAt: Date
@@ -7925,11 +12374,18 @@ export namespace Prisma {
     id?: boolean
     tenantId?: boolean
     invoiceNumber?: boolean
+    invoicePrefix?: boolean
     date?: boolean
     dueDate?: boolean
     status?: boolean
     currency?: boolean
+    currencyRate?: boolean
+    subtotal?: boolean
+    tax?: boolean
     total?: boolean
+    amountPaid?: boolean
+    balanceDue?: boolean
+    note?: boolean
     customerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7945,11 +12401,18 @@ export namespace Prisma {
     id?: boolean
     tenantId?: boolean
     invoiceNumber?: boolean
+    invoicePrefix?: boolean
     date?: boolean
     dueDate?: boolean
     status?: boolean
     currency?: boolean
+    currencyRate?: boolean
+    subtotal?: boolean
+    tax?: boolean
     total?: boolean
+    amountPaid?: boolean
+    balanceDue?: boolean
+    note?: boolean
     customerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7962,11 +12425,18 @@ export namespace Prisma {
     id?: boolean
     tenantId?: boolean
     invoiceNumber?: boolean
+    invoicePrefix?: boolean
     date?: boolean
     dueDate?: boolean
     status?: boolean
     currency?: boolean
+    currencyRate?: boolean
+    subtotal?: boolean
+    tax?: boolean
     total?: boolean
+    amountPaid?: boolean
+    balanceDue?: boolean
+    note?: boolean
     customerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7979,18 +12449,25 @@ export namespace Prisma {
     id?: boolean
     tenantId?: boolean
     invoiceNumber?: boolean
+    invoicePrefix?: boolean
     date?: boolean
     dueDate?: boolean
     status?: boolean
     currency?: boolean
+    currencyRate?: boolean
+    subtotal?: boolean
+    tax?: boolean
     total?: boolean
+    amountPaid?: boolean
+    balanceDue?: boolean
+    note?: boolean
     customerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     syncStatus?: boolean
   }
 
-  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "invoiceNumber" | "date" | "dueDate" | "status" | "currency" | "total" | "customerId" | "createdAt" | "updatedAt" | "syncStatus", ExtArgs["result"]["invoice"]>
+  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "invoiceNumber" | "invoicePrefix" | "date" | "dueDate" | "status" | "currency" | "currencyRate" | "subtotal" | "tax" | "total" | "amountPaid" | "balanceDue" | "note" | "customerId" | "createdAt" | "updatedAt" | "syncStatus", ExtArgs["result"]["invoice"]>
   export type InvoiceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tenant?: boolean | TenantDefaultArgs<ExtArgs>
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
@@ -8019,11 +12496,18 @@ export namespace Prisma {
       id: number
       tenantId: number
       invoiceNumber: string
+      invoicePrefix: string | null
       date: Date
       dueDate: Date | null
       status: $Enums.InvoiceStatus
       currency: string
-      total: number
+      currencyRate: Prisma.Decimal | null
+      subtotal: Prisma.Decimal
+      tax: Prisma.Decimal
+      total: Prisma.Decimal
+      amountPaid: Prisma.Decimal
+      balanceDue: Prisma.Decimal
+      note: string | null
       customerId: number
       createdAt: Date
       updatedAt: Date
@@ -8458,11 +12942,18 @@ export namespace Prisma {
     readonly id: FieldRef<"Invoice", 'Int'>
     readonly tenantId: FieldRef<"Invoice", 'Int'>
     readonly invoiceNumber: FieldRef<"Invoice", 'String'>
+    readonly invoicePrefix: FieldRef<"Invoice", 'String'>
     readonly date: FieldRef<"Invoice", 'DateTime'>
     readonly dueDate: FieldRef<"Invoice", 'DateTime'>
     readonly status: FieldRef<"Invoice", 'InvoiceStatus'>
     readonly currency: FieldRef<"Invoice", 'String'>
-    readonly total: FieldRef<"Invoice", 'Float'>
+    readonly currencyRate: FieldRef<"Invoice", 'Decimal'>
+    readonly subtotal: FieldRef<"Invoice", 'Decimal'>
+    readonly tax: FieldRef<"Invoice", 'Decimal'>
+    readonly total: FieldRef<"Invoice", 'Decimal'>
+    readonly amountPaid: FieldRef<"Invoice", 'Decimal'>
+    readonly balanceDue: FieldRef<"Invoice", 'Decimal'>
+    readonly note: FieldRef<"Invoice", 'String'>
     readonly customerId: FieldRef<"Invoice", 'Int'>
     readonly createdAt: FieldRef<"Invoice", 'DateTime'>
     readonly updatedAt: FieldRef<"Invoice", 'DateTime'>
@@ -8946,9 +13437,9 @@ export namespace Prisma {
     tenantId: number | null
     invoiceId: number | null
     itemId: number | null
-    quantity: number | null
-    unitPrice: number | null
-    lineTotal: number | null
+    quantity: Decimal | null
+    unitPrice: Decimal | null
+    lineTotal: Decimal | null
   }
 
   export type InvoiceItemSumAggregateOutputType = {
@@ -8956,9 +13447,9 @@ export namespace Prisma {
     tenantId: number | null
     invoiceId: number | null
     itemId: number | null
-    quantity: number | null
-    unitPrice: number | null
-    lineTotal: number | null
+    quantity: Decimal | null
+    unitPrice: Decimal | null
+    lineTotal: Decimal | null
   }
 
   export type InvoiceItemMinAggregateOutputType = {
@@ -8967,9 +13458,9 @@ export namespace Prisma {
     invoiceId: number | null
     itemId: number | null
     description: string | null
-    quantity: number | null
-    unitPrice: number | null
-    lineTotal: number | null
+    quantity: Decimal | null
+    unitPrice: Decimal | null
+    lineTotal: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
     syncStatus: $Enums.SyncStatus | null
@@ -8981,9 +13472,9 @@ export namespace Prisma {
     invoiceId: number | null
     itemId: number | null
     description: string | null
-    quantity: number | null
-    unitPrice: number | null
-    lineTotal: number | null
+    quantity: Decimal | null
+    unitPrice: Decimal | null
+    lineTotal: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
     syncStatus: $Enums.SyncStatus | null
@@ -9160,9 +13651,9 @@ export namespace Prisma {
     invoiceId: number
     itemId: number
     description: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal
+    unitPrice: Decimal
+    lineTotal: Decimal
     createdAt: Date
     updatedAt: Date
     syncStatus: $Enums.SyncStatus
@@ -9282,9 +13773,9 @@ export namespace Prisma {
       invoiceId: number
       itemId: number
       description: string | null
-      quantity: number
-      unitPrice: number
-      lineTotal: number
+      quantity: Prisma.Decimal
+      unitPrice: Prisma.Decimal
+      lineTotal: Prisma.Decimal
       createdAt: Date
       updatedAt: Date
       syncStatus: $Enums.SyncStatus
@@ -9719,9 +14210,9 @@ export namespace Prisma {
     readonly invoiceId: FieldRef<"InvoiceItem", 'Int'>
     readonly itemId: FieldRef<"InvoiceItem", 'Int'>
     readonly description: FieldRef<"InvoiceItem", 'String'>
-    readonly quantity: FieldRef<"InvoiceItem", 'Float'>
-    readonly unitPrice: FieldRef<"InvoiceItem", 'Float'>
-    readonly lineTotal: FieldRef<"InvoiceItem", 'Float'>
+    readonly quantity: FieldRef<"InvoiceItem", 'Decimal'>
+    readonly unitPrice: FieldRef<"InvoiceItem", 'Decimal'>
+    readonly lineTotal: FieldRef<"InvoiceItem", 'Decimal'>
     readonly createdAt: FieldRef<"InvoiceItem", 'DateTime'>
     readonly updatedAt: FieldRef<"InvoiceItem", 'DateTime'>
     readonly syncStatus: FieldRef<"InvoiceItem", 'SyncStatus'>
@@ -10155,14 +14646,14 @@ export namespace Prisma {
     id: number | null
     tenantId: number | null
     invoiceId: number | null
-    amount: number | null
+    amount: Decimal | null
   }
 
   export type PaymentSumAggregateOutputType = {
     id: number | null
     tenantId: number | null
     invoiceId: number | null
-    amount: number | null
+    amount: Decimal | null
   }
 
   export type PaymentMinAggregateOutputType = {
@@ -10171,8 +14662,9 @@ export namespace Prisma {
     invoiceId: number | null
     date: Date | null
     paidDate: Date | null
-    amount: number | null
-    method: string | null
+    amount: Decimal | null
+    method: $Enums.PaymentMethod | null
+    status: $Enums.PaymentStatus | null
     reference: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10185,8 +14677,9 @@ export namespace Prisma {
     invoiceId: number | null
     date: Date | null
     paidDate: Date | null
-    amount: number | null
-    method: string | null
+    amount: Decimal | null
+    method: $Enums.PaymentMethod | null
+    status: $Enums.PaymentStatus | null
     reference: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10201,6 +14694,7 @@ export namespace Prisma {
     paidDate: number
     amount: number
     method: number
+    status: number
     reference: number
     createdAt: number
     updatedAt: number
@@ -10231,6 +14725,7 @@ export namespace Prisma {
     paidDate?: true
     amount?: true
     method?: true
+    status?: true
     reference?: true
     createdAt?: true
     updatedAt?: true
@@ -10245,6 +14740,7 @@ export namespace Prisma {
     paidDate?: true
     amount?: true
     method?: true
+    status?: true
     reference?: true
     createdAt?: true
     updatedAt?: true
@@ -10259,6 +14755,7 @@ export namespace Prisma {
     paidDate?: true
     amount?: true
     method?: true
+    status?: true
     reference?: true
     createdAt?: true
     updatedAt?: true
@@ -10358,8 +14855,9 @@ export namespace Prisma {
     invoiceId: number
     date: Date
     paidDate: Date
-    amount: number
-    method: string
+    amount: Decimal
+    method: $Enums.PaymentMethod
+    status: $Enums.PaymentStatus
     reference: string | null
     createdAt: Date
     updatedAt: Date
@@ -10393,6 +14891,7 @@ export namespace Prisma {
     paidDate?: boolean
     amount?: boolean
     method?: boolean
+    status?: boolean
     reference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10409,6 +14908,7 @@ export namespace Prisma {
     paidDate?: boolean
     amount?: boolean
     method?: boolean
+    status?: boolean
     reference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10425,6 +14925,7 @@ export namespace Prisma {
     paidDate?: boolean
     amount?: boolean
     method?: boolean
+    status?: boolean
     reference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10441,13 +14942,14 @@ export namespace Prisma {
     paidDate?: boolean
     amount?: boolean
     method?: boolean
+    status?: boolean
     reference?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     syncStatus?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "invoiceId" | "date" | "paidDate" | "amount" | "method" | "reference" | "createdAt" | "updatedAt" | "syncStatus", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "invoiceId" | "date" | "paidDate" | "amount" | "method" | "status" | "reference" | "createdAt" | "updatedAt" | "syncStatus", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tenant?: boolean | TenantDefaultArgs<ExtArgs>
     invoice?: boolean | InvoiceDefaultArgs<ExtArgs>
@@ -10473,8 +14975,9 @@ export namespace Prisma {
       invoiceId: number
       date: Date
       paidDate: Date
-      amount: number
-      method: string
+      amount: Prisma.Decimal
+      method: $Enums.PaymentMethod
+      status: $Enums.PaymentStatus
       reference: string | null
       createdAt: Date
       updatedAt: Date
@@ -10909,8 +15412,9 @@ export namespace Prisma {
     readonly invoiceId: FieldRef<"Payment", 'Int'>
     readonly date: FieldRef<"Payment", 'DateTime'>
     readonly paidDate: FieldRef<"Payment", 'DateTime'>
-    readonly amount: FieldRef<"Payment", 'Float'>
-    readonly method: FieldRef<"Payment", 'String'>
+    readonly amount: FieldRef<"Payment", 'Decimal'>
+    readonly method: FieldRef<"Payment", 'PaymentMethod'>
+    readonly status: FieldRef<"Payment", 'PaymentStatus'>
     readonly reference: FieldRef<"Payment", 'String'>
     readonly createdAt: FieldRef<"Payment", 'DateTime'>
     readonly updatedAt: FieldRef<"Payment", 'DateTime'>
@@ -11330,6 +15834,1078 @@ export namespace Prisma {
 
 
   /**
+   * Model AuditLog
+   */
+
+  export type AggregateAuditLog = {
+    _count: AuditLogCountAggregateOutputType | null
+    _avg: AuditLogAvgAggregateOutputType | null
+    _sum: AuditLogSumAggregateOutputType | null
+    _min: AuditLogMinAggregateOutputType | null
+    _max: AuditLogMaxAggregateOutputType | null
+  }
+
+  export type AuditLogAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+  }
+
+  export type AuditLogSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+  }
+
+  export type AuditLogMinAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+    actor: string | null
+    action: string | null
+    ipAddress: string | null
+    createdAt: Date | null
+  }
+
+  export type AuditLogMaxAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+    actor: string | null
+    action: string | null
+    ipAddress: string | null
+    createdAt: Date | null
+  }
+
+  export type AuditLogCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    userId: number
+    actor: number
+    action: number
+    meta: number
+    ipAddress: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AuditLogAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+  }
+
+  export type AuditLogSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+  }
+
+  export type AuditLogMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    actor?: true
+    action?: true
+    ipAddress?: true
+    createdAt?: true
+  }
+
+  export type AuditLogMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    actor?: true
+    action?: true
+    ipAddress?: true
+    createdAt?: true
+  }
+
+  export type AuditLogCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    actor?: true
+    action?: true
+    meta?: true
+    ipAddress?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AuditLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuditLog to aggregate.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AuditLogs
+    **/
+    _count?: true | AuditLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AuditLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AuditLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AuditLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AuditLogMaxAggregateInputType
+  }
+
+  export type GetAuditLogAggregateType<T extends AuditLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuditLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAuditLog[P]>
+      : GetScalarType<T[P], AggregateAuditLog[P]>
+  }
+
+
+
+
+  export type AuditLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithAggregationInput | AuditLogOrderByWithAggregationInput[]
+    by: AuditLogScalarFieldEnum[] | AuditLogScalarFieldEnum
+    having?: AuditLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AuditLogCountAggregateInputType | true
+    _avg?: AuditLogAvgAggregateInputType
+    _sum?: AuditLogSumAggregateInputType
+    _min?: AuditLogMinAggregateInputType
+    _max?: AuditLogMaxAggregateInputType
+  }
+
+  export type AuditLogGroupByOutputType = {
+    id: number
+    tenantId: number | null
+    userId: number | null
+    actor: string | null
+    action: string
+    meta: JsonValue | null
+    ipAddress: string | null
+    createdAt: Date
+    _count: AuditLogCountAggregateOutputType | null
+    _avg: AuditLogAvgAggregateOutputType | null
+    _sum: AuditLogSumAggregateOutputType | null
+    _min: AuditLogMinAggregateOutputType | null
+    _max: AuditLogMaxAggregateOutputType | null
+  }
+
+  type GetAuditLogGroupByPayload<T extends AuditLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AuditLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AuditLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AuditLogGroupByOutputType[P]>
+            : GetScalarType<T[P], AuditLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    actor?: boolean
+    action?: boolean
+    meta?: boolean
+    ipAddress?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    actor?: boolean
+    action?: boolean
+    meta?: boolean
+    ipAddress?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    actor?: boolean
+    action?: boolean
+    meta?: boolean
+    ipAddress?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    actor?: boolean
+    action?: boolean
+    meta?: boolean
+    ipAddress?: boolean
+    createdAt?: boolean
+  }
+
+  export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "userId" | "actor" | "action" | "meta" | "ipAddress" | "createdAt", ExtArgs["result"]["auditLog"]>
+
+  export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuditLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantId: number | null
+      userId: number | null
+      actor: string | null
+      action: string
+      meta: Prisma.JsonValue | null
+      ipAddress: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["auditLog"]>
+    composites: {}
+  }
+
+  type AuditLogGetPayload<S extends boolean | null | undefined | AuditLogDefaultArgs> = $Result.GetResult<Prisma.$AuditLogPayload, S>
+
+  type AuditLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AuditLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AuditLogCountAggregateInputType | true
+    }
+
+  export interface AuditLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuditLog'], meta: { name: 'AuditLog' } }
+    /**
+     * Find zero or one AuditLog that matches the filter.
+     * @param {AuditLogFindUniqueArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AuditLogFindUniqueArgs>(args: SelectSubset<T, AuditLogFindUniqueArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AuditLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AuditLogFindUniqueOrThrowArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AuditLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AuditLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AuditLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindFirstArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AuditLogFindFirstArgs>(args?: SelectSubset<T, AuditLogFindFirstArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AuditLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindFirstOrThrowArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AuditLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AuditLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AuditLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AuditLogs
+     * const auditLogs = await prisma.auditLog.findMany()
+     * 
+     * // Get first 10 AuditLogs
+     * const auditLogs = await prisma.auditLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AuditLogFindManyArgs>(args?: SelectSubset<T, AuditLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AuditLog.
+     * @param {AuditLogCreateArgs} args - Arguments to create a AuditLog.
+     * @example
+     * // Create one AuditLog
+     * const AuditLog = await prisma.auditLog.create({
+     *   data: {
+     *     // ... data to create a AuditLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends AuditLogCreateArgs>(args: SelectSubset<T, AuditLogCreateArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AuditLogs.
+     * @param {AuditLogCreateManyArgs} args - Arguments to create many AuditLogs.
+     * @example
+     * // Create many AuditLogs
+     * const auditLog = await prisma.auditLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AuditLogCreateManyArgs>(args?: SelectSubset<T, AuditLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AuditLogs and returns the data saved in the database.
+     * @param {AuditLogCreateManyAndReturnArgs} args - Arguments to create many AuditLogs.
+     * @example
+     * // Create many AuditLogs
+     * const auditLog = await prisma.auditLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AuditLogs and only return the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AuditLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AuditLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AuditLog.
+     * @param {AuditLogDeleteArgs} args - Arguments to delete one AuditLog.
+     * @example
+     * // Delete one AuditLog
+     * const AuditLog = await prisma.auditLog.delete({
+     *   where: {
+     *     // ... filter to delete one AuditLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AuditLogDeleteArgs>(args: SelectSubset<T, AuditLogDeleteArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AuditLog.
+     * @param {AuditLogUpdateArgs} args - Arguments to update one AuditLog.
+     * @example
+     * // Update one AuditLog
+     * const auditLog = await prisma.auditLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AuditLogUpdateArgs>(args: SelectSubset<T, AuditLogUpdateArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AuditLogs.
+     * @param {AuditLogDeleteManyArgs} args - Arguments to filter AuditLogs to delete.
+     * @example
+     * // Delete a few AuditLogs
+     * const { count } = await prisma.auditLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AuditLogDeleteManyArgs>(args?: SelectSubset<T, AuditLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AuditLogs
+     * const auditLog = await prisma.auditLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AuditLogUpdateManyArgs>(args: SelectSubset<T, AuditLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuditLogs and returns the data updated in the database.
+     * @param {AuditLogUpdateManyAndReturnArgs} args - Arguments to update many AuditLogs.
+     * @example
+     * // Update many AuditLogs
+     * const auditLog = await prisma.auditLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AuditLogs and only return the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AuditLogUpdateManyAndReturnArgs>(args: SelectSubset<T, AuditLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AuditLog.
+     * @param {AuditLogUpsertArgs} args - Arguments to update or create a AuditLog.
+     * @example
+     * // Update or create a AuditLog
+     * const auditLog = await prisma.auditLog.upsert({
+     *   create: {
+     *     // ... data to create a AuditLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AuditLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AuditLogUpsertArgs>(args: SelectSubset<T, AuditLogUpsertArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogCountArgs} args - Arguments to filter AuditLogs to count.
+     * @example
+     * // Count the number of AuditLogs
+     * const count = await prisma.auditLog.count({
+     *   where: {
+     *     // ... the filter for the AuditLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends AuditLogCountArgs>(
+      args?: Subset<T, AuditLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AuditLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AuditLogAggregateArgs>(args: Subset<T, AuditLogAggregateArgs>): Prisma.PrismaPromise<GetAuditLogAggregateType<T>>
+
+    /**
+     * Group by AuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AuditLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AuditLogGroupByArgs['orderBy'] }
+        : { orderBy?: AuditLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AuditLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuditLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AuditLog model
+   */
+  readonly fields: AuditLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AuditLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AuditLog model
+   */
+  interface AuditLogFieldRefs {
+    readonly id: FieldRef<"AuditLog", 'Int'>
+    readonly tenantId: FieldRef<"AuditLog", 'Int'>
+    readonly userId: FieldRef<"AuditLog", 'Int'>
+    readonly actor: FieldRef<"AuditLog", 'String'>
+    readonly action: FieldRef<"AuditLog", 'String'>
+    readonly meta: FieldRef<"AuditLog", 'Json'>
+    readonly ipAddress: FieldRef<"AuditLog", 'String'>
+    readonly createdAt: FieldRef<"AuditLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AuditLog findUnique
+   */
+  export type AuditLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog findUniqueOrThrow
+   */
+  export type AuditLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog findFirst
+   */
+  export type AuditLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog findFirstOrThrow
+   */
+  export type AuditLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog findMany
+   */
+  export type AuditLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Filter, which AuditLogs to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog create
+   */
+  export type AuditLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AuditLog.
+     */
+    data: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
+  }
+
+  /**
+   * AuditLog createMany
+   */
+  export type AuditLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AuditLogs.
+     */
+    data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AuditLog createManyAndReturn
+   */
+  export type AuditLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many AuditLogs.
+     */
+    data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AuditLog update
+   */
+  export type AuditLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AuditLog.
+     */
+    data: XOR<AuditLogUpdateInput, AuditLogUncheckedUpdateInput>
+    /**
+     * Choose, which AuditLog to update.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog updateMany
+   */
+  export type AuditLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AuditLogs.
+     */
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AuditLogs to update
+     */
+    where?: AuditLogWhereInput
+    /**
+     * Limit how many AuditLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuditLog updateManyAndReturn
+   */
+  export type AuditLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The data used to update AuditLogs.
+     */
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AuditLogs to update
+     */
+    where?: AuditLogWhereInput
+    /**
+     * Limit how many AuditLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuditLog upsert
+   */
+  export type AuditLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AuditLog to update in case it exists.
+     */
+    where: AuditLogWhereUniqueInput
+    /**
+     * In case the AuditLog found by the `where` argument doesn't exist, create a new AuditLog with this data.
+     */
+    create: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
+    /**
+     * In case the AuditLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AuditLogUpdateInput, AuditLogUncheckedUpdateInput>
+  }
+
+  /**
+   * AuditLog delete
+   */
+  export type AuditLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Filter which AuditLog to delete.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog deleteMany
+   */
+  export type AuditLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuditLogs to delete
+     */
+    where?: AuditLogWhereInput
+    /**
+     * Limit how many AuditLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuditLog without action
+   */
+  export type AuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -11346,8 +16922,11 @@ export namespace Prisma {
   export const TenantScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    slug: 'slug',
+    settings: 'settings',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
   };
 
   export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
@@ -11360,12 +16939,30 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     role: 'role',
+    lastSeenAt: 'lastSeenAt',
+    locale: 'locale',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     syncStatus: 'syncStatus'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const SessionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tenantId: 'tenantId',
+    sessionToken: 'sessionToken',
+    expires: 'expires',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
   export const VendorScalarFieldEnum: {
@@ -11415,15 +17012,58 @@ export namespace Prisma {
   export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
 
 
+  export const PackageScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    tenantId: 'tenantId',
+    price: 'price',
+    durationDays: 'durationDays',
+    freeFeatures: 'freeFeatures',
+    basicFeatures: 'basicFeatures',
+    proFeatures: 'proFeatures',
+    enterpriseFeatures: 'enterpriseFeatures',
+    metadata: 'metadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PackageScalarFieldEnum = (typeof PackageScalarFieldEnum)[keyof typeof PackageScalarFieldEnum]
+
+
+  export const PackageSubscriptionScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    packageId: 'packageId',
+    status: 'status',
+    seats: 'seats',
+    autoRenew: 'autoRenew',
+    startsAt: 'startsAt',
+    endsAt: 'endsAt',
+    trialEndsAt: 'trialEndsAt',
+    metadata: 'metadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PackageSubscriptionScalarFieldEnum = (typeof PackageSubscriptionScalarFieldEnum)[keyof typeof PackageSubscriptionScalarFieldEnum]
+
+
   export const InvoiceScalarFieldEnum: {
     id: 'id',
     tenantId: 'tenantId',
     invoiceNumber: 'invoiceNumber',
+    invoicePrefix: 'invoicePrefix',
     date: 'date',
     dueDate: 'dueDate',
     status: 'status',
     currency: 'currency',
+    currencyRate: 'currencyRate',
+    subtotal: 'subtotal',
+    tax: 'tax',
     total: 'total',
+    amountPaid: 'amountPaid',
+    balanceDue: 'balanceDue',
+    note: 'note',
     customerId: 'customerId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -11458,6 +17098,7 @@ export namespace Prisma {
     paidDate: 'paidDate',
     amount: 'amount',
     method: 'method',
+    status: 'status',
     reference: 'reference',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -11465,6 +17106,20 @@ export namespace Prisma {
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+  export const AuditLogScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    userId: 'userId',
+    actor: 'actor',
+    action: 'action',
+    meta: 'meta',
+    ipAddress: 'ipAddress',
+    createdAt: 'createdAt'
+  };
+
+  export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11475,12 +17130,29 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   export const NullsOrder: {
@@ -11525,6 +17197,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -11553,6 +17239,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'SyncStatus'
    */
   export type EnumSyncStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncStatus'>
@@ -11567,16 +17260,100 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Decimal'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
   /**
-   * Reference to a field of type 'Float[]'
+   * Reference to a field of type 'Decimal[]'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'packageName'
+   */
+  export type EnumpackageNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'packageName'>
+    
+
+
+  /**
+   * Reference to a field of type 'packageName[]'
+   */
+  export type ListEnumpackageNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'packageName[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'FreeFeatures[]'
+   */
+  export type ListEnumFreeFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FreeFeatures[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'FreeFeatures'
+   */
+  export type EnumFreeFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FreeFeatures'>
+    
+
+
+  /**
+   * Reference to a field of type 'BasicFeatures[]'
+   */
+  export type ListEnumBasicFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BasicFeatures[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BasicFeatures'
+   */
+  export type EnumBasicFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BasicFeatures'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProFeatures[]'
+   */
+  export type ListEnumProFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProFeatures[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProFeatures'
+   */
+  export type EnumProFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProFeatures'>
+    
+
+
+  /**
+   * Reference to a field of type 'EnterpriseFeatures[]'
+   */
+  export type ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnterpriseFeatures[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'EnterpriseFeatures'
+   */
+  export type EnumEnterpriseFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnterpriseFeatures'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubscriptionStatus'
+   */
+  export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubscriptionStatus[]'
+   */
+  export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
     
 
 
@@ -11592,6 +17369,48 @@ export namespace Prisma {
    */
   export type ListEnumInvoiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InvoiceStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'PaymentMethod'
+   */
+  export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentMethod[]'
+   */
+  export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentStatus'
+   */
+  export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentStatus[]'
+   */
+  export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -11603,53 +17422,74 @@ export namespace Prisma {
     NOT?: TenantWhereInput | TenantWhereInput[]
     id?: IntFilter<"Tenant"> | number
     name?: StringFilter<"Tenant"> | string
+    slug?: StringFilter<"Tenant"> | string
+    settings?: JsonNullableFilter<"Tenant">
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"Tenant"> | Date | string | null
     users?: UserListRelationFilter
+    packages?: PackageListRelationFilter
     vendors?: VendorListRelationFilter
     customers?: CustomerListRelationFilter
     items?: ItemListRelationFilter
     invoices?: InvoiceListRelationFilter
     payments?: PaymentListRelationFilter
-    invoiceItems?: InvoiceItemListRelationFilter
+    subscription?: PackageSubscriptionListRelationFilter
+    userSession?: SessionListRelationFilter
+    InvoiceItem?: InvoiceItemListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    settings?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     users?: UserOrderByRelationAggregateInput
+    packages?: PackageOrderByRelationAggregateInput
     vendors?: VendorOrderByRelationAggregateInput
     customers?: CustomerOrderByRelationAggregateInput
     items?: ItemOrderByRelationAggregateInput
     invoices?: InvoiceOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
-    invoiceItems?: InvoiceItemOrderByRelationAggregateInput
+    subscription?: PackageSubscriptionOrderByRelationAggregateInput
+    userSession?: SessionOrderByRelationAggregateInput
+    InvoiceItem?: InvoiceItemOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    slug?: string
     AND?: TenantWhereInput | TenantWhereInput[]
     OR?: TenantWhereInput[]
     NOT?: TenantWhereInput | TenantWhereInput[]
     name?: StringFilter<"Tenant"> | string
+    settings?: JsonNullableFilter<"Tenant">
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"Tenant"> | Date | string | null
     users?: UserListRelationFilter
+    packages?: PackageListRelationFilter
     vendors?: VendorListRelationFilter
     customers?: CustomerListRelationFilter
     items?: ItemListRelationFilter
     invoices?: InvoiceListRelationFilter
     payments?: PaymentListRelationFilter
-    invoiceItems?: InvoiceItemListRelationFilter
-  }, "id">
+    subscription?: PackageSubscriptionListRelationFilter
+    userSession?: SessionListRelationFilter
+    InvoiceItem?: InvoiceItemListRelationFilter
+  }, "id" | "slug">
 
   export type TenantOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    settings?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     _count?: TenantCountOrderByAggregateInput
     _avg?: TenantAvgOrderByAggregateInput
     _max?: TenantMaxOrderByAggregateInput
@@ -11663,8 +17503,11 @@ export namespace Prisma {
     NOT?: TenantScalarWhereWithAggregatesInput | TenantScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Tenant"> | number
     name?: StringWithAggregatesFilter<"Tenant"> | string
+    slug?: StringWithAggregatesFilter<"Tenant"> | string
+    settings?: JsonNullableWithAggregatesFilter<"Tenant">
     createdAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"Tenant"> | Date | string | null
   }
 
   export type UserWhereInput = {
@@ -11672,28 +17515,36 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: IntFilter<"User"> | number
-    tenantId?: IntFilter<"User"> | number
+    tenantId?: IntNullableFilter<"User"> | number | null
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumUserTypeFilter<"User"> | $Enums.UserType
+    lastSeenAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    locale?: StringNullableFilter<"User"> | string | null
+    isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"User"> | $Enums.SyncStatus
-    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    tenant?: XOR<TenantNullableScalarRelationFilter, TenantWhereInput> | null
+    sessions?: SessionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    tenantId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    lastSeenAt?: SortOrderInput | SortOrder
+    locale?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     syncStatus?: SortOrder
     tenant?: TenantOrderByWithRelationInput
+    sessions?: SessionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11702,23 +17553,30 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    tenantId?: IntFilter<"User"> | number
+    tenantId?: IntNullableFilter<"User"> | number | null
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumUserTypeFilter<"User"> | $Enums.UserType
+    lastSeenAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    locale?: StringNullableFilter<"User"> | string | null
+    isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"User"> | $Enums.SyncStatus
-    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    tenant?: XOR<TenantNullableScalarRelationFilter, TenantWhereInput> | null
+    sessions?: SessionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    tenantId?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    lastSeenAt?: SortOrderInput | SortOrder
+    locale?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     syncStatus?: SortOrder
@@ -11734,14 +17592,97 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"User"> | number
-    tenantId?: IntWithAggregatesFilter<"User"> | number
+    tenantId?: IntNullableWithAggregatesFilter<"User"> | number | null
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumUserTypeWithAggregatesFilter<"User"> | $Enums.UserType
+    lastSeenAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    locale?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isActive?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     syncStatus?: EnumSyncStatusWithAggregatesFilter<"User"> | $Enums.SyncStatus
+  }
+
+  export type SessionWhereInput = {
+    AND?: SessionWhereInput | SessionWhereInput[]
+    OR?: SessionWhereInput[]
+    NOT?: SessionWhereInput | SessionWhereInput[]
+    id?: IntFilter<"Session"> | number
+    userId?: IntFilter<"Session"> | number
+    tenantId?: IntFilter<"Session"> | number
+    sessionToken?: StringFilter<"Session"> | string
+    expires?: DateTimeFilter<"Session"> | Date | string
+    ipAddress?: StringNullableFilter<"Session"> | string | null
+    userAgent?: StringNullableFilter<"Session"> | string | null
+    createdAt?: DateTimeFilter<"Session"> | Date | string
+    updatedAt?: DateTimeFilter<"Session"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }
+
+  export type SessionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    sessionToken?: SortOrder
+    expires?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type SessionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    sessionToken?: string
+    AND?: SessionWhereInput | SessionWhereInput[]
+    OR?: SessionWhereInput[]
+    NOT?: SessionWhereInput | SessionWhereInput[]
+    userId?: IntFilter<"Session"> | number
+    tenantId?: IntFilter<"Session"> | number
+    expires?: DateTimeFilter<"Session"> | Date | string
+    ipAddress?: StringNullableFilter<"Session"> | string | null
+    userAgent?: StringNullableFilter<"Session"> | string | null
+    createdAt?: DateTimeFilter<"Session"> | Date | string
+    updatedAt?: DateTimeFilter<"Session"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }, "id" | "sessionToken">
+
+  export type SessionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    sessionToken?: SortOrder
+    expires?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SessionCountOrderByAggregateInput
+    _avg?: SessionAvgOrderByAggregateInput
+    _max?: SessionMaxOrderByAggregateInput
+    _min?: SessionMinOrderByAggregateInput
+    _sum?: SessionSumOrderByAggregateInput
+  }
+
+  export type SessionScalarWhereWithAggregatesInput = {
+    AND?: SessionScalarWhereWithAggregatesInput | SessionScalarWhereWithAggregatesInput[]
+    OR?: SessionScalarWhereWithAggregatesInput[]
+    NOT?: SessionScalarWhereWithAggregatesInput | SessionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Session"> | number
+    userId?: IntWithAggregatesFilter<"Session"> | number
+    tenantId?: IntWithAggregatesFilter<"Session"> | number
+    sessionToken?: StringWithAggregatesFilter<"Session"> | string
+    expires?: DateTimeWithAggregatesFilter<"Session"> | Date | string
+    ipAddress?: StringNullableWithAggregatesFilter<"Session"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"Session"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
   }
 
   export type VendorWhereInput = {
@@ -11915,8 +17856,8 @@ export namespace Prisma {
     name?: StringFilter<"Item"> | string
     sku?: StringNullableFilter<"Item"> | string | null
     description?: StringNullableFilter<"Item"> | string | null
-    unitPrice?: FloatFilter<"Item"> | number
-    quantity?: FloatFilter<"Item"> | number
+    unitPrice?: DecimalFilter<"Item"> | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFilter<"Item"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"Item"> | $Enums.SyncStatus
@@ -11941,6 +17882,7 @@ export namespace Prisma {
 
   export type ItemWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    tenantId_sku?: ItemTenantIdSkuCompoundUniqueInput
     AND?: ItemWhereInput | ItemWhereInput[]
     OR?: ItemWhereInput[]
     NOT?: ItemWhereInput | ItemWhereInput[]
@@ -11948,14 +17890,14 @@ export namespace Prisma {
     name?: StringFilter<"Item"> | string
     sku?: StringNullableFilter<"Item"> | string | null
     description?: StringNullableFilter<"Item"> | string | null
-    unitPrice?: FloatFilter<"Item"> | number
-    quantity?: FloatFilter<"Item"> | number
+    unitPrice?: DecimalFilter<"Item"> | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFilter<"Item"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"Item"> | $Enums.SyncStatus
     tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
     invoiceItems?: InvoiceItemListRelationFilter
-  }, "id">
+  }, "id" | "tenantId_sku">
 
   export type ItemOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11984,11 +17926,201 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Item"> | string
     sku?: StringNullableWithAggregatesFilter<"Item"> | string | null
     description?: StringNullableWithAggregatesFilter<"Item"> | string | null
-    unitPrice?: FloatWithAggregatesFilter<"Item"> | number
-    quantity?: FloatWithAggregatesFilter<"Item"> | number
+    unitPrice?: DecimalWithAggregatesFilter<"Item"> | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalWithAggregatesFilter<"Item"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeWithAggregatesFilter<"Item"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Item"> | Date | string
     syncStatus?: EnumSyncStatusWithAggregatesFilter<"Item"> | $Enums.SyncStatus
+  }
+
+  export type PackageWhereInput = {
+    AND?: PackageWhereInput | PackageWhereInput[]
+    OR?: PackageWhereInput[]
+    NOT?: PackageWhereInput | PackageWhereInput[]
+    id?: IntFilter<"Package"> | number
+    name?: EnumpackageNameFilter<"Package"> | $Enums.packageName
+    tenantId?: IntFilter<"Package"> | number
+    price?: DecimalFilter<"Package"> | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFilter<"Package"> | number
+    freeFeatures?: EnumFreeFeaturesNullableListFilter<"Package">
+    basicFeatures?: EnumBasicFeaturesNullableListFilter<"Package">
+    proFeatures?: EnumProFeaturesNullableListFilter<"Package">
+    enterpriseFeatures?: EnumEnterpriseFeaturesNullableListFilter<"Package">
+    metadata?: JsonNullableFilter<"Package">
+    createdAt?: DateTimeFilter<"Package"> | Date | string
+    updatedAt?: DateTimeFilter<"Package"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    subscription?: PackageSubscriptionListRelationFilter
+  }
+
+  export type PackageOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+    freeFeatures?: SortOrder
+    basicFeatures?: SortOrder
+    proFeatures?: SortOrder
+    enterpriseFeatures?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    subscription?: PackageSubscriptionOrderByRelationAggregateInput
+  }
+
+  export type PackageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: $Enums.packageName
+    AND?: PackageWhereInput | PackageWhereInput[]
+    OR?: PackageWhereInput[]
+    NOT?: PackageWhereInput | PackageWhereInput[]
+    tenantId?: IntFilter<"Package"> | number
+    price?: DecimalFilter<"Package"> | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFilter<"Package"> | number
+    freeFeatures?: EnumFreeFeaturesNullableListFilter<"Package">
+    basicFeatures?: EnumBasicFeaturesNullableListFilter<"Package">
+    proFeatures?: EnumProFeaturesNullableListFilter<"Package">
+    enterpriseFeatures?: EnumEnterpriseFeaturesNullableListFilter<"Package">
+    metadata?: JsonNullableFilter<"Package">
+    createdAt?: DateTimeFilter<"Package"> | Date | string
+    updatedAt?: DateTimeFilter<"Package"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    subscription?: PackageSubscriptionListRelationFilter
+  }, "id" | "name">
+
+  export type PackageOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+    freeFeatures?: SortOrder
+    basicFeatures?: SortOrder
+    proFeatures?: SortOrder
+    enterpriseFeatures?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PackageCountOrderByAggregateInput
+    _avg?: PackageAvgOrderByAggregateInput
+    _max?: PackageMaxOrderByAggregateInput
+    _min?: PackageMinOrderByAggregateInput
+    _sum?: PackageSumOrderByAggregateInput
+  }
+
+  export type PackageScalarWhereWithAggregatesInput = {
+    AND?: PackageScalarWhereWithAggregatesInput | PackageScalarWhereWithAggregatesInput[]
+    OR?: PackageScalarWhereWithAggregatesInput[]
+    NOT?: PackageScalarWhereWithAggregatesInput | PackageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Package"> | number
+    name?: EnumpackageNameWithAggregatesFilter<"Package"> | $Enums.packageName
+    tenantId?: IntWithAggregatesFilter<"Package"> | number
+    price?: DecimalWithAggregatesFilter<"Package"> | Decimal | DecimalJsLike | number | string
+    durationDays?: IntWithAggregatesFilter<"Package"> | number
+    freeFeatures?: EnumFreeFeaturesNullableListFilter<"Package">
+    basicFeatures?: EnumBasicFeaturesNullableListFilter<"Package">
+    proFeatures?: EnumProFeaturesNullableListFilter<"Package">
+    enterpriseFeatures?: EnumEnterpriseFeaturesNullableListFilter<"Package">
+    metadata?: JsonNullableWithAggregatesFilter<"Package">
+    createdAt?: DateTimeWithAggregatesFilter<"Package"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Package"> | Date | string
+  }
+
+  export type PackageSubscriptionWhereInput = {
+    AND?: PackageSubscriptionWhereInput | PackageSubscriptionWhereInput[]
+    OR?: PackageSubscriptionWhereInput[]
+    NOT?: PackageSubscriptionWhereInput | PackageSubscriptionWhereInput[]
+    id?: IntFilter<"PackageSubscription"> | number
+    tenantId?: IntFilter<"PackageSubscription"> | number
+    packageId?: IntFilter<"PackageSubscription"> | number
+    status?: EnumSubscriptionStatusFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
+    seats?: IntFilter<"PackageSubscription"> | number
+    autoRenew?: BoolFilter<"PackageSubscription"> | boolean
+    startsAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    endsAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    trialEndsAt?: DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
+    metadata?: JsonNullableFilter<"PackageSubscription">
+    createdAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    package?: XOR<PackageScalarRelationFilter, PackageWhereInput>
+  }
+
+  export type PackageSubscriptionOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    autoRenew?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    trialEndsAt?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    package?: PackageOrderByWithRelationInput
+  }
+
+  export type PackageSubscriptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PackageSubscriptionWhereInput | PackageSubscriptionWhereInput[]
+    OR?: PackageSubscriptionWhereInput[]
+    NOT?: PackageSubscriptionWhereInput | PackageSubscriptionWhereInput[]
+    tenantId?: IntFilter<"PackageSubscription"> | number
+    packageId?: IntFilter<"PackageSubscription"> | number
+    status?: EnumSubscriptionStatusFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
+    seats?: IntFilter<"PackageSubscription"> | number
+    autoRenew?: BoolFilter<"PackageSubscription"> | boolean
+    startsAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    endsAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    trialEndsAt?: DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
+    metadata?: JsonNullableFilter<"PackageSubscription">
+    createdAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    package?: XOR<PackageScalarRelationFilter, PackageWhereInput>
+  }, "id">
+
+  export type PackageSubscriptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    autoRenew?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    trialEndsAt?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PackageSubscriptionCountOrderByAggregateInput
+    _avg?: PackageSubscriptionAvgOrderByAggregateInput
+    _max?: PackageSubscriptionMaxOrderByAggregateInput
+    _min?: PackageSubscriptionMinOrderByAggregateInput
+    _sum?: PackageSubscriptionSumOrderByAggregateInput
+  }
+
+  export type PackageSubscriptionScalarWhereWithAggregatesInput = {
+    AND?: PackageSubscriptionScalarWhereWithAggregatesInput | PackageSubscriptionScalarWhereWithAggregatesInput[]
+    OR?: PackageSubscriptionScalarWhereWithAggregatesInput[]
+    NOT?: PackageSubscriptionScalarWhereWithAggregatesInput | PackageSubscriptionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PackageSubscription"> | number
+    tenantId?: IntWithAggregatesFilter<"PackageSubscription"> | number
+    packageId?: IntWithAggregatesFilter<"PackageSubscription"> | number
+    status?: EnumSubscriptionStatusWithAggregatesFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
+    seats?: IntWithAggregatesFilter<"PackageSubscription"> | number
+    autoRenew?: BoolWithAggregatesFilter<"PackageSubscription"> | boolean
+    startsAt?: DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
+    endsAt?: DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
+    trialEndsAt?: DateTimeNullableWithAggregatesFilter<"PackageSubscription"> | Date | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"PackageSubscription">
+    createdAt?: DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
   }
 
   export type InvoiceWhereInput = {
@@ -11998,11 +18130,18 @@ export namespace Prisma {
     id?: IntFilter<"Invoice"> | number
     tenantId?: IntFilter<"Invoice"> | number
     invoiceNumber?: StringFilter<"Invoice"> | string
+    invoicePrefix?: StringNullableFilter<"Invoice"> | string | null
     date?: DateTimeFilter<"Invoice"> | Date | string
     dueDate?: DateTimeNullableFilter<"Invoice"> | Date | string | null
     status?: EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
     currency?: StringFilter<"Invoice"> | string
-    total?: FloatFilter<"Invoice"> | number
+    currencyRate?: DecimalNullableFilter<"Invoice"> | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    note?: StringNullableFilter<"Invoice"> | string | null
     customerId?: IntFilter<"Invoice"> | number
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
@@ -12017,11 +18156,18 @@ export namespace Prisma {
     id?: SortOrder
     tenantId?: SortOrder
     invoiceNumber?: SortOrder
+    invoicePrefix?: SortOrderInput | SortOrder
     date?: SortOrder
     dueDate?: SortOrderInput | SortOrder
     status?: SortOrder
     currency?: SortOrder
+    currencyRate?: SortOrderInput | SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
+    note?: SortOrderInput | SortOrder
     customerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12040,11 +18186,18 @@ export namespace Prisma {
     NOT?: InvoiceWhereInput | InvoiceWhereInput[]
     tenantId?: IntFilter<"Invoice"> | number
     invoiceNumber?: StringFilter<"Invoice"> | string
+    invoicePrefix?: StringNullableFilter<"Invoice"> | string | null
     date?: DateTimeFilter<"Invoice"> | Date | string
     dueDate?: DateTimeNullableFilter<"Invoice"> | Date | string | null
     status?: EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
     currency?: StringFilter<"Invoice"> | string
-    total?: FloatFilter<"Invoice"> | number
+    currencyRate?: DecimalNullableFilter<"Invoice"> | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    note?: StringNullableFilter<"Invoice"> | string | null
     customerId?: IntFilter<"Invoice"> | number
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
@@ -12059,11 +18212,18 @@ export namespace Prisma {
     id?: SortOrder
     tenantId?: SortOrder
     invoiceNumber?: SortOrder
+    invoicePrefix?: SortOrderInput | SortOrder
     date?: SortOrder
     dueDate?: SortOrderInput | SortOrder
     status?: SortOrder
     currency?: SortOrder
+    currencyRate?: SortOrderInput | SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
+    note?: SortOrderInput | SortOrder
     customerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12082,11 +18242,18 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Invoice"> | number
     tenantId?: IntWithAggregatesFilter<"Invoice"> | number
     invoiceNumber?: StringWithAggregatesFilter<"Invoice"> | string
+    invoicePrefix?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
     date?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
     dueDate?: DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
     status?: EnumInvoiceStatusWithAggregatesFilter<"Invoice"> | $Enums.InvoiceStatus
     currency?: StringWithAggregatesFilter<"Invoice"> | string
-    total?: FloatWithAggregatesFilter<"Invoice"> | number
+    currencyRate?: DecimalNullableWithAggregatesFilter<"Invoice"> | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalWithAggregatesFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    tax?: DecimalWithAggregatesFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalWithAggregatesFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalWithAggregatesFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalWithAggregatesFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    note?: StringNullableWithAggregatesFilter<"Invoice"> | string | null
     customerId?: IntWithAggregatesFilter<"Invoice"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
@@ -12102,9 +18269,9 @@ export namespace Prisma {
     invoiceId?: IntFilter<"InvoiceItem"> | number
     itemId?: IntFilter<"InvoiceItem"> | number
     description?: StringNullableFilter<"InvoiceItem"> | string | null
-    quantity?: FloatFilter<"InvoiceItem"> | number
-    unitPrice?: FloatFilter<"InvoiceItem"> | number
-    lineTotal?: FloatFilter<"InvoiceItem"> | number
+    quantity?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"InvoiceItem"> | Date | string
     updatedAt?: DateTimeFilter<"InvoiceItem"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"InvoiceItem"> | $Enums.SyncStatus
@@ -12139,9 +18306,9 @@ export namespace Prisma {
     invoiceId?: IntFilter<"InvoiceItem"> | number
     itemId?: IntFilter<"InvoiceItem"> | number
     description?: StringNullableFilter<"InvoiceItem"> | string | null
-    quantity?: FloatFilter<"InvoiceItem"> | number
-    unitPrice?: FloatFilter<"InvoiceItem"> | number
-    lineTotal?: FloatFilter<"InvoiceItem"> | number
+    quantity?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"InvoiceItem"> | Date | string
     updatedAt?: DateTimeFilter<"InvoiceItem"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"InvoiceItem"> | $Enums.SyncStatus
@@ -12178,9 +18345,9 @@ export namespace Prisma {
     invoiceId?: IntWithAggregatesFilter<"InvoiceItem"> | number
     itemId?: IntWithAggregatesFilter<"InvoiceItem"> | number
     description?: StringNullableWithAggregatesFilter<"InvoiceItem"> | string | null
-    quantity?: FloatWithAggregatesFilter<"InvoiceItem"> | number
-    unitPrice?: FloatWithAggregatesFilter<"InvoiceItem"> | number
-    lineTotal?: FloatWithAggregatesFilter<"InvoiceItem"> | number
+    quantity?: DecimalWithAggregatesFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalWithAggregatesFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalWithAggregatesFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeWithAggregatesFilter<"InvoiceItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"InvoiceItem"> | Date | string
     syncStatus?: EnumSyncStatusWithAggregatesFilter<"InvoiceItem"> | $Enums.SyncStatus
@@ -12195,8 +18362,9 @@ export namespace Prisma {
     invoiceId?: IntFilter<"Payment"> | number
     date?: DateTimeFilter<"Payment"> | Date | string
     paidDate?: DateTimeFilter<"Payment"> | Date | string
-    amount?: FloatFilter<"Payment"> | number
-    method?: StringFilter<"Payment"> | string
+    amount?: DecimalFilter<"Payment"> | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFilter<"Payment"> | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
     reference?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
@@ -12213,6 +18381,7 @@ export namespace Prisma {
     paidDate?: SortOrder
     amount?: SortOrder
     method?: SortOrder
+    status?: SortOrder
     reference?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12230,8 +18399,9 @@ export namespace Prisma {
     invoiceId?: IntFilter<"Payment"> | number
     date?: DateTimeFilter<"Payment"> | Date | string
     paidDate?: DateTimeFilter<"Payment"> | Date | string
-    amount?: FloatFilter<"Payment"> | number
-    method?: StringFilter<"Payment"> | string
+    amount?: DecimalFilter<"Payment"> | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFilter<"Payment"> | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
     reference?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
@@ -12248,6 +18418,7 @@ export namespace Prisma {
     paidDate?: SortOrder
     amount?: SortOrder
     method?: SortOrder
+    status?: SortOrder
     reference?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12268,86 +18439,189 @@ export namespace Prisma {
     invoiceId?: IntWithAggregatesFilter<"Payment"> | number
     date?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     paidDate?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
-    amount?: FloatWithAggregatesFilter<"Payment"> | number
-    method?: StringWithAggregatesFilter<"Payment"> | string
+    amount?: DecimalWithAggregatesFilter<"Payment"> | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodWithAggregatesFilter<"Payment"> | $Enums.PaymentMethod
+    status?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
     reference?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     syncStatus?: EnumSyncStatusWithAggregatesFilter<"Payment"> | $Enums.SyncStatus
   }
 
+  export type AuditLogWhereInput = {
+    AND?: AuditLogWhereInput | AuditLogWhereInput[]
+    OR?: AuditLogWhereInput[]
+    NOT?: AuditLogWhereInput | AuditLogWhereInput[]
+    id?: IntFilter<"AuditLog"> | number
+    tenantId?: IntNullableFilter<"AuditLog"> | number | null
+    userId?: IntNullableFilter<"AuditLog"> | number | null
+    actor?: StringNullableFilter<"AuditLog"> | string | null
+    action?: StringFilter<"AuditLog"> | string
+    meta?: JsonNullableFilter<"AuditLog">
+    ipAddress?: StringNullableFilter<"AuditLog"> | string | null
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+  }
+
+  export type AuditLogOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    actor?: SortOrderInput | SortOrder
+    action?: SortOrder
+    meta?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AuditLogWhereInput | AuditLogWhereInput[]
+    OR?: AuditLogWhereInput[]
+    NOT?: AuditLogWhereInput | AuditLogWhereInput[]
+    tenantId?: IntNullableFilter<"AuditLog"> | number | null
+    userId?: IntNullableFilter<"AuditLog"> | number | null
+    actor?: StringNullableFilter<"AuditLog"> | string | null
+    action?: StringFilter<"AuditLog"> | string
+    meta?: JsonNullableFilter<"AuditLog">
+    ipAddress?: StringNullableFilter<"AuditLog"> | string | null
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+  }, "id">
+
+  export type AuditLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    actor?: SortOrderInput | SortOrder
+    action?: SortOrder
+    meta?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: AuditLogCountOrderByAggregateInput
+    _avg?: AuditLogAvgOrderByAggregateInput
+    _max?: AuditLogMaxOrderByAggregateInput
+    _min?: AuditLogMinOrderByAggregateInput
+    _sum?: AuditLogSumOrderByAggregateInput
+  }
+
+  export type AuditLogScalarWhereWithAggregatesInput = {
+    AND?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
+    OR?: AuditLogScalarWhereWithAggregatesInput[]
+    NOT?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AuditLog"> | number
+    tenantId?: IntNullableWithAggregatesFilter<"AuditLog"> | number | null
+    userId?: IntNullableWithAggregatesFilter<"AuditLog"> | number | null
+    actor?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    action?: StringWithAggregatesFilter<"AuditLog"> | string
+    meta?: JsonNullableWithAggregatesFilter<"AuditLog">
+    ipAddress?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
+  }
+
   export type TenantCreateInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type TenantUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TenantUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserCreateInput = {
@@ -12355,22 +18629,30 @@ export namespace Prisma {
     email: string
     password: string
     role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
-    tenant: TenantCreateNestedOneWithoutUsersInput
+    tenant?: TenantCreateNestedOneWithoutUsersInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: number
-    tenantId: number
+    tenantId?: number | null
     name: string
     email: string
     password: string
     role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -12378,31 +18660,42 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
-    tenant?: TenantUpdateOneRequiredWithoutUsersNestedInput
+    tenant?: TenantUpdateOneWithoutUsersNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    tenantId?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: number
-    tenantId: number
+    tenantId?: number | null
     name: string
     email: string
     password: string
     role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12413,6 +18706,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12420,14 +18716,96 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    tenantId?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+  }
+
+  export type SessionCreateInput = {
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSessionsInput
+    tenant: TenantCreateNestedOneWithoutUserSessionInput
+  }
+
+  export type SessionUncheckedCreateInput = {
+    id?: number
+    userId: number
+    tenantId: number
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionUpdateInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSessionsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutUserSessionNestedInput
+  }
+
+  export type SessionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionCreateManyInput = {
+    id?: number
+    userId: number
+    tenantId: number
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionUpdateManyMutationInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VendorCreateInput = {
@@ -12605,8 +18983,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12620,8 +18998,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12632,8 +19010,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12647,8 +19025,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12661,8 +19039,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12672,8 +19050,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12685,20 +19063,232 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
   }
 
+  export type PackageCreateInput = {
+    name?: $Enums.packageName
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutPackagesInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutPackageInput
+  }
+
+  export type PackageUncheckedCreateInput = {
+    id?: number
+    name?: $Enums.packageName
+    tenantId: number
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutPackageInput
+  }
+
+  export type PackageUpdateInput = {
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutPackagesNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutPackageNestedInput
+  }
+
+  export type PackageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    tenantId?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutPackageNestedInput
+  }
+
+  export type PackageCreateManyInput = {
+    id?: number
+    name?: $Enums.packageName
+    tenantId: number
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageUpdateManyMutationInput = {
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PackageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    tenantId?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PackageSubscriptionCreateInput = {
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutSubscriptionInput
+    package: PackageCreateNestedOneWithoutSubscriptionInput
+  }
+
+  export type PackageSubscriptionUncheckedCreateInput = {
+    id?: number
+    tenantId: number
+    packageId: number
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageSubscriptionUpdateInput = {
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutSubscriptionNestedInput
+    package?: PackageUpdateOneRequiredWithoutSubscriptionNestedInput
+  }
+
+  export type PackageSubscriptionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    packageId?: IntFieldUpdateOperationsInput | number
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PackageSubscriptionCreateManyInput = {
+    id?: number
+    tenantId: number
+    packageId: number
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageSubscriptionUpdateManyMutationInput = {
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PackageSubscriptionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    packageId?: IntFieldUpdateOperationsInput | number
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type InvoiceCreateInput = {
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12712,11 +19302,18 @@ export namespace Prisma {
     id?: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     customerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12727,11 +19324,18 @@ export namespace Prisma {
 
   export type InvoiceUpdateInput = {
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12745,11 +19349,18 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     customerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12762,11 +19373,18 @@ export namespace Prisma {
     id?: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     customerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12775,11 +19393,18 @@ export namespace Prisma {
 
   export type InvoiceUpdateManyMutationInput = {
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12789,11 +19414,18 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     customerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12802,13 +19434,13 @@ export namespace Prisma {
 
   export type InvoiceItemCreateInput = {
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
-    tenant: TenantCreateNestedOneWithoutInvoiceItemsInput
+    tenant: TenantCreateNestedOneWithoutInvoiceItemInput
     invoice: InvoiceCreateNestedOneWithoutItemsInput
     item: ItemCreateNestedOneWithoutInvoiceItemsInput
   }
@@ -12819,9 +19451,9 @@ export namespace Prisma {
     invoiceId: number
     itemId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12829,13 +19461,13 @@ export namespace Prisma {
 
   export type InvoiceItemUpdateInput = {
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
-    tenant?: TenantUpdateOneRequiredWithoutInvoiceItemsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutInvoiceItemNestedInput
     invoice?: InvoiceUpdateOneRequiredWithoutItemsNestedInput
     item?: ItemUpdateOneRequiredWithoutInvoiceItemsNestedInput
   }
@@ -12846,9 +19478,9 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12860,9 +19492,9 @@ export namespace Prisma {
     invoiceId: number
     itemId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -12870,9 +19502,9 @@ export namespace Prisma {
 
   export type InvoiceItemUpdateManyMutationInput = {
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12884,9 +19516,9 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -12895,8 +19527,9 @@ export namespace Prisma {
   export type PaymentCreateInput = {
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12911,8 +19544,9 @@ export namespace Prisma {
     invoiceId: number
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12922,8 +19556,9 @@ export namespace Prisma {
   export type PaymentUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12938,8 +19573,9 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12952,8 +19588,9 @@ export namespace Prisma {
     invoiceId: number
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12963,8 +19600,9 @@ export namespace Prisma {
   export type PaymentUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12977,12 +19615,87 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+  }
+
+  export type AuditLogCreateInput = {
+    tenantId?: number | null
+    userId?: number | null
+    actor?: string | null
+    action: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUncheckedCreateInput = {
+    id?: number
+    tenantId?: number | null
+    userId?: number | null
+    actor?: string | null
+    action: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUpdateInput = {
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    actor?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    actor?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogCreateManyInput = {
+    id?: number
+    tenantId?: number | null
+    userId?: number | null
+    actor?: string | null
+    action: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUpdateManyMutationInput = {
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    actor?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    actor?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13010,6 +19723,29 @@ export namespace Prisma {
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -13022,10 +19758,27 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type UserListRelationFilter = {
     every?: UserWhereInput
     some?: UserWhereInput
     none?: UserWhereInput
+  }
+
+  export type PackageListRelationFilter = {
+    every?: PackageWhereInput
+    some?: PackageWhereInput
+    none?: PackageWhereInput
   }
 
   export type VendorListRelationFilter = {
@@ -13058,13 +19811,34 @@ export namespace Prisma {
     none?: PaymentWhereInput
   }
 
+  export type PackageSubscriptionListRelationFilter = {
+    every?: PackageSubscriptionWhereInput
+    some?: PackageSubscriptionWhereInput
+    none?: PackageSubscriptionWhereInput
+  }
+
+  export type SessionListRelationFilter = {
+    every?: SessionWhereInput
+    some?: SessionWhereInput
+    none?: SessionWhereInput
+  }
+
   export type InvoiceItemListRelationFilter = {
     every?: InvoiceItemWhereInput
     some?: InvoiceItemWhereInput
     none?: InvoiceItemWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PackageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13088,6 +19862,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type PackageSubscriptionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type InvoiceItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -13095,8 +19877,11 @@ export namespace Prisma {
   export type TenantCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    settings?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type TenantAvgOrderByAggregateInput = {
@@ -13106,15 +19891,19 @@ export namespace Prisma {
   export type TenantMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type TenantMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type TenantSumOrderByAggregateInput = {
@@ -13154,6 +19943,32 @@ export namespace Prisma {
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
   }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -13169,89 +19984,36 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type EnumUserTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.UserType | EnumUserTypeFieldRefInput<$PrismaModel>
     in?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumUserTypeFilter<$PrismaModel> | $Enums.UserType
-  }
-
-  export type EnumSyncStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumSyncStatusFilter<$PrismaModel> | $Enums.SyncStatus
-  }
-
-  export type TenantScalarRelationFilter = {
-    is?: TenantWhereInput
-    isNot?: TenantWhereInput
-  }
-
-  export type UserCountOrderByAggregateInput = {
-    id?: SortOrder
-    tenantId?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    syncStatus?: SortOrder
-  }
-
-  export type UserAvgOrderByAggregateInput = {
-    id?: SortOrder
-    tenantId?: SortOrder
-  }
-
-  export type UserMaxOrderByAggregateInput = {
-    id?: SortOrder
-    tenantId?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    syncStatus?: SortOrder
-  }
-
-  export type UserMinOrderByAggregateInput = {
-    id?: SortOrder
-    tenantId?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    syncStatus?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    id?: SortOrder
-    tenantId?: SortOrder
-  }
-
-  export type EnumUserTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserType | EnumUserTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserTypeWithAggregatesFilter<$PrismaModel> | $Enums.UserType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserTypeFilter<$PrismaModel>
-    _max?: NestedEnumUserTypeFilter<$PrismaModel>
-  }
-
-  export type EnumSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.SyncStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSyncStatusFilter<$PrismaModel>
-    _max?: NestedEnumSyncStatusFilter<$PrismaModel>
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -13269,9 +20031,196 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type EnumSyncStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSyncStatusFilter<$PrismaModel> | $Enums.SyncStatus
+  }
+
+  export type TenantNullableScalarRelationFilter = {
+    is?: TenantWhereInput | null
+    isNot?: TenantWhereInput | null
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    lastSeenAt?: SortOrder
+    locale?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    syncStatus?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    lastSeenAt?: SortOrder
+    locale?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    syncStatus?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    lastSeenAt?: SortOrder
+    locale?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    syncStatus?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type EnumUserTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserType | EnumUserTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserTypeWithAggregatesFilter<$PrismaModel> | $Enums.UserType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserTypeFilter<$PrismaModel>
+    _max?: NestedEnumUserTypeFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.SyncStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSyncStatusFilter<$PrismaModel>
+    _max?: NestedEnumSyncStatusFilter<$PrismaModel>
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type TenantScalarRelationFilter = {
+    is?: TenantWhereInput
+    isNot?: TenantWhereInput
+  }
+
+  export type SessionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    sessionToken?: SortOrder
+    expires?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SessionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type SessionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    sessionToken?: SortOrder
+    expires?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SessionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
+    sessionToken?: SortOrder
+    expires?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SessionSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tenantId?: SortOrder
   }
 
   export type VendorCountOrderByAggregateInput = {
@@ -13323,24 +20272,6 @@ export namespace Prisma {
     tenantId?: SortOrder
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type CustomerCountOrderByAggregateInput = {
     id?: SortOrder
     tenantId?: SortOrder
@@ -13387,15 +20318,20 @@ export namespace Prisma {
     tenantId?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type ItemTenantIdSkuCompoundUniqueInput = {
+    tenantId: number
+    sku: string
   }
 
   export type ItemCountOrderByAggregateInput = {
@@ -13451,31 +20387,197 @@ export namespace Prisma {
     quantity?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type EnumpackageNameFilter<$PrismaModel = never> = {
+    equals?: $Enums.packageName | EnumpackageNameFieldRefInput<$PrismaModel>
+    in?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumpackageNameFilter<$PrismaModel> | $Enums.packageName
+  }
+
+  export type EnumFreeFeaturesNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.FreeFeatures[] | ListEnumFreeFeaturesFieldRefInput<$PrismaModel> | null
+    has?: $Enums.FreeFeatures | EnumFreeFeaturesFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.FreeFeatures[] | ListEnumFreeFeaturesFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.FreeFeatures[] | ListEnumFreeFeaturesFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type EnumBasicFeaturesNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.BasicFeatures[] | ListEnumBasicFeaturesFieldRefInput<$PrismaModel> | null
+    has?: $Enums.BasicFeatures | EnumBasicFeaturesFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.BasicFeatures[] | ListEnumBasicFeaturesFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.BasicFeatures[] | ListEnumBasicFeaturesFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type EnumProFeaturesNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProFeatures[] | ListEnumProFeaturesFieldRefInput<$PrismaModel> | null
+    has?: $Enums.ProFeatures | EnumProFeaturesFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.ProFeatures[] | ListEnumProFeaturesFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.ProFeatures[] | ListEnumProFeaturesFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type EnumEnterpriseFeaturesNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.EnterpriseFeatures[] | ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel> | null
+    has?: $Enums.EnterpriseFeatures | EnumEnterpriseFeaturesFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.EnterpriseFeatures[] | ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.EnterpriseFeatures[] | ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type PackageCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+    freeFeatures?: SortOrder
+    basicFeatures?: SortOrder
+    proFeatures?: SortOrder
+    enterpriseFeatures?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PackageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+  }
+
+  export type PackageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PackageMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PackageSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    price?: SortOrder
+    durationDays?: SortOrder
+  }
+
+  export type EnumpackageNameWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.packageName | EnumpackageNameFieldRefInput<$PrismaModel>
+    in?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumpackageNameWithAggregatesFilter<$PrismaModel> | $Enums.packageName
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumpackageNameFilter<$PrismaModel>
+    _max?: NestedEnumpackageNameFilter<$PrismaModel>
+  }
+
+  export type EnumSubscriptionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionStatus | EnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubscriptionStatusFilter<$PrismaModel> | $Enums.SubscriptionStatus
+  }
+
+  export type PackageScalarRelationFilter = {
+    is?: PackageWhereInput
+    isNot?: PackageWhereInput
+  }
+
+  export type PackageSubscriptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    autoRenew?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    trialEndsAt?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PackageSubscriptionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    seats?: SortOrder
+  }
+
+  export type PackageSubscriptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    autoRenew?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    trialEndsAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PackageSubscriptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    autoRenew?: SortOrder
+    startsAt?: SortOrder
+    endsAt?: SortOrder
+    trialEndsAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PackageSubscriptionSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    packageId?: SortOrder
+    seats?: SortOrder
+  }
+
+  export type EnumSubscriptionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionStatus | EnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubscriptionStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubscriptionStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubscriptionStatusFilter<$PrismaModel>
+    _max?: NestedEnumSubscriptionStatusFilter<$PrismaModel>
   }
 
   export type EnumInvoiceStatusFilter<$PrismaModel = never> = {
@@ -13483,6 +20585,17 @@ export namespace Prisma {
     in?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumInvoiceStatusFilter<$PrismaModel> | $Enums.InvoiceStatus
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type CustomerScalarRelationFilter = {
@@ -13499,11 +20612,18 @@ export namespace Prisma {
     id?: SortOrder
     tenantId?: SortOrder
     invoiceNumber?: SortOrder
+    invoicePrefix?: SortOrder
     date?: SortOrder
     dueDate?: SortOrder
     status?: SortOrder
     currency?: SortOrder
+    currencyRate?: SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
+    note?: SortOrder
     customerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13513,7 +20633,12 @@ export namespace Prisma {
   export type InvoiceAvgOrderByAggregateInput = {
     id?: SortOrder
     tenantId?: SortOrder
+    currencyRate?: SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
     customerId?: SortOrder
   }
 
@@ -13521,11 +20646,18 @@ export namespace Prisma {
     id?: SortOrder
     tenantId?: SortOrder
     invoiceNumber?: SortOrder
+    invoicePrefix?: SortOrder
     date?: SortOrder
     dueDate?: SortOrder
     status?: SortOrder
     currency?: SortOrder
+    currencyRate?: SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
+    note?: SortOrder
     customerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13536,11 +20668,18 @@ export namespace Prisma {
     id?: SortOrder
     tenantId?: SortOrder
     invoiceNumber?: SortOrder
+    invoicePrefix?: SortOrder
     date?: SortOrder
     dueDate?: SortOrder
     status?: SortOrder
     currency?: SortOrder
+    currencyRate?: SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
+    note?: SortOrder
     customerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13550,22 +20689,13 @@ export namespace Prisma {
   export type InvoiceSumOrderByAggregateInput = {
     id?: SortOrder
     tenantId?: SortOrder
+    currencyRate?: SortOrder
+    subtotal?: SortOrder
+    tax?: SortOrder
     total?: SortOrder
+    amountPaid?: SortOrder
+    balanceDue?: SortOrder
     customerId?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumInvoiceStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -13576,6 +20706,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumInvoiceStatusFilter<$PrismaModel>
     _max?: NestedEnumInvoiceStatusFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type InvoiceScalarRelationFilter = {
@@ -13650,6 +20796,20 @@ export namespace Prisma {
     lineTotal?: SortOrder
   }
 
+  export type EnumPaymentMethodFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentMethodFilter<$PrismaModel> | $Enums.PaymentMethod
+  }
+
+  export type EnumPaymentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
+  }
+
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
     tenantId?: SortOrder
@@ -13658,6 +20818,7 @@ export namespace Prisma {
     paidDate?: SortOrder
     amount?: SortOrder
     method?: SortOrder
+    status?: SortOrder
     reference?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13679,6 +20840,7 @@ export namespace Prisma {
     paidDate?: SortOrder
     amount?: SortOrder
     method?: SortOrder
+    status?: SortOrder
     reference?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13693,6 +20855,7 @@ export namespace Prisma {
     paidDate?: SortOrder
     amount?: SortOrder
     method?: SortOrder
+    status?: SortOrder
     reference?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13706,11 +20869,81 @@ export namespace Prisma {
     amount?: SortOrder
   }
 
+  export type EnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentMethodWithAggregatesFilter<$PrismaModel> | $Enums.PaymentMethod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentMethodFilter<$PrismaModel>
+    _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
+  }
+
+  export type EnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
+    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  }
+
+  export type AuditLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    actor?: SortOrder
+    action?: SortOrder
+    meta?: SortOrder
+    ipAddress?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AuditLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    actor?: SortOrder
+    action?: SortOrder
+    ipAddress?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    actor?: SortOrder
+    action?: SortOrder
+    ipAddress?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutTenantInput = {
     create?: XOR<UserCreateWithoutTenantInput, UserUncheckedCreateWithoutTenantInput> | UserCreateWithoutTenantInput[] | UserUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutTenantInput | UserCreateOrConnectWithoutTenantInput[]
     createMany?: UserCreateManyTenantInputEnvelope
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type PackageCreateNestedManyWithoutTenantInput = {
+    create?: XOR<PackageCreateWithoutTenantInput, PackageUncheckedCreateWithoutTenantInput> | PackageCreateWithoutTenantInput[] | PackageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageCreateOrConnectWithoutTenantInput | PackageCreateOrConnectWithoutTenantInput[]
+    createMany?: PackageCreateManyTenantInputEnvelope
+    connect?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
   }
 
   export type VendorCreateNestedManyWithoutTenantInput = {
@@ -13748,6 +20981,20 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
+  export type PackageSubscriptionCreateNestedManyWithoutTenantInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutTenantInput, PackageSubscriptionUncheckedCreateWithoutTenantInput> | PackageSubscriptionCreateWithoutTenantInput[] | PackageSubscriptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutTenantInput | PackageSubscriptionCreateOrConnectWithoutTenantInput[]
+    createMany?: PackageSubscriptionCreateManyTenantInputEnvelope
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+  }
+
+  export type SessionCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SessionCreateWithoutTenantInput, SessionUncheckedCreateWithoutTenantInput> | SessionCreateWithoutTenantInput[] | SessionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutTenantInput | SessionCreateOrConnectWithoutTenantInput[]
+    createMany?: SessionCreateManyTenantInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
   export type InvoiceItemCreateNestedManyWithoutTenantInput = {
     create?: XOR<InvoiceItemCreateWithoutTenantInput, InvoiceItemUncheckedCreateWithoutTenantInput> | InvoiceItemCreateWithoutTenantInput[] | InvoiceItemUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: InvoiceItemCreateOrConnectWithoutTenantInput | InvoiceItemCreateOrConnectWithoutTenantInput[]
@@ -13760,6 +21007,13 @@ export namespace Prisma {
     connectOrCreate?: UserCreateOrConnectWithoutTenantInput | UserCreateOrConnectWithoutTenantInput[]
     createMany?: UserCreateManyTenantInputEnvelope
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type PackageUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<PackageCreateWithoutTenantInput, PackageUncheckedCreateWithoutTenantInput> | PackageCreateWithoutTenantInput[] | PackageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageCreateOrConnectWithoutTenantInput | PackageCreateOrConnectWithoutTenantInput[]
+    createMany?: PackageCreateManyTenantInputEnvelope
+    connect?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
   }
 
   export type VendorUncheckedCreateNestedManyWithoutTenantInput = {
@@ -13797,6 +21051,20 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
+  export type PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutTenantInput, PackageSubscriptionUncheckedCreateWithoutTenantInput> | PackageSubscriptionCreateWithoutTenantInput[] | PackageSubscriptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutTenantInput | PackageSubscriptionCreateOrConnectWithoutTenantInput[]
+    createMany?: PackageSubscriptionCreateManyTenantInputEnvelope
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+  }
+
+  export type SessionUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<SessionCreateWithoutTenantInput, SessionUncheckedCreateWithoutTenantInput> | SessionCreateWithoutTenantInput[] | SessionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutTenantInput | SessionCreateOrConnectWithoutTenantInput[]
+    createMany?: SessionCreateManyTenantInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
   export type InvoiceItemUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<InvoiceItemCreateWithoutTenantInput, InvoiceItemUncheckedCreateWithoutTenantInput> | InvoiceItemCreateWithoutTenantInput[] | InvoiceItemUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: InvoiceItemCreateOrConnectWithoutTenantInput | InvoiceItemCreateOrConnectWithoutTenantInput[]
@@ -13812,6 +21080,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type UserUpdateManyWithoutTenantNestedInput = {
     create?: XOR<UserCreateWithoutTenantInput, UserUncheckedCreateWithoutTenantInput> | UserCreateWithoutTenantInput[] | UserUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutTenantInput | UserCreateOrConnectWithoutTenantInput[]
@@ -13824,6 +21096,20 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutTenantInput | UserUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: UserUpdateManyWithWhereWithoutTenantInput | UserUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type PackageUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<PackageCreateWithoutTenantInput, PackageUncheckedCreateWithoutTenantInput> | PackageCreateWithoutTenantInput[] | PackageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageCreateOrConnectWithoutTenantInput | PackageCreateOrConnectWithoutTenantInput[]
+    upsert?: PackageUpsertWithWhereUniqueWithoutTenantInput | PackageUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: PackageCreateManyTenantInputEnvelope
+    set?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    disconnect?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    delete?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    connect?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    update?: PackageUpdateWithWhereUniqueWithoutTenantInput | PackageUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: PackageUpdateManyWithWhereWithoutTenantInput | PackageUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: PackageScalarWhereInput | PackageScalarWhereInput[]
   }
 
   export type VendorUpdateManyWithoutTenantNestedInput = {
@@ -13896,6 +21182,34 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
+  export type PackageSubscriptionUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutTenantInput, PackageSubscriptionUncheckedCreateWithoutTenantInput> | PackageSubscriptionCreateWithoutTenantInput[] | PackageSubscriptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutTenantInput | PackageSubscriptionCreateOrConnectWithoutTenantInput[]
+    upsert?: PackageSubscriptionUpsertWithWhereUniqueWithoutTenantInput | PackageSubscriptionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: PackageSubscriptionCreateManyTenantInputEnvelope
+    set?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    disconnect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    delete?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    update?: PackageSubscriptionUpdateWithWhereUniqueWithoutTenantInput | PackageSubscriptionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: PackageSubscriptionUpdateManyWithWhereWithoutTenantInput | PackageSubscriptionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: PackageSubscriptionScalarWhereInput | PackageSubscriptionScalarWhereInput[]
+  }
+
+  export type SessionUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SessionCreateWithoutTenantInput, SessionUncheckedCreateWithoutTenantInput> | SessionCreateWithoutTenantInput[] | SessionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutTenantInput | SessionCreateOrConnectWithoutTenantInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutTenantInput | SessionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SessionCreateManyTenantInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutTenantInput | SessionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutTenantInput | SessionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
   export type InvoiceItemUpdateManyWithoutTenantNestedInput = {
     create?: XOR<InvoiceItemCreateWithoutTenantInput, InvoiceItemUncheckedCreateWithoutTenantInput> | InvoiceItemCreateWithoutTenantInput[] | InvoiceItemUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: InvoiceItemCreateOrConnectWithoutTenantInput | InvoiceItemCreateOrConnectWithoutTenantInput[]
@@ -13930,6 +21244,20 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutTenantInput | UserUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: UserUpdateManyWithWhereWithoutTenantInput | UserUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type PackageUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<PackageCreateWithoutTenantInput, PackageUncheckedCreateWithoutTenantInput> | PackageCreateWithoutTenantInput[] | PackageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageCreateOrConnectWithoutTenantInput | PackageCreateOrConnectWithoutTenantInput[]
+    upsert?: PackageUpsertWithWhereUniqueWithoutTenantInput | PackageUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: PackageCreateManyTenantInputEnvelope
+    set?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    disconnect?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    delete?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    connect?: PackageWhereUniqueInput | PackageWhereUniqueInput[]
+    update?: PackageUpdateWithWhereUniqueWithoutTenantInput | PackageUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: PackageUpdateManyWithWhereWithoutTenantInput | PackageUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: PackageScalarWhereInput | PackageScalarWhereInput[]
   }
 
   export type VendorUncheckedUpdateManyWithoutTenantNestedInput = {
@@ -14002,6 +21330,34 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
+  export type PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutTenantInput, PackageSubscriptionUncheckedCreateWithoutTenantInput> | PackageSubscriptionCreateWithoutTenantInput[] | PackageSubscriptionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutTenantInput | PackageSubscriptionCreateOrConnectWithoutTenantInput[]
+    upsert?: PackageSubscriptionUpsertWithWhereUniqueWithoutTenantInput | PackageSubscriptionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: PackageSubscriptionCreateManyTenantInputEnvelope
+    set?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    disconnect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    delete?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    update?: PackageSubscriptionUpdateWithWhereUniqueWithoutTenantInput | PackageSubscriptionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: PackageSubscriptionUpdateManyWithWhereWithoutTenantInput | PackageSubscriptionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: PackageSubscriptionScalarWhereInput | PackageSubscriptionScalarWhereInput[]
+  }
+
+  export type SessionUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<SessionCreateWithoutTenantInput, SessionUncheckedCreateWithoutTenantInput> | SessionCreateWithoutTenantInput[] | SessionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutTenantInput | SessionCreateOrConnectWithoutTenantInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutTenantInput | SessionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: SessionCreateManyTenantInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutTenantInput | SessionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutTenantInput | SessionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
   export type InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<InvoiceItemCreateWithoutTenantInput, InvoiceItemUncheckedCreateWithoutTenantInput> | InvoiceItemCreateWithoutTenantInput[] | InvoiceItemUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: InvoiceItemCreateOrConnectWithoutTenantInput | InvoiceItemCreateOrConnectWithoutTenantInput[]
@@ -14022,30 +21378,114 @@ export namespace Prisma {
     connect?: TenantWhereUniqueInput
   }
 
+  export type SessionCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
   export type EnumUserTypeFieldUpdateOperationsInput = {
     set?: $Enums.UserType
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type EnumSyncStatusFieldUpdateOperationsInput = {
     set?: $Enums.SyncStatus
   }
 
-  export type TenantUpdateOneRequiredWithoutUsersNestedInput = {
+  export type TenantUpdateOneWithoutUsersNestedInput = {
     create?: XOR<TenantCreateWithoutUsersInput, TenantUncheckedCreateWithoutUsersInput>
     connectOrCreate?: TenantCreateOrConnectWithoutUsersInput
     upsert?: TenantUpsertWithoutUsersInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
     connect?: TenantWhereUniqueInput
     update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutUsersInput, TenantUpdateWithoutUsersInput>, TenantUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type SessionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutSessionsInput = {
+    create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutUserSessionInput = {
+    create?: XOR<TenantCreateWithoutUserSessionInput, TenantUncheckedCreateWithoutUserSessionInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutUserSessionInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
+    create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
+    upsert?: UserUpsertWithoutSessionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type TenantUpdateOneRequiredWithoutUserSessionNestedInput = {
+    create?: XOR<TenantCreateWithoutUserSessionInput, TenantUncheckedCreateWithoutUserSessionInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutUserSessionInput
+    upsert?: TenantUpsertWithoutUserSessionInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutUserSessionInput, TenantUpdateWithoutUserSessionInput>, TenantUncheckedUpdateWithoutUserSessionInput>
   }
 
   export type TenantCreateNestedOneWithoutVendorsInput = {
     create?: XOR<TenantCreateWithoutVendorsInput, TenantUncheckedCreateWithoutVendorsInput>
     connectOrCreate?: TenantCreateOrConnectWithoutVendorsInput
     connect?: TenantWhereUniqueInput
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type TenantUpdateOneRequiredWithoutVendorsNestedInput = {
@@ -14132,12 +21572,12 @@ export namespace Prisma {
     connect?: InvoiceItemWhereUniqueInput | InvoiceItemWhereUniqueInput[]
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type TenantUpdateOneRequiredWithoutItemsNestedInput = {
@@ -14174,6 +21614,134 @@ export namespace Prisma {
     update?: InvoiceItemUpdateWithWhereUniqueWithoutItemInput | InvoiceItemUpdateWithWhereUniqueWithoutItemInput[]
     updateMany?: InvoiceItemUpdateManyWithWhereWithoutItemInput | InvoiceItemUpdateManyWithWhereWithoutItemInput[]
     deleteMany?: InvoiceItemScalarWhereInput | InvoiceItemScalarWhereInput[]
+  }
+
+  export type PackageCreatefreeFeaturesInput = {
+    set: $Enums.FreeFeatures[]
+  }
+
+  export type PackageCreatebasicFeaturesInput = {
+    set: $Enums.BasicFeatures[]
+  }
+
+  export type PackageCreateproFeaturesInput = {
+    set: $Enums.ProFeatures[]
+  }
+
+  export type PackageCreateenterpriseFeaturesInput = {
+    set: $Enums.EnterpriseFeatures[]
+  }
+
+  export type TenantCreateNestedOneWithoutPackagesInput = {
+    create?: XOR<TenantCreateWithoutPackagesInput, TenantUncheckedCreateWithoutPackagesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPackagesInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type PackageSubscriptionCreateNestedManyWithoutPackageInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutPackageInput, PackageSubscriptionUncheckedCreateWithoutPackageInput> | PackageSubscriptionCreateWithoutPackageInput[] | PackageSubscriptionUncheckedCreateWithoutPackageInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutPackageInput | PackageSubscriptionCreateOrConnectWithoutPackageInput[]
+    createMany?: PackageSubscriptionCreateManyPackageInputEnvelope
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+  }
+
+  export type PackageSubscriptionUncheckedCreateNestedManyWithoutPackageInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutPackageInput, PackageSubscriptionUncheckedCreateWithoutPackageInput> | PackageSubscriptionCreateWithoutPackageInput[] | PackageSubscriptionUncheckedCreateWithoutPackageInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutPackageInput | PackageSubscriptionCreateOrConnectWithoutPackageInput[]
+    createMany?: PackageSubscriptionCreateManyPackageInputEnvelope
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+  }
+
+  export type EnumpackageNameFieldUpdateOperationsInput = {
+    set?: $Enums.packageName
+  }
+
+  export type PackageUpdatefreeFeaturesInput = {
+    set?: $Enums.FreeFeatures[]
+    push?: $Enums.FreeFeatures | $Enums.FreeFeatures[]
+  }
+
+  export type PackageUpdatebasicFeaturesInput = {
+    set?: $Enums.BasicFeatures[]
+    push?: $Enums.BasicFeatures | $Enums.BasicFeatures[]
+  }
+
+  export type PackageUpdateproFeaturesInput = {
+    set?: $Enums.ProFeatures[]
+    push?: $Enums.ProFeatures | $Enums.ProFeatures[]
+  }
+
+  export type PackageUpdateenterpriseFeaturesInput = {
+    set?: $Enums.EnterpriseFeatures[]
+    push?: $Enums.EnterpriseFeatures | $Enums.EnterpriseFeatures[]
+  }
+
+  export type TenantUpdateOneRequiredWithoutPackagesNestedInput = {
+    create?: XOR<TenantCreateWithoutPackagesInput, TenantUncheckedCreateWithoutPackagesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPackagesInput
+    upsert?: TenantUpsertWithoutPackagesInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutPackagesInput, TenantUpdateWithoutPackagesInput>, TenantUncheckedUpdateWithoutPackagesInput>
+  }
+
+  export type PackageSubscriptionUpdateManyWithoutPackageNestedInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutPackageInput, PackageSubscriptionUncheckedCreateWithoutPackageInput> | PackageSubscriptionCreateWithoutPackageInput[] | PackageSubscriptionUncheckedCreateWithoutPackageInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutPackageInput | PackageSubscriptionCreateOrConnectWithoutPackageInput[]
+    upsert?: PackageSubscriptionUpsertWithWhereUniqueWithoutPackageInput | PackageSubscriptionUpsertWithWhereUniqueWithoutPackageInput[]
+    createMany?: PackageSubscriptionCreateManyPackageInputEnvelope
+    set?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    disconnect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    delete?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    update?: PackageSubscriptionUpdateWithWhereUniqueWithoutPackageInput | PackageSubscriptionUpdateWithWhereUniqueWithoutPackageInput[]
+    updateMany?: PackageSubscriptionUpdateManyWithWhereWithoutPackageInput | PackageSubscriptionUpdateManyWithWhereWithoutPackageInput[]
+    deleteMany?: PackageSubscriptionScalarWhereInput | PackageSubscriptionScalarWhereInput[]
+  }
+
+  export type PackageSubscriptionUncheckedUpdateManyWithoutPackageNestedInput = {
+    create?: XOR<PackageSubscriptionCreateWithoutPackageInput, PackageSubscriptionUncheckedCreateWithoutPackageInput> | PackageSubscriptionCreateWithoutPackageInput[] | PackageSubscriptionUncheckedCreateWithoutPackageInput[]
+    connectOrCreate?: PackageSubscriptionCreateOrConnectWithoutPackageInput | PackageSubscriptionCreateOrConnectWithoutPackageInput[]
+    upsert?: PackageSubscriptionUpsertWithWhereUniqueWithoutPackageInput | PackageSubscriptionUpsertWithWhereUniqueWithoutPackageInput[]
+    createMany?: PackageSubscriptionCreateManyPackageInputEnvelope
+    set?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    disconnect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    delete?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    connect?: PackageSubscriptionWhereUniqueInput | PackageSubscriptionWhereUniqueInput[]
+    update?: PackageSubscriptionUpdateWithWhereUniqueWithoutPackageInput | PackageSubscriptionUpdateWithWhereUniqueWithoutPackageInput[]
+    updateMany?: PackageSubscriptionUpdateManyWithWhereWithoutPackageInput | PackageSubscriptionUpdateManyWithWhereWithoutPackageInput[]
+    deleteMany?: PackageSubscriptionScalarWhereInput | PackageSubscriptionScalarWhereInput[]
+  }
+
+  export type TenantCreateNestedOneWithoutSubscriptionInput = {
+    create?: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSubscriptionInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type PackageCreateNestedOneWithoutSubscriptionInput = {
+    create?: XOR<PackageCreateWithoutSubscriptionInput, PackageUncheckedCreateWithoutSubscriptionInput>
+    connectOrCreate?: PackageCreateOrConnectWithoutSubscriptionInput
+    connect?: PackageWhereUniqueInput
+  }
+
+  export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SubscriptionStatus
+  }
+
+  export type TenantUpdateOneRequiredWithoutSubscriptionNestedInput = {
+    create?: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSubscriptionInput
+    upsert?: TenantUpsertWithoutSubscriptionInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSubscriptionInput, TenantUpdateWithoutSubscriptionInput>, TenantUncheckedUpdateWithoutSubscriptionInput>
+  }
+
+  export type PackageUpdateOneRequiredWithoutSubscriptionNestedInput = {
+    create?: XOR<PackageCreateWithoutSubscriptionInput, PackageUncheckedCreateWithoutSubscriptionInput>
+    connectOrCreate?: PackageCreateOrConnectWithoutSubscriptionInput
+    upsert?: PackageUpsertWithoutSubscriptionInput
+    connect?: PackageWhereUniqueInput
+    update?: XOR<XOR<PackageUpdateToOneWithWhereWithoutSubscriptionInput, PackageUpdateWithoutSubscriptionInput>, PackageUncheckedUpdateWithoutSubscriptionInput>
   }
 
   export type TenantCreateNestedOneWithoutInvoicesInput = {
@@ -14216,12 +21784,16 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type EnumInvoiceStatusFieldUpdateOperationsInput = {
     set?: $Enums.InvoiceStatus
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type TenantUpdateOneRequiredWithoutInvoicesNestedInput = {
@@ -14296,9 +21868,9 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
-  export type TenantCreateNestedOneWithoutInvoiceItemsInput = {
-    create?: XOR<TenantCreateWithoutInvoiceItemsInput, TenantUncheckedCreateWithoutInvoiceItemsInput>
-    connectOrCreate?: TenantCreateOrConnectWithoutInvoiceItemsInput
+  export type TenantCreateNestedOneWithoutInvoiceItemInput = {
+    create?: XOR<TenantCreateWithoutInvoiceItemInput, TenantUncheckedCreateWithoutInvoiceItemInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutInvoiceItemInput
     connect?: TenantWhereUniqueInput
   }
 
@@ -14314,12 +21886,12 @@ export namespace Prisma {
     connect?: ItemWhereUniqueInput
   }
 
-  export type TenantUpdateOneRequiredWithoutInvoiceItemsNestedInput = {
-    create?: XOR<TenantCreateWithoutInvoiceItemsInput, TenantUncheckedCreateWithoutInvoiceItemsInput>
-    connectOrCreate?: TenantCreateOrConnectWithoutInvoiceItemsInput
-    upsert?: TenantUpsertWithoutInvoiceItemsInput
+  export type TenantUpdateOneRequiredWithoutInvoiceItemNestedInput = {
+    create?: XOR<TenantCreateWithoutInvoiceItemInput, TenantUncheckedCreateWithoutInvoiceItemInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutInvoiceItemInput
+    upsert?: TenantUpsertWithoutInvoiceItemInput
     connect?: TenantWhereUniqueInput
-    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutInvoiceItemsInput, TenantUpdateWithoutInvoiceItemsInput>, TenantUncheckedUpdateWithoutInvoiceItemsInput>
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutInvoiceItemInput, TenantUpdateWithoutInvoiceItemInput>, TenantUncheckedUpdateWithoutInvoiceItemInput>
   }
 
   export type InvoiceUpdateOneRequiredWithoutItemsNestedInput = {
@@ -14348,6 +21920,14 @@ export namespace Prisma {
     create?: XOR<InvoiceCreateWithoutPaymentsInput, InvoiceUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: InvoiceCreateOrConnectWithoutPaymentsInput
     connect?: InvoiceWhereUniqueInput
+  }
+
+  export type EnumPaymentMethodFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentMethod
+  }
+
+  export type EnumPaymentStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentStatus
   }
 
   export type TenantUpdateOneRequiredWithoutPaymentsNestedInput = {
@@ -14402,6 +21982,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -14446,6 +22037,40 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -14460,38 +22085,25 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumUserTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.UserType | EnumUserTypeFieldRefInput<$PrismaModel>
     in?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumUserTypeFilter<$PrismaModel> | $Enums.UserType
-  }
-
-  export type NestedEnumSyncStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumSyncStatusFilter<$PrismaModel> | $Enums.SyncStatus
-  }
-
-  export type NestedEnumUserTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserType | EnumUserTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserTypeWithAggregatesFilter<$PrismaModel> | $Enums.UserType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserTypeFilter<$PrismaModel>
-    _max?: NestedEnumUserTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.SyncStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSyncStatusFilter<$PrismaModel>
-    _max?: NestedEnumSyncStatusFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -14506,6 +22118,55 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumSyncStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSyncStatusFilter<$PrismaModel> | $Enums.SyncStatus
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumUserTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserType | EnumUserTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserType[] | ListEnumUserTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserTypeWithAggregatesFilter<$PrismaModel> | $Enums.UserType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserTypeFilter<$PrismaModel>
+    _max?: NestedEnumUserTypeFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -14525,42 +22186,83 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type NestedEnumSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SyncStatus | EnumSyncStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SyncStatus[] | ListEnumSyncStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.SyncStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSyncStatusFilter<$PrismaModel>
+    _max?: NestedEnumSyncStatusFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedEnumpackageNameFilter<$PrismaModel = never> = {
+    equals?: $Enums.packageName | EnumpackageNameFieldRefInput<$PrismaModel>
+    in?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumpackageNameFilter<$PrismaModel> | $Enums.packageName
+  }
+
+  export type NestedEnumpackageNameWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.packageName | EnumpackageNameFieldRefInput<$PrismaModel>
+    in?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.packageName[] | ListEnumpackageNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumpackageNameWithAggregatesFilter<$PrismaModel> | $Enums.packageName
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumpackageNameFilter<$PrismaModel>
+    _max?: NestedEnumpackageNameFilter<$PrismaModel>
+  }
+
+  export type NestedEnumSubscriptionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionStatus | EnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubscriptionStatusFilter<$PrismaModel> | $Enums.SubscriptionStatus
+  }
+
+  export type NestedEnumSubscriptionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionStatus | EnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubscriptionStatus[] | ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubscriptionStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubscriptionStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubscriptionStatusFilter<$PrismaModel>
+    _max?: NestedEnumSubscriptionStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumInvoiceStatusFilter<$PrismaModel = never> = {
@@ -14570,18 +22272,15 @@ export namespace Prisma {
     not?: NestedEnumInvoiceStatusFilter<$PrismaModel> | $Enums.InvoiceStatus
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type NestedEnumInvoiceStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -14594,14 +22293,68 @@ export namespace Prisma {
     _max?: NestedEnumInvoiceStatusFilter<$PrismaModel>
   }
 
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPaymentMethodFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentMethodFilter<$PrismaModel> | $Enums.PaymentMethod
+  }
+
+  export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
+  }
+
+  export type NestedEnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentMethodWithAggregatesFilter<$PrismaModel> | $Enums.PaymentMethod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentMethodFilter<$PrismaModel>
+    _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
+    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutTenantInput = {
     name: string
     email: string
     password: string
     role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTenantInput = {
@@ -14610,9 +22363,13 @@ export namespace Prisma {
     email: string
     password: string
     role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTenantInput = {
@@ -14622,6 +22379,45 @@ export namespace Prisma {
 
   export type UserCreateManyTenantInputEnvelope = {
     data: UserCreateManyTenantInput | UserCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PackageCreateWithoutTenantInput = {
+    name?: $Enums.packageName
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subscription?: PackageSubscriptionCreateNestedManyWithoutPackageInput
+  }
+
+  export type PackageUncheckedCreateWithoutTenantInput = {
+    id?: number
+    name?: $Enums.packageName
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutPackageInput
+  }
+
+  export type PackageCreateOrConnectWithoutTenantInput = {
+    where: PackageWhereUniqueInput
+    create: XOR<PackageCreateWithoutTenantInput, PackageUncheckedCreateWithoutTenantInput>
+  }
+
+  export type PackageCreateManyTenantInputEnvelope = {
+    data: PackageCreateManyTenantInput | PackageCreateManyTenantInput[]
     skipDuplicates?: boolean
   }
 
@@ -14695,8 +22491,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -14708,8 +22504,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -14728,11 +22524,18 @@ export namespace Prisma {
 
   export type InvoiceCreateWithoutTenantInput = {
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -14744,11 +22547,18 @@ export namespace Prisma {
   export type InvoiceUncheckedCreateWithoutTenantInput = {
     id?: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     customerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14770,8 +22580,9 @@ export namespace Prisma {
   export type PaymentCreateWithoutTenantInput = {
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14784,8 +22595,9 @@ export namespace Prisma {
     invoiceId: number
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14802,11 +22614,79 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PackageSubscriptionCreateWithoutTenantInput = {
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    package: PackageCreateNestedOneWithoutSubscriptionInput
+  }
+
+  export type PackageSubscriptionUncheckedCreateWithoutTenantInput = {
+    id?: number
+    packageId: number
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageSubscriptionCreateOrConnectWithoutTenantInput = {
+    where: PackageSubscriptionWhereUniqueInput
+    create: XOR<PackageSubscriptionCreateWithoutTenantInput, PackageSubscriptionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type PackageSubscriptionCreateManyTenantInputEnvelope = {
+    data: PackageSubscriptionCreateManyTenantInput | PackageSubscriptionCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SessionCreateWithoutTenantInput = {
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSessionsInput
+  }
+
+  export type SessionUncheckedCreateWithoutTenantInput = {
+    id?: number
+    userId: number
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutTenantInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutTenantInput, SessionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SessionCreateManyTenantInputEnvelope = {
+    data: SessionCreateManyTenantInput | SessionCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type InvoiceItemCreateWithoutTenantInput = {
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -14819,9 +22699,9 @@ export namespace Prisma {
     invoiceId: number
     itemId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -14858,14 +22738,51 @@ export namespace Prisma {
     OR?: UserScalarWhereInput[]
     NOT?: UserScalarWhereInput | UserScalarWhereInput[]
     id?: IntFilter<"User"> | number
-    tenantId?: IntFilter<"User"> | number
+    tenantId?: IntNullableFilter<"User"> | number | null
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumUserTypeFilter<"User"> | $Enums.UserType
+    lastSeenAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    locale?: StringNullableFilter<"User"> | string | null
+    isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"User"> | $Enums.SyncStatus
+  }
+
+  export type PackageUpsertWithWhereUniqueWithoutTenantInput = {
+    where: PackageWhereUniqueInput
+    update: XOR<PackageUpdateWithoutTenantInput, PackageUncheckedUpdateWithoutTenantInput>
+    create: XOR<PackageCreateWithoutTenantInput, PackageUncheckedCreateWithoutTenantInput>
+  }
+
+  export type PackageUpdateWithWhereUniqueWithoutTenantInput = {
+    where: PackageWhereUniqueInput
+    data: XOR<PackageUpdateWithoutTenantInput, PackageUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type PackageUpdateManyWithWhereWithoutTenantInput = {
+    where: PackageScalarWhereInput
+    data: XOR<PackageUpdateManyMutationInput, PackageUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type PackageScalarWhereInput = {
+    AND?: PackageScalarWhereInput | PackageScalarWhereInput[]
+    OR?: PackageScalarWhereInput[]
+    NOT?: PackageScalarWhereInput | PackageScalarWhereInput[]
+    id?: IntFilter<"Package"> | number
+    name?: EnumpackageNameFilter<"Package"> | $Enums.packageName
+    tenantId?: IntFilter<"Package"> | number
+    price?: DecimalFilter<"Package"> | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFilter<"Package"> | number
+    freeFeatures?: EnumFreeFeaturesNullableListFilter<"Package">
+    basicFeatures?: EnumBasicFeaturesNullableListFilter<"Package">
+    proFeatures?: EnumProFeaturesNullableListFilter<"Package">
+    enterpriseFeatures?: EnumEnterpriseFeaturesNullableListFilter<"Package">
+    metadata?: JsonNullableFilter<"Package">
+    createdAt?: DateTimeFilter<"Package"> | Date | string
+    updatedAt?: DateTimeFilter<"Package"> | Date | string
   }
 
   export type VendorUpsertWithWhereUniqueWithoutTenantInput = {
@@ -14956,8 +22873,8 @@ export namespace Prisma {
     name?: StringFilter<"Item"> | string
     sku?: StringNullableFilter<"Item"> | string | null
     description?: StringNullableFilter<"Item"> | string | null
-    unitPrice?: FloatFilter<"Item"> | number
-    quantity?: FloatFilter<"Item"> | number
+    unitPrice?: DecimalFilter<"Item"> | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFilter<"Item"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"Item"> | Date | string
     updatedAt?: DateTimeFilter<"Item"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"Item"> | $Enums.SyncStatus
@@ -14986,11 +22903,18 @@ export namespace Prisma {
     id?: IntFilter<"Invoice"> | number
     tenantId?: IntFilter<"Invoice"> | number
     invoiceNumber?: StringFilter<"Invoice"> | string
+    invoicePrefix?: StringNullableFilter<"Invoice"> | string | null
     date?: DateTimeFilter<"Invoice"> | Date | string
     dueDate?: DateTimeNullableFilter<"Invoice"> | Date | string | null
     status?: EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
     currency?: StringFilter<"Invoice"> | string
-    total?: FloatFilter<"Invoice"> | number
+    currencyRate?: DecimalNullableFilter<"Invoice"> | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    total?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFilter<"Invoice"> | Decimal | DecimalJsLike | number | string
+    note?: StringNullableFilter<"Invoice"> | string | null
     customerId?: IntFilter<"Invoice"> | number
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
@@ -15022,12 +22946,78 @@ export namespace Prisma {
     invoiceId?: IntFilter<"Payment"> | number
     date?: DateTimeFilter<"Payment"> | Date | string
     paidDate?: DateTimeFilter<"Payment"> | Date | string
-    amount?: FloatFilter<"Payment"> | number
-    method?: StringFilter<"Payment"> | string
+    amount?: DecimalFilter<"Payment"> | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFilter<"Payment"> | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
     reference?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"Payment"> | $Enums.SyncStatus
+  }
+
+  export type PackageSubscriptionUpsertWithWhereUniqueWithoutTenantInput = {
+    where: PackageSubscriptionWhereUniqueInput
+    update: XOR<PackageSubscriptionUpdateWithoutTenantInput, PackageSubscriptionUncheckedUpdateWithoutTenantInput>
+    create: XOR<PackageSubscriptionCreateWithoutTenantInput, PackageSubscriptionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type PackageSubscriptionUpdateWithWhereUniqueWithoutTenantInput = {
+    where: PackageSubscriptionWhereUniqueInput
+    data: XOR<PackageSubscriptionUpdateWithoutTenantInput, PackageSubscriptionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type PackageSubscriptionUpdateManyWithWhereWithoutTenantInput = {
+    where: PackageSubscriptionScalarWhereInput
+    data: XOR<PackageSubscriptionUpdateManyMutationInput, PackageSubscriptionUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type PackageSubscriptionScalarWhereInput = {
+    AND?: PackageSubscriptionScalarWhereInput | PackageSubscriptionScalarWhereInput[]
+    OR?: PackageSubscriptionScalarWhereInput[]
+    NOT?: PackageSubscriptionScalarWhereInput | PackageSubscriptionScalarWhereInput[]
+    id?: IntFilter<"PackageSubscription"> | number
+    tenantId?: IntFilter<"PackageSubscription"> | number
+    packageId?: IntFilter<"PackageSubscription"> | number
+    status?: EnumSubscriptionStatusFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
+    seats?: IntFilter<"PackageSubscription"> | number
+    autoRenew?: BoolFilter<"PackageSubscription"> | boolean
+    startsAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    endsAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    trialEndsAt?: DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
+    metadata?: JsonNullableFilter<"PackageSubscription">
+    createdAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"PackageSubscription"> | Date | string
+  }
+
+  export type SessionUpsertWithWhereUniqueWithoutTenantInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutTenantInput, SessionUncheckedUpdateWithoutTenantInput>
+    create: XOR<SessionCreateWithoutTenantInput, SessionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutTenantInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutTenantInput, SessionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutTenantInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type SessionScalarWhereInput = {
+    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    OR?: SessionScalarWhereInput[]
+    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    id?: IntFilter<"Session"> | number
+    userId?: IntFilter<"Session"> | number
+    tenantId?: IntFilter<"Session"> | number
+    sessionToken?: StringFilter<"Session"> | string
+    expires?: DateTimeFilter<"Session"> | Date | string
+    ipAddress?: StringNullableFilter<"Session"> | string | null
+    userAgent?: StringNullableFilter<"Session"> | string | null
+    createdAt?: DateTimeFilter<"Session"> | Date | string
+    updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutTenantInput = {
@@ -15055,9 +23045,9 @@ export namespace Prisma {
     invoiceId?: IntFilter<"InvoiceItem"> | number
     itemId?: IntFilter<"InvoiceItem"> | number
     description?: StringNullableFilter<"InvoiceItem"> | string | null
-    quantity?: FloatFilter<"InvoiceItem"> | number
-    unitPrice?: FloatFilter<"InvoiceItem"> | number
-    lineTotal?: FloatFilter<"InvoiceItem"> | number
+    quantity?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFilter<"InvoiceItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"InvoiceItem"> | Date | string
     updatedAt?: DateTimeFilter<"InvoiceItem"> | Date | string
     syncStatus?: EnumSyncStatusFilter<"InvoiceItem"> | $Enums.SyncStatus
@@ -15065,32 +23055,75 @@ export namespace Prisma {
 
   export type TenantCreateWithoutUsersInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    packages?: PackageCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutUsersInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutUsersInput = {
     where: TenantWhereUniqueInput
     create: XOR<TenantCreateWithoutUsersInput, TenantUncheckedCreateWithoutUsersInput>
+  }
+
+  export type SessionCreateWithoutUserInput = {
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutUserSessionInput
+  }
+
+  export type SessionUncheckedCreateWithoutUserInput = {
+    id?: number
+    tenantId: number
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionCreateManyUserInputEnvelope = {
+    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type TenantUpsertWithoutUsersInput = {
@@ -15106,52 +23139,256 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
-  export type TenantCreateWithoutVendorsInput = {
+  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutUserInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserCreateWithoutSessionsInput = {
     name: string
+    email: string
+    password: string
+    role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    syncStatus?: $Enums.SyncStatus
+    tenant?: TenantCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutSessionsInput = {
+    id?: number
+    tenantId?: number | null
+    name: string
+    email: string
+    password: string
+    role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    syncStatus?: $Enums.SyncStatus
+  }
+
+  export type UserCreateOrConnectWithoutSessionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
+  }
+
+  export type TenantCreateWithoutUserSessionInput = {
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
+    vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutUserSessionInput = {
+    id?: number
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
+    vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
+    items?: ItemUncheckedCreateNestedManyWithoutTenantInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutUserSessionInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutUserSessionInput, TenantUncheckedCreateWithoutUserSessionInput>
+  }
+
+  export type UserUpsertWithoutSessionsInput = {
+    update: XOR<UserUpdateWithoutSessionsInput, UserUncheckedUpdateWithoutSessionsInput>
+    create: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSessionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSessionsInput, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type UserUpdateWithoutSessionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+    tenant?: TenantUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSessionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+  }
+
+  export type TenantUpsertWithoutUserSessionInput = {
+    update: XOR<TenantUpdateWithoutUserSessionInput, TenantUncheckedUpdateWithoutUserSessionInput>
+    create: XOR<TenantCreateWithoutUserSessionInput, TenantUncheckedCreateWithoutUserSessionInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutUserSessionInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutUserSessionInput, TenantUncheckedUpdateWithoutUserSessionInput>
+  }
+
+  export type TenantUpdateWithoutUserSessionInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
+    vendors?: VendorUpdateManyWithoutTenantNestedInput
+    customers?: CustomerUpdateManyWithoutTenantNestedInput
+    items?: ItemUpdateManyWithoutTenantNestedInput
+    invoices?: InvoiceUpdateManyWithoutTenantNestedInput
+    payments?: PaymentUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutUserSessionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
+    vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
+    items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantCreateWithoutVendorsInput = {
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
+    customers?: CustomerCreateNestedManyWithoutTenantInput
+    items?: ItemCreateNestedManyWithoutTenantInput
+    invoices?: InvoiceCreateNestedManyWithoutTenantInput
+    payments?: PaymentCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutVendorsInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutVendorsInput = {
@@ -15172,52 +23409,76 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutVendorsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutVendorsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateWithoutCustomersInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCustomersInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCustomersInput = {
@@ -15227,11 +23488,18 @@ export namespace Prisma {
 
   export type InvoiceCreateWithoutCustomerInput = {
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15244,11 +23512,18 @@ export namespace Prisma {
     id?: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15279,27 +23554,39 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutCustomersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCustomersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type InvoiceUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -15320,27 +23607,39 @@ export namespace Prisma {
 
   export type TenantCreateWithoutItemsInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutItemsInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutItemsInput = {
@@ -15350,13 +23649,13 @@ export namespace Prisma {
 
   export type InvoiceItemCreateWithoutItemInput = {
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
-    tenant: TenantCreateNestedOneWithoutInvoiceItemsInput
+    tenant: TenantCreateNestedOneWithoutInvoiceItemInput
     invoice: InvoiceCreateNestedOneWithoutItemsInput
   }
 
@@ -15365,9 +23664,9 @@ export namespace Prisma {
     tenantId: number
     invoiceId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15396,27 +23695,39 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutItemsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type InvoiceItemUpsertWithWhereUniqueWithoutItemInput = {
@@ -15435,29 +23746,348 @@ export namespace Prisma {
     data: XOR<InvoiceItemUpdateManyMutationInput, InvoiceItemUncheckedUpdateManyWithoutItemInput>
   }
 
-  export type TenantCreateWithoutInvoicesInput = {
+  export type TenantCreateWithoutPackagesInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
+    invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutPackagesInput = {
+    id?: number
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
+    items?: ItemUncheckedCreateNestedManyWithoutTenantInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutPackagesInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutPackagesInput, TenantUncheckedCreateWithoutPackagesInput>
+  }
+
+  export type PackageSubscriptionCreateWithoutPackageInput = {
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutSubscriptionInput
+  }
+
+  export type PackageSubscriptionUncheckedCreateWithoutPackageInput = {
+    id?: number
+    tenantId: number
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageSubscriptionCreateOrConnectWithoutPackageInput = {
+    where: PackageSubscriptionWhereUniqueInput
+    create: XOR<PackageSubscriptionCreateWithoutPackageInput, PackageSubscriptionUncheckedCreateWithoutPackageInput>
+  }
+
+  export type PackageSubscriptionCreateManyPackageInputEnvelope = {
+    data: PackageSubscriptionCreateManyPackageInput | PackageSubscriptionCreateManyPackageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TenantUpsertWithoutPackagesInput = {
+    update: XOR<TenantUpdateWithoutPackagesInput, TenantUncheckedUpdateWithoutPackagesInput>
+    create: XOR<TenantCreateWithoutPackagesInput, TenantUncheckedCreateWithoutPackagesInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutPackagesInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutPackagesInput, TenantUncheckedUpdateWithoutPackagesInput>
+  }
+
+  export type TenantUpdateWithoutPackagesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    vendors?: VendorUpdateManyWithoutTenantNestedInput
+    customers?: CustomerUpdateManyWithoutTenantNestedInput
+    items?: ItemUpdateManyWithoutTenantNestedInput
+    invoices?: InvoiceUpdateManyWithoutTenantNestedInput
+    payments?: PaymentUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutPackagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
+    items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type PackageSubscriptionUpsertWithWhereUniqueWithoutPackageInput = {
+    where: PackageSubscriptionWhereUniqueInput
+    update: XOR<PackageSubscriptionUpdateWithoutPackageInput, PackageSubscriptionUncheckedUpdateWithoutPackageInput>
+    create: XOR<PackageSubscriptionCreateWithoutPackageInput, PackageSubscriptionUncheckedCreateWithoutPackageInput>
+  }
+
+  export type PackageSubscriptionUpdateWithWhereUniqueWithoutPackageInput = {
+    where: PackageSubscriptionWhereUniqueInput
+    data: XOR<PackageSubscriptionUpdateWithoutPackageInput, PackageSubscriptionUncheckedUpdateWithoutPackageInput>
+  }
+
+  export type PackageSubscriptionUpdateManyWithWhereWithoutPackageInput = {
+    where: PackageSubscriptionScalarWhereInput
+    data: XOR<PackageSubscriptionUpdateManyMutationInput, PackageSubscriptionUncheckedUpdateManyWithoutPackageInput>
+  }
+
+  export type TenantCreateWithoutSubscriptionInput = {
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
+    vendors?: VendorCreateNestedManyWithoutTenantInput
+    customers?: CustomerCreateNestedManyWithoutTenantInput
+    items?: ItemCreateNestedManyWithoutTenantInput
+    invoices?: InvoiceCreateNestedManyWithoutTenantInput
+    payments?: PaymentCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSubscriptionInput = {
+    id?: number
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
+    vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
+    items?: ItemUncheckedCreateNestedManyWithoutTenantInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSubscriptionInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+  }
+
+  export type PackageCreateWithoutSubscriptionInput = {
+    name?: $Enums.packageName
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutPackagesInput
+  }
+
+  export type PackageUncheckedCreateWithoutSubscriptionInput = {
+    id?: number
+    name?: $Enums.packageName
+    tenantId: number
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageCreateOrConnectWithoutSubscriptionInput = {
+    where: PackageWhereUniqueInput
+    create: XOR<PackageCreateWithoutSubscriptionInput, PackageUncheckedCreateWithoutSubscriptionInput>
+  }
+
+  export type TenantUpsertWithoutSubscriptionInput = {
+    update: XOR<TenantUpdateWithoutSubscriptionInput, TenantUncheckedUpdateWithoutSubscriptionInput>
+    create: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSubscriptionInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSubscriptionInput, TenantUncheckedUpdateWithoutSubscriptionInput>
+  }
+
+  export type TenantUpdateWithoutSubscriptionInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
+    vendors?: VendorUpdateManyWithoutTenantNestedInput
+    customers?: CustomerUpdateManyWithoutTenantNestedInput
+    items?: ItemUpdateManyWithoutTenantNestedInput
+    invoices?: InvoiceUpdateManyWithoutTenantNestedInput
+    payments?: PaymentUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSubscriptionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
+    vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
+    items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type PackageUpsertWithoutSubscriptionInput = {
+    update: XOR<PackageUpdateWithoutSubscriptionInput, PackageUncheckedUpdateWithoutSubscriptionInput>
+    create: XOR<PackageCreateWithoutSubscriptionInput, PackageUncheckedCreateWithoutSubscriptionInput>
+    where?: PackageWhereInput
+  }
+
+  export type PackageUpdateToOneWithWhereWithoutSubscriptionInput = {
+    where?: PackageWhereInput
+    data: XOR<PackageUpdateWithoutSubscriptionInput, PackageUncheckedUpdateWithoutSubscriptionInput>
+  }
+
+  export type PackageUpdateWithoutSubscriptionInput = {
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutPackagesNestedInput
+  }
+
+  export type PackageUncheckedUpdateWithoutSubscriptionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    tenantId?: IntFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantCreateWithoutInvoicesInput = {
+    name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
+    vendors?: VendorCreateNestedManyWithoutTenantInput
+    customers?: CustomerCreateNestedManyWithoutTenantInput
+    items?: ItemCreateNestedManyWithoutTenantInput
+    payments?: PaymentCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutInvoicesInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutInvoicesInput = {
@@ -15495,13 +24125,13 @@ export namespace Prisma {
 
   export type InvoiceItemCreateWithoutInvoiceInput = {
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
-    tenant: TenantCreateNestedOneWithoutInvoiceItemsInput
+    tenant: TenantCreateNestedOneWithoutInvoiceItemInput
     item: ItemCreateNestedOneWithoutInvoiceItemsInput
   }
 
@@ -15510,9 +24140,9 @@ export namespace Prisma {
     tenantId: number
     itemId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15531,8 +24161,9 @@ export namespace Prisma {
   export type PaymentCreateWithoutInvoiceInput = {
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15545,8 +24176,9 @@ export namespace Prisma {
     tenantId: number
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15576,27 +24208,39 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutInvoicesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutInvoicesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CustomerUpsertWithoutInvoicesInput = {
@@ -15665,43 +24309,62 @@ export namespace Prisma {
     data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutInvoiceInput>
   }
 
-  export type TenantCreateWithoutInvoiceItemsInput = {
+  export type TenantCreateWithoutInvoiceItemInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
     payments?: PaymentCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
   }
 
-  export type TenantUncheckedCreateWithoutInvoiceItemsInput = {
+  export type TenantUncheckedCreateWithoutInvoiceItemInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
     payments?: PaymentUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
   }
 
-  export type TenantCreateOrConnectWithoutInvoiceItemsInput = {
+  export type TenantCreateOrConnectWithoutInvoiceItemInput = {
     where: TenantWhereUniqueInput
-    create: XOR<TenantCreateWithoutInvoiceItemsInput, TenantUncheckedCreateWithoutInvoiceItemsInput>
+    create: XOR<TenantCreateWithoutInvoiceItemInput, TenantUncheckedCreateWithoutInvoiceItemInput>
   }
 
   export type InvoiceCreateWithoutItemsInput = {
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15714,11 +24377,18 @@ export namespace Prisma {
     id?: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     customerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15735,8 +24405,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15749,8 +24419,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15761,40 +24431,52 @@ export namespace Prisma {
     create: XOR<ItemCreateWithoutInvoiceItemsInput, ItemUncheckedCreateWithoutInvoiceItemsInput>
   }
 
-  export type TenantUpsertWithoutInvoiceItemsInput = {
-    update: XOR<TenantUpdateWithoutInvoiceItemsInput, TenantUncheckedUpdateWithoutInvoiceItemsInput>
-    create: XOR<TenantCreateWithoutInvoiceItemsInput, TenantUncheckedCreateWithoutInvoiceItemsInput>
+  export type TenantUpsertWithoutInvoiceItemInput = {
+    update: XOR<TenantUpdateWithoutInvoiceItemInput, TenantUncheckedUpdateWithoutInvoiceItemInput>
+    create: XOR<TenantCreateWithoutInvoiceItemInput, TenantUncheckedCreateWithoutInvoiceItemInput>
     where?: TenantWhereInput
   }
 
-  export type TenantUpdateToOneWithWhereWithoutInvoiceItemsInput = {
+  export type TenantUpdateToOneWithWhereWithoutInvoiceItemInput = {
     where?: TenantWhereInput
-    data: XOR<TenantUpdateWithoutInvoiceItemsInput, TenantUncheckedUpdateWithoutInvoiceItemsInput>
+    data: XOR<TenantUpdateWithoutInvoiceItemInput, TenantUncheckedUpdateWithoutInvoiceItemInput>
   }
 
-  export type TenantUpdateWithoutInvoiceItemsInput = {
+  export type TenantUpdateWithoutInvoiceItemInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
     payments?: PaymentUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
   }
 
-  export type TenantUncheckedUpdateWithoutInvoiceItemsInput = {
+  export type TenantUncheckedUpdateWithoutInvoiceItemInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type InvoiceUpsertWithoutItemsInput = {
@@ -15810,11 +24492,18 @@ export namespace Prisma {
 
   export type InvoiceUpdateWithoutItemsInput = {
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -15827,11 +24516,18 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     customerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15854,8 +24550,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -15868,8 +24564,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -15877,27 +24573,39 @@ export namespace Prisma {
 
   export type TenantCreateWithoutPaymentsInput = {
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserCreateNestedManyWithoutTenantInput
+    packages?: PackageCreateNestedManyWithoutTenantInput
     vendors?: VendorCreateNestedManyWithoutTenantInput
     customers?: CustomerCreateNestedManyWithoutTenantInput
     items?: ItemCreateNestedManyWithoutTenantInput
     invoices?: InvoiceCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionCreateNestedManyWithoutTenantInput
+    userSession?: SessionCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutPaymentsInput = {
     id?: number
     name: string
+    slug: string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    packages?: PackageUncheckedCreateNestedManyWithoutTenantInput
     vendors?: VendorUncheckedCreateNestedManyWithoutTenantInput
     customers?: CustomerUncheckedCreateNestedManyWithoutTenantInput
     items?: ItemUncheckedCreateNestedManyWithoutTenantInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTenantInput
-    invoiceItems?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
+    userSession?: SessionUncheckedCreateNestedManyWithoutTenantInput
+    InvoiceItem?: InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutPaymentsInput = {
@@ -15907,11 +24615,18 @@ export namespace Prisma {
 
   export type InvoiceCreateWithoutPaymentsInput = {
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -15924,11 +24639,18 @@ export namespace Prisma {
     id?: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     customerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15954,27 +24676,39 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutPaymentsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUpdateManyWithoutTenantNestedInput
+    packages?: PackageUpdateManyWithoutTenantNestedInput
     vendors?: VendorUpdateManyWithoutTenantNestedInput
     customers?: CustomerUpdateManyWithoutTenantNestedInput
     items?: ItemUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutPaymentsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    settings?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    packages?: PackageUncheckedUpdateManyWithoutTenantNestedInput
     vendors?: VendorUncheckedUpdateManyWithoutTenantNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutTenantNestedInput
     items?: ItemUncheckedUpdateManyWithoutTenantNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutTenantNestedInput
-    invoiceItems?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+    userSession?: SessionUncheckedUpdateManyWithoutTenantNestedInput
+    InvoiceItem?: InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type InvoiceUpsertWithoutPaymentsInput = {
@@ -15990,11 +24724,18 @@ export namespace Prisma {
 
   export type InvoiceUpdateWithoutPaymentsInput = {
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16007,11 +24748,18 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     customerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16025,9 +24773,26 @@ export namespace Prisma {
     email: string
     password: string
     role?: $Enums.UserType
+    lastSeenAt?: Date | string | null
+    locale?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
+  }
+
+  export type PackageCreateManyTenantInput = {
+    id?: number
+    name?: $Enums.packageName
+    price: Decimal | DecimalJsLike | number | string
+    durationDays: number
+    freeFeatures?: PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageCreateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type VendorCreateManyTenantInput = {
@@ -16058,8 +24823,8 @@ export namespace Prisma {
     name: string
     sku?: string | null
     description?: string | null
-    unitPrice: number
-    quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    quantity?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -16068,11 +24833,18 @@ export namespace Prisma {
   export type InvoiceCreateManyTenantInput = {
     id?: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     customerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16084,12 +24856,38 @@ export namespace Prisma {
     invoiceId: number
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
+  }
+
+  export type PackageSubscriptionCreateManyTenantInput = {
+    id?: number
+    packageId: number
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateManyTenantInput = {
+    id?: number
+    userId: number
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type InvoiceItemCreateManyTenantInput = {
@@ -16097,9 +24895,9 @@ export namespace Prisma {
     invoiceId: number
     itemId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -16110,9 +24908,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTenantInput = {
@@ -16121,9 +24923,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutTenantInput = {
@@ -16132,9 +24938,55 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+  }
+
+  export type PackageUpdateWithoutTenantInput = {
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subscription?: PackageSubscriptionUpdateManyWithoutPackageNestedInput
+  }
+
+  export type PackageUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subscription?: PackageSubscriptionUncheckedUpdateManyWithoutPackageNestedInput
+  }
+
+  export type PackageUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    durationDays?: IntFieldUpdateOperationsInput | number
+    freeFeatures?: PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
+    basicFeatures?: PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
+    proFeatures?: PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
+    enterpriseFeatures?: PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VendorUpdateWithoutTenantInput = {
@@ -16210,8 +25062,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16223,8 +25075,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16236,8 +25088,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    quantity?: FloatFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16245,11 +25097,18 @@ export namespace Prisma {
 
   export type InvoiceUpdateWithoutTenantInput = {
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16261,11 +25120,18 @@ export namespace Prisma {
   export type InvoiceUncheckedUpdateWithoutTenantInput = {
     id?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     customerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16277,11 +25143,18 @@ export namespace Prisma {
   export type InvoiceUncheckedUpdateManyWithoutTenantInput = {
     id?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     customerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16291,8 +25164,9 @@ export namespace Prisma {
   export type PaymentUpdateWithoutTenantInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16305,8 +25179,9 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16318,19 +25193,93 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
   }
 
+  export type PackageSubscriptionUpdateWithoutTenantInput = {
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    package?: PackageUpdateOneRequiredWithoutSubscriptionNestedInput
+  }
+
+  export type PackageSubscriptionUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    packageId?: IntFieldUpdateOperationsInput | number
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PackageSubscriptionUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    packageId?: IntFieldUpdateOperationsInput | number
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUpdateWithoutTenantInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSessionsNestedInput
+  }
+
+  export type SessionUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type InvoiceItemUpdateWithoutTenantInput = {
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16343,9 +25292,9 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16356,23 +25305,73 @@ export namespace Prisma {
     invoiceId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+  }
+
+  export type SessionCreateManyUserInput = {
+    id?: number
+    tenantId: number
+    sessionToken: string
+    expires: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionUpdateWithoutUserInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutUserSessionNestedInput
+  }
+
+  export type SessionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type InvoiceCreateManyCustomerInput = {
     id?: number
     tenantId: number
     invoiceNumber: string
+    invoicePrefix?: string | null
     date: Date | string
     dueDate?: Date | string | null
     status?: $Enums.InvoiceStatus
     currency: string
-    total: number
+    currencyRate?: Decimal | DecimalJsLike | number | string | null
+    subtotal: Decimal | DecimalJsLike | number | string
+    tax?: Decimal | DecimalJsLike | number | string
+    total: Decimal | DecimalJsLike | number | string
+    amountPaid?: Decimal | DecimalJsLike | number | string
+    balanceDue: Decimal | DecimalJsLike | number | string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -16380,11 +25379,18 @@ export namespace Prisma {
 
   export type InvoiceUpdateWithoutCustomerInput = {
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16397,11 +25403,18 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16413,11 +25426,18 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: StringFieldUpdateOperationsInput | string
+    invoicePrefix?: NullableStringFieldUpdateOperationsInput | string | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     currency?: StringFieldUpdateOperationsInput | string
-    total?: FloatFieldUpdateOperationsInput | number
+    currencyRate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    balanceDue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16428,9 +25448,9 @@ export namespace Prisma {
     tenantId: number
     invoiceId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -16438,13 +25458,13 @@ export namespace Prisma {
 
   export type InvoiceItemUpdateWithoutItemInput = {
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
-    tenant?: TenantUpdateOneRequiredWithoutInvoiceItemsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutInvoiceItemNestedInput
     invoice?: InvoiceUpdateOneRequiredWithoutItemsNestedInput
   }
 
@@ -16453,9 +25473,9 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16466,12 +25486,67 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
     invoiceId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
+  }
+
+  export type PackageSubscriptionCreateManyPackageInput = {
+    id?: number
+    tenantId: number
+    status?: $Enums.SubscriptionStatus
+    seats?: number
+    autoRenew?: boolean
+    startsAt: Date | string
+    endsAt: Date | string
+    trialEndsAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PackageSubscriptionUpdateWithoutPackageInput = {
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutSubscriptionNestedInput
+  }
+
+  export type PackageSubscriptionUncheckedUpdateWithoutPackageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PackageSubscriptionUncheckedUpdateManyWithoutPackageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    status?: EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+    seats?: IntFieldUpdateOperationsInput | number
+    autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type InvoiceItemCreateManyInvoiceInput = {
@@ -16479,9 +25554,9 @@ export namespace Prisma {
     tenantId: number
     itemId: number
     description?: string | null
-    quantity: number
-    unitPrice: number
-    lineTotal: number
+    quantity: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     syncStatus?: $Enums.SyncStatus
@@ -16492,8 +25567,9 @@ export namespace Prisma {
     tenantId: number
     date: Date | string
     paidDate: Date | string
-    amount: number
-    method: string
+    amount: Decimal | DecimalJsLike | number | string
+    method: $Enums.PaymentMethod
+    status?: $Enums.PaymentStatus
     reference?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16502,13 +25578,13 @@ export namespace Prisma {
 
   export type InvoiceItemUpdateWithoutInvoiceInput = {
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
-    tenant?: TenantUpdateOneRequiredWithoutInvoiceItemsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutInvoiceItemNestedInput
     item?: ItemUpdateOneRequiredWithoutInvoiceItemsNestedInput
   }
 
@@ -16517,9 +25593,9 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16530,9 +25606,9 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: FloatFieldUpdateOperationsInput | number
-    unitPrice?: FloatFieldUpdateOperationsInput | number
-    lineTotal?: FloatFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     syncStatus?: EnumSyncStatusFieldUpdateOperationsInput | $Enums.SyncStatus
@@ -16541,8 +25617,9 @@ export namespace Prisma {
   export type PaymentUpdateWithoutInvoiceInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16555,8 +25632,9 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16568,8 +25646,9 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reference?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
