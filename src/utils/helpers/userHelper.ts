@@ -1,5 +1,5 @@
 import { Actor } from '@/types/userTypes';
-import prisma from '../lib/prisma';
+import prisma from '../../lib/prisma';
 
 function requireActor(actor?: Actor) {
   if (!actor) throw new Error('Authentication required for this operation.');

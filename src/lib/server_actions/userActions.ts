@@ -3,13 +3,13 @@
 import { Actor } from '@/types/userTypes';
 import prisma from '../prisma';
 import bcrypt from 'bcryptjs';
-import { createUserSchema, updateUserSchema } from '@/utils/userValidator';
+import { createUserSchema, updateUserSchema } from '@/utils/validators/userValidator';
 import {
   prismaErrorHandler,
   requireActor,
   requireAdmin,
   requireTenantMatch,
-} from '@/utils/userHelper';
+} from '@/utils/helpers/userHelper';
 
 /**
  * Helpful types

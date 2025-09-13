@@ -7,8 +7,8 @@ import {
   prismaErrorHandler,
   // requireActor,
   requireSuperAdmin,
-} from '@/utils/userHelper';
-import { createTenantSchema, updateTenantSchema } from '@/utils/userValidator';
+} from '@/utils/helpers/userHelper';
+import { createTenantSchema, updateTenantSchema } from '@/utils/validators/userValidator';
 
 /**
  * Actor = caller identity (optional) used to enforce tenant boundaries and Admin checks.
@@ -145,7 +145,7 @@ export async function getAllTenants(options?: {
       where.name = { contains: search, mode: 'insensitive' };
     }
 
-    const tenants = await prisma.tenant.findMany({
+    const tenants = await prisma.tenants.findMany({
       where,
       skip: (page - 1) * pageSize,
       take: pageSize,
@@ -156,7 +156,7 @@ export async function getAllTenants(options?: {
 
     // If includeCounts requested, augment each tenant with counts (parallelized)
     const tenantsWithCounts = await Promise.all(
-      tenants.map(async (t) => {
+      (tenants as any[]).map(async (t) => {
         const counts = await prisma.$transaction([
           prisma.user.count({ where: { tenantId: t.id } }),
           prisma.vendor.count({ where: { tenantId: t.id } }),

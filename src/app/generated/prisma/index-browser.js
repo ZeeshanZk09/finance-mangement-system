@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.15.0
- * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+ * Prisma Client JS version: 6.16.0
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.15.0",
-  engine: "85179d7826409ee107a6ba334b5e305ae3fba9fb"
+  client: "6.16.0",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -123,8 +123,11 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.TenantScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  slug: 'slug',
+  settings: 'settings',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -134,9 +137,24 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
+  lastSeenAt: 'lastSeenAt',
+  locale: 'locale',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   syncStatus: 'syncStatus'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tenantId: 'tenantId',
+  sessionToken: 'sessionToken',
+  expires: 'expires',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VendorScalarFieldEnum = {
@@ -177,15 +195,52 @@ exports.Prisma.ItemScalarFieldEnum = {
   syncStatus: 'syncStatus'
 };
 
+exports.Prisma.PackageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  tenantId: 'tenantId',
+  price: 'price',
+  durationDays: 'durationDays',
+  freeFeatures: 'freeFeatures',
+  basicFeatures: 'basicFeatures',
+  proFeatures: 'proFeatures',
+  enterpriseFeatures: 'enterpriseFeatures',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PackageSubscriptionScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  packageId: 'packageId',
+  status: 'status',
+  seats: 'seats',
+  autoRenew: 'autoRenew',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  trialEndsAt: 'trialEndsAt',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.InvoiceScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
   invoiceNumber: 'invoiceNumber',
+  invoicePrefix: 'invoicePrefix',
   date: 'date',
   dueDate: 'dueDate',
   status: 'status',
   currency: 'currency',
+  currencyRate: 'currencyRate',
+  subtotal: 'subtotal',
+  tax: 'tax',
   total: 'total',
+  amountPaid: 'amountPaid',
+  balanceDue: 'balanceDue',
+  note: 'note',
   customerId: 'customerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -214,10 +269,22 @@ exports.Prisma.PaymentScalarFieldEnum = {
   paidDate: 'paidDate',
   amount: 'amount',
   method: 'method',
+  status: 'status',
   reference: 'reference',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   syncStatus: 'syncStatus'
+};
+
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  actor: 'actor',
+  action: 'action',
+  meta: 'meta',
+  ipAddress: 'ipAddress',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -225,9 +292,20 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -246,21 +324,121 @@ exports.SyncStatus = exports.$Enums.SyncStatus = {
   FAILED: 'FAILED'
 };
 
+exports.packageName = exports.$Enums.packageName = {
+  Free: 'Free',
+  Basic: 'Basic',
+  Pro: 'Pro',
+  Enterprise: 'Enterprise'
+};
+
+exports.FreeFeatures = exports.$Enums.FreeFeatures = {
+  Invoicing: 'Invoicing',
+  Customer_Management: 'Customer_Management',
+  Vendor_Management: 'Vendor_Management',
+  Notifications_and_Reminders: 'Notifications_and_Reminders',
+  Mobile_Access: 'Mobile_Access',
+  Free_Trials: 'Free_Trials',
+  Money_Back_Guarantees: 'Money_Back_Guarantees'
+};
+
+exports.BasicFeatures = exports.$Enums.BasicFeatures = {
+  Inventory_Management: 'Inventory_Management',
+  Payment_Tracking: 'Payment_Tracking',
+  Tax_Management: 'Tax_Management',
+  Reporting_and_Analytics: 'Reporting_and_Analytics',
+  Expense_Tracking: 'Expense_Tracking',
+  Purchase_Orders: 'Purchase_Orders',
+  User_Roles_and_Permissions: 'User_Roles_and_Permissions',
+  Data_Import_and_Export: 'Data_Import_and_Export',
+  Community_Access: 'Community_Access'
+};
+
+exports.ProFeatures = exports.$Enums.ProFeatures = {
+  Multi_Currency_Support: 'Multi_Currency_Support',
+  Recurring_Invoices: 'Recurring_Invoices',
+  Project_Management: 'Project_Management',
+  Time_Tracking: 'Time_Tracking',
+  Integrations: 'Integrations',
+  Custom_Branding: 'Custom_Branding',
+  API_Access: 'API_Access',
+  Dashboards: 'Dashboards',
+  Custom_Reports: 'Custom_Reports',
+  Barcoding: 'Barcoding',
+  Warehouse_Management: 'Warehouse_Management',
+  Shipping_Integration: 'Shipping_Integration',
+  E_Commerce_Integration: 'E_Commerce_Integration',
+  CRM_Integration: 'CRM_Integration',
+  Budgeting: 'Budgeting',
+  Forecasting: 'Forecasting'
+};
+
+exports.EnterpriseFeatures = exports.$Enums.EnterpriseFeatures = {
+  Role_Based_Access_Control: 'Role_Based_Access_Control',
+  Single_Sign_On: 'Single_Sign_On',
+  Two_Factor_Authentication: 'Two_Factor_Authentication',
+  Data_Encryption: 'Data_Encryption',
+  Audit_Trails: 'Audit_Trails',
+  Cloud_Backups: 'Cloud_Backups',
+  Multi_Language_Support: 'Multi_Language_Support',
+  Document_Storage: 'Document_Storage',
+  Compliance_Features: 'Compliance_Features',
+  Advanced_Security_Features: 'Advanced_Security_Features',
+  Dedicated_Account_Manager: 'Dedicated_Account_Manager',
+  Service_Level_Agreements: 'Service_Level_Agreements',
+  Priority_Support: 'Priority_Support',
+  White_Labeling: 'White_Labeling',
+  Custom_Workflows: 'Custom_Workflows',
+  Approval_Processes: 'Approval_Processes',
+  Data_Migration_Support: 'Data_Migration_Support',
+  Performance_Guarantees: 'Performance_Guarantees',
+  Uptime_Guarantees: 'Uptime_Guarantees'
+};
+
+exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
+  TRIAL: 'TRIAL',
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  CANCELED: 'CANCELED'
+};
+
 exports.InvoiceStatus = exports.$Enums.InvoiceStatus = {
   DRAFT: 'DRAFT',
   SENT: 'SENT',
-  PAID: 'PAID'
+  PARTIALLY_PAID: 'PARTIALLY_PAID',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  CREDIT_CARD: 'CREDIT_CARD',
+  DEBIT_CARD: 'DEBIT_CARD',
+  CASH: 'CASH',
+  CHEQUE: 'CHEQUE',
+  ONLINE: 'ONLINE',
+  OTHER: 'OTHER'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
 };
 
 exports.Prisma.ModelName = {
   Tenant: 'Tenant',
   User: 'User',
+  Session: 'Session',
   Vendor: 'Vendor',
   Customer: 'Customer',
   Item: 'Item',
+  Package: 'Package',
+  PackageSubscription: 'PackageSubscription',
   Invoice: 'Invoice',
   InvoiceItem: 'InvoiceItem',
-  Payment: 'Payment'
+  Payment: 'Payment',
+  AuditLog: 'AuditLog'
 };
 
 /**
