@@ -1,7 +1,7 @@
 'use server';
 
 import { Actor } from '@/types/userTypes';
-import prisma from './../prisma';
+import prisma from '@/lib/prisma';
 import {
   ensureTenantExists,
   prismaErrorHandler,
@@ -9,6 +9,7 @@ import {
   requireSuperAdmin,
 } from '@/utils/helpers/userHelper';
 import { createTenantSchema, updateTenantSchema } from '@/utils/validators/userValidator';
+import { ApiError } from '@/utils/NextApiError';
 
 /**
  * Actor = caller identity (optional) used to enforce tenant boundaries and Admin checks.
@@ -27,7 +28,10 @@ import { createTenantSchema, updateTenantSchema } from '@/utils/validators/userV
  * - Only Super_Admin (if actor provided) may create tenants.
  * - Ensures tenant name uniqueness.
  */
-export async function createTenant(data: { name: string }, actor?: Actor) {
+export async function createTenant(
+  data: { name: string; email: string; slug: string },
+  actor?: Actor
+) {
   try {
     const parsed = createTenantSchema.parse(data);
 
@@ -41,7 +45,12 @@ export async function createTenant(data: { name: string }, actor?: Actor) {
     if (existing) throw new Error('A tenant with this name already exists.');
 
     const tenant = await prisma.tenant.create({
-      data: { name: parsed.name },
+      data: {
+        name: parsed.name,
+        // You may need to provide dummy or default values for required fields
+        email: parsed.email || '', // Replace with actual email if available
+        slug: parsed.slug || parsed.name.toLowerCase().replace(/\s+/g, '-'), // Example slug generation
+      },
     });
 
     return tenant;
@@ -56,7 +65,7 @@ export async function createTenant(data: { name: string }, actor?: Actor) {
  * - If actor provided, ensures actor belongs to the tenant or is Super_Admin.
  */
 export async function getTenantById(
-  id: number,
+  id: string,
   options?: { includeCounts?: boolean; includeFinancialSummary?: boolean; actor?: Actor }
 ) {
   try {
@@ -108,9 +117,9 @@ export async function getTenantById(
       const totalInvoiced = invoicedAgg._sum.total ?? 0;
       const totalPayments = paymentsAgg._sum.amount ?? 0;
       result.financial = {
-        totalInvoiced,
-        totalPayments,
-        outstanding: totalInvoiced - totalPayments,
+        totalInvoiced: Number(totalInvoiced),
+        totalPayments: Number(totalPayments),
+        outstanding: Number(totalInvoiced) - Number(totalPayments),
         invoiceCount: invoicedAgg._count.id ?? 0,
         paymentCount: paymentsAgg._count.id ?? 0,
       };
@@ -145,7 +154,7 @@ export async function getAllTenants(options?: {
       where.name = { contains: search, mode: 'insensitive' };
     }
 
-    const tenants = await prisma.tenants.findMany({
+    const tenants = await prisma.tenant.findMany({
       where,
       skip: (page - 1) * pageSize,
       take: pageSize,
@@ -190,7 +199,7 @@ export async function getAllTenants(options?: {
  * - Only Super_Admin or the tenant's Super_Admin-level user may update tenant metadata.
  * - Validates input.
  */
-export async function updateTenant(id: number, data: { name?: string }, actor?: Actor) {
+export async function updateTenant(id: string, data: { name?: string }, actor?: Actor) {
   try {
     const parsed = updateTenantSchema.parse(data);
 
@@ -200,8 +209,9 @@ export async function updateTenant(id: number, data: { name?: string }, actor?: 
     if (actor) {
       // allow Super_Admin to update any tenant; otherwise only allow if actor.tenantId matches and actor is Admin
       if (actor.role !== 'Super_Admin') {
-        if (actor.tenantId !== id) throw new Error('Access denied: tenant mismatch.');
-        if (actor.role !== 'Admin') throw new Error('Admin privileges required to update tenant.');
+        if (actor.tenantId !== id) throw new ApiError(401, 'Access denied: tenant mismatch.');
+        if (actor.role !== 'Admin')
+          throw new ApiError(401, 'Admin privileges required to update tenant.');
       }
     }
 
@@ -222,7 +232,7 @@ export async function updateTenant(id: number, data: { name?: string }, actor?: 
  * - If force=true, runs a transactional cascade delete on tenant-owned resources in the correct order.
  * - Only Super_Admin may perform force deletes. Local Admin may request non-force deletes (but will fail if relations exist).
  */
-export async function deleteTenant(id: number, options?: { force?: boolean; actor?: Actor }) {
+export async function deleteTenant(id: string, options?: { force?: boolean; actor?: Actor }) {
   try {
     const { force = false, actor } = options || {};
 
@@ -319,7 +329,7 @@ export async function getTenantsUpdatedSince(since: Date, options?: { actor?: Ac
  * - Gathers tenant and all related entities and returns a JSON-serializable object.
  * - Only Super_Admin or tenant Admin may export.
  */
-export async function exportTenantData(tenantId: number, actor?: Actor) {
+export async function exportTenantData(tenantId: string, actor?: Actor) {
   try {
     // permission check
     if (actor) {
@@ -372,7 +382,7 @@ export async function exportTenantData(tenantId: number, actor?: Actor) {
  * A lightweight health-check / tenant sanity check.
  * - Validates that essential counts are present and returns issues if any.
  */
-export async function tenantSanityCheck(tenantId: number, actor?: Actor) {
+export async function tenantSanityCheck(tenantId: string, actor?: Actor) {
   try {
     if (actor) {
       if (actor.role !== 'Super_Admin' && actor.tenantId !== tenantId) {

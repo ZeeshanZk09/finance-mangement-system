@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 const createTenantSchema = z.object({
   name: z.string().min(2).max(200),
+  email: z.string().email(),
+  slug: z.string(),
 });
 
 const updateTenantSchema = z.object({
@@ -13,7 +15,7 @@ const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   role: z.string().min(1),
-  tenantId: z.number().int().positive(),
+  tenantId: z.string(),
 });
 
 const updateUserSchema = z.object({

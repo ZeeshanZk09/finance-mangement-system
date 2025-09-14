@@ -1,64 +1,68 @@
-// lib/redux/slices/userSlice.ts
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { SafeUser } from '@/types/userSchemaType';
-import { handleApiError } from '@/utils/errorHandling';
+// lib/redux/slices/tenantSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
-  users: SafeUser[] | null;
-  loading: boolean;
-  error: string | null;
+export interface UserUIState {
+  selectedUserId: string | null;
+  lastSyncAt: string | null; // ISO string
+  isOffline: boolean;
+  listFilter: {
+    q?: string; // search text
+    active?: boolean | null;
+    page?: number;
+    pageSize?: number;
+  };
+  isSyncing: boolean;
 }
 
-const initialState: UserState = {
-  users: null,
-  loading: false,
-  error: null,
+const initialState: UserUIState = {
+  selectedUserId: null,
+  lastSyncAt: null,
+  isOffline: false,
+  listFilter: {
+    q: undefined,
+    active: null,
+    page: 1,
+    pageSize: 20,
+  },
+  isSyncing: false,
 };
 
-export const fetchAllUsers = createAsyncThunk(
-  'user/fetchAllUsers',
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get<SafeUser[]>('/api/admin/get-all-users', {
-        timeout: 20000,
-        withCredentials: true,
-      });
-      return data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage = handleApiError(error.response?.data.error, 'Failed to fetch users');
-        return rejectWithValue(errorMessage);
-      }
-      return null;
-    }
-  }
-);
-
-const userSlice = createSlice({
+const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    clearUsersError: (state) => {
-      state.error = null;
+    setSelectedUserId(state, action: PayloadAction<string | null>) {
+      state.selectedUserId = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllUsers.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchAllUsers.fulfilled, (state, action) => {
-        state.loading = false;
-        state.users = action.payload ? JSON.parse(JSON.stringify(action.payload)) : null;
-      })
-      .addCase(fetchAllUsers.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
+    setLastSyncAt(state, action: PayloadAction<string | null>) {
+      state.lastSyncAt = action.payload;
+    },
+    setOffline(state, action: PayloadAction<boolean>) {
+      state.isOffline = action.payload;
+    },
+    setListFilter(state, action: PayloadAction<Partial<UserUIState['listFilter']>>) {
+      state.listFilter = { ...state.listFilter, ...action.payload };
+    },
+    setIsSyncing(state, action: PayloadAction<boolean>) {
+      state.isSyncing = action.payload;
+    },
+    resetUserUI(state) {
+      state.selectedUserId = null;
+      state.lastSyncAt = null;
+      state.isOffline = false;
+      state.listFilter = initialState.listFilter;
+      state.isSyncing = false;
+    },
   },
 });
 
-export const { clearUsersError } = userSlice.actions;
-export default userSlice.reducer;
+export const {
+  setSelectedUserId,
+  setLastSyncAt,
+  setOffline,
+  setListFilter,
+  setIsSyncing,
+  resetUserUI,
+} = UserSlice.actions;
+
+export default UserSlice.reducer;

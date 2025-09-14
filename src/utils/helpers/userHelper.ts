@@ -12,7 +12,7 @@ function requireSuperAdmin(actor?: Actor) {
   }
 }
 
-async function ensureTenantExists(id: number) {
+async function ensureTenantExists(id: string) {
   const t = await prisma.tenant.findUnique({
     where: { id },
     select: {
@@ -29,7 +29,7 @@ function prismaErrorHandler(err: any) {
   throw new Error(err?.message ?? 'Database operation failed');
 }
 
-function requireTenantMatch(actor: Actor, tenantId: number) {
+function requireTenantMatch(actor: Actor, tenantId: string) {
   if (actor && actor.tenantId !== tenantId && actor.role !== 'Super_Admin') {
     throw new Error('Access denied: tenant mismatch.');
   }

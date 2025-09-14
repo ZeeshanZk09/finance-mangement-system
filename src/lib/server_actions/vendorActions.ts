@@ -28,7 +28,7 @@ import {
  */
 export async function createVendor(
   data: {
-    tenantId: number;
+    tenantId: string;
     name: string;
     email?: string;
     phone?: string;
@@ -98,7 +98,7 @@ export async function getVendorById(id: number, actor?: Actor) {
  * - Supports search on name/email/phone and optional includeCount.
  */
 export async function getVendors(options?: {
-  tenantId?: number;
+  tenantId: string;
   page?: number;
   pageSize?: number;
   search?: string;
@@ -255,7 +255,7 @@ export async function deleteVendor(id: number, options?: { force?: boolean; acto
 /**
  * Get unsynced vendors for a tenant (client sync engine).
  */
-export async function getUnsyncedVendors(tenantId: number, limit = 200, actor?: Actor) {
+export async function getUnsyncedVendors(tenantId: string, limit = 200, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 
@@ -304,7 +304,7 @@ export async function applyRemoteVendors(
   remoteVendors: Array<
     Partial<{
       id: number;
-      tenantId: number;
+      tenantId: string;
       name: string;
       email: string;
       phone: string;
@@ -476,7 +476,7 @@ export async function getVendorsUpdatedSince(
  * Export vendors for a tenant (optional filters).
  */
 export async function exportVendorsForTenant(
-  tenantId: number,
+  tenantId: string,
   options?: { actor?: Actor; search?: string }
 ) {
   try {
@@ -502,7 +502,7 @@ export async function exportVendorsForTenant(
 /**
  * Simple tenant-level vendor sanity check (useful for health dashboards).
  */
-export async function vendorSanityCheck(tenantId: number, actor?: Actor) {
+export async function vendorSanityCheck(tenantId: string, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 

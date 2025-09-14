@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           localPath: localRelPath,
           mimeType: f.mimetype,
           size: f.size,
-          status: 'pending',
+          status: 'PENDING',
         },
       });
 

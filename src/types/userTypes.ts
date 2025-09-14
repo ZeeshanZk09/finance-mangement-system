@@ -1,1 +1,1 @@
-export type Actor = { id: number; tenantId: number; role: 'User' | 'Admin' | 'Super_Admin' } | null;
+export type Actor = { id: number; tenantId: string; role: 'User' | 'Admin' | 'Super_Admin' } | null;

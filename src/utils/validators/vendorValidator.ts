@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const createVendorSchema = z.object({
-  tenantId: z.number().int().positive(),
+  tenantId: z.string(),
   name: z.string().min(1),
   email: z.string().email().optional(),
   phone: z.string().optional(),
