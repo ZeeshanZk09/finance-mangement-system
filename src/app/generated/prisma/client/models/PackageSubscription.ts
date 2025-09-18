@@ -13,7 +13,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PackageSubscription
- * PACKAGE SUBSCRIPTIONS (which tenant is on which package)
+ * 
  */
 export type PackageSubscriptionModel = runtime.Types.Result.DefaultSelection<Prisma.$PackageSubscriptionPayload>
 
@@ -28,22 +28,28 @@ export type AggregatePackageSubscription = {
 export type PackageSubscriptionAvgAggregateOutputType = {
   id: number | null
   packageId: number | null
-  seats: number | null
+  packagePrice: runtime.Decimal | null
+  packageTrialPrice: runtime.Decimal | null
+  amountPaid: runtime.Decimal | null
 }
 
 export type PackageSubscriptionSumAggregateOutputType = {
   id: number | null
   packageId: number | null
-  seats: number | null
+  packagePrice: runtime.Decimal | null
+  packageTrialPrice: runtime.Decimal | null
+  amountPaid: runtime.Decimal | null
 }
 
 export type PackageSubscriptionMinAggregateOutputType = {
   id: number | null
   tenantId: string | null
   packageId: number | null
+  packageName: $Enums.packageName | null
+  packagePrice: runtime.Decimal | null
+  packageTrialPrice: runtime.Decimal | null
   status: $Enums.SubscriptionStatus | null
-  seats: number | null
-  autoRenew: boolean | null
+  amountPaid: runtime.Decimal | null
   startsAt: Date | null
   endsAt: Date | null
   trialEndsAt: Date | null
@@ -55,9 +61,11 @@ export type PackageSubscriptionMaxAggregateOutputType = {
   id: number | null
   tenantId: string | null
   packageId: number | null
+  packageName: $Enums.packageName | null
+  packagePrice: runtime.Decimal | null
+  packageTrialPrice: runtime.Decimal | null
   status: $Enums.SubscriptionStatus | null
-  seats: number | null
-  autoRenew: boolean | null
+  amountPaid: runtime.Decimal | null
   startsAt: Date | null
   endsAt: Date | null
   trialEndsAt: Date | null
@@ -69,9 +77,11 @@ export type PackageSubscriptionCountAggregateOutputType = {
   id: number
   tenantId: number
   packageId: number
+  packageName: number
+  packagePrice: number
+  packageTrialPrice: number
   status: number
-  seats: number
-  autoRenew: number
+  amountPaid: number
   startsAt: number
   endsAt: number
   trialEndsAt: number
@@ -85,22 +95,28 @@ export type PackageSubscriptionCountAggregateOutputType = {
 export type PackageSubscriptionAvgAggregateInputType = {
   id?: true
   packageId?: true
-  seats?: true
+  packagePrice?: true
+  packageTrialPrice?: true
+  amountPaid?: true
 }
 
 export type PackageSubscriptionSumAggregateInputType = {
   id?: true
   packageId?: true
-  seats?: true
+  packagePrice?: true
+  packageTrialPrice?: true
+  amountPaid?: true
 }
 
 export type PackageSubscriptionMinAggregateInputType = {
   id?: true
   tenantId?: true
   packageId?: true
+  packageName?: true
+  packagePrice?: true
+  packageTrialPrice?: true
   status?: true
-  seats?: true
-  autoRenew?: true
+  amountPaid?: true
   startsAt?: true
   endsAt?: true
   trialEndsAt?: true
@@ -112,9 +128,11 @@ export type PackageSubscriptionMaxAggregateInputType = {
   id?: true
   tenantId?: true
   packageId?: true
+  packageName?: true
+  packagePrice?: true
+  packageTrialPrice?: true
   status?: true
-  seats?: true
-  autoRenew?: true
+  amountPaid?: true
   startsAt?: true
   endsAt?: true
   trialEndsAt?: true
@@ -126,9 +144,11 @@ export type PackageSubscriptionCountAggregateInputType = {
   id?: true
   tenantId?: true
   packageId?: true
+  packageName?: true
+  packagePrice?: true
+  packageTrialPrice?: true
   status?: true
-  seats?: true
-  autoRenew?: true
+  amountPaid?: true
   startsAt?: true
   endsAt?: true
   trialEndsAt?: true
@@ -228,15 +248,17 @@ export type PackageSubscriptionGroupByOutputType = {
   id: number
   tenantId: string
   packageId: number
+  packageName: $Enums.packageName
+  packagePrice: runtime.Decimal
+  packageTrialPrice: runtime.Decimal
   status: $Enums.SubscriptionStatus
-  seats: number
-  autoRenew: boolean
+  amountPaid: runtime.Decimal
   startsAt: Date
-  endsAt: Date
+  endsAt: Date | null
   trialEndsAt: Date | null
   metadata: runtime.JsonValue | null
   createdAt: Date
-  updatedAt: Date | null
+  updatedAt: Date
   _count: PackageSubscriptionCountAggregateOutputType | null
   _avg: PackageSubscriptionAvgAggregateOutputType | null
   _sum: PackageSubscriptionSumAggregateOutputType | null
@@ -264,17 +286,19 @@ export type PackageSubscriptionWhereInput = {
   OR?: Prisma.PackageSubscriptionWhereInput[]
   NOT?: Prisma.PackageSubscriptionWhereInput | Prisma.PackageSubscriptionWhereInput[]
   id?: Prisma.IntFilter<"PackageSubscription"> | number
-  tenantId?: Prisma.StringFilter<"PackageSubscription"> | string
+  tenantId?: Prisma.UuidFilter<"PackageSubscription"> | string
   packageId?: Prisma.IntFilter<"PackageSubscription"> | number
+  packageName?: Prisma.EnumpackageNameFilter<"PackageSubscription"> | $Enums.packageName
+  packagePrice?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFilter<"PackageSubscription"> | number
-  autoRenew?: Prisma.BoolFilter<"PackageSubscription"> | boolean
+  amountPaid?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
-  endsAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
+  endsAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
   trialEndsAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
   metadata?: Prisma.JsonNullableFilter<"PackageSubscription">
   createdAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
+  updatedAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   package?: Prisma.XOR<Prisma.PackageScalarRelationFilter, Prisma.PackageWhereInput>
 }
@@ -283,52 +307,58 @@ export type PackageSubscriptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
+  packageName?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
-  autoRenew?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
-  endsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrderInput | Prisma.SortOrder
   trialEndsAt?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   package?: Prisma.PackageOrderByWithRelationInput
 }
 
 export type PackageSubscriptionWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  packageName?: $Enums.packageName
   AND?: Prisma.PackageSubscriptionWhereInput | Prisma.PackageSubscriptionWhereInput[]
   OR?: Prisma.PackageSubscriptionWhereInput[]
   NOT?: Prisma.PackageSubscriptionWhereInput | Prisma.PackageSubscriptionWhereInput[]
-  tenantId?: Prisma.StringFilter<"PackageSubscription"> | string
+  tenantId?: Prisma.UuidFilter<"PackageSubscription"> | string
   packageId?: Prisma.IntFilter<"PackageSubscription"> | number
+  packagePrice?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFilter<"PackageSubscription"> | number
-  autoRenew?: Prisma.BoolFilter<"PackageSubscription"> | boolean
+  amountPaid?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
-  endsAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
+  endsAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
   trialEndsAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
   metadata?: Prisma.JsonNullableFilter<"PackageSubscription">
   createdAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
+  updatedAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   package?: Prisma.XOR<Prisma.PackageScalarRelationFilter, Prisma.PackageWhereInput>
-}, "id">
+}, "id" | "packageName">
 
 export type PackageSubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
+  packageName?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
-  autoRenew?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
-  endsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrderInput | Prisma.SortOrder
   trialEndsAt?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.PackageSubscriptionCountOrderByAggregateInput
   _avg?: Prisma.PackageSubscriptionAvgOrderByAggregateInput
   _max?: Prisma.PackageSubscriptionMaxOrderByAggregateInput
@@ -341,29 +371,33 @@ export type PackageSubscriptionScalarWhereWithAggregatesInput = {
   OR?: Prisma.PackageSubscriptionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PackageSubscriptionScalarWhereWithAggregatesInput | Prisma.PackageSubscriptionScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"PackageSubscription"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"PackageSubscription"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"PackageSubscription"> | string
   packageId?: Prisma.IntWithAggregatesFilter<"PackageSubscription"> | number
+  packageName?: Prisma.EnumpackageNameWithAggregatesFilter<"PackageSubscription"> | $Enums.packageName
+  packagePrice?: Prisma.DecimalWithAggregatesFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalWithAggregatesFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
-  seats?: Prisma.IntWithAggregatesFilter<"PackageSubscription"> | number
-  autoRenew?: Prisma.BoolWithAggregatesFilter<"PackageSubscription"> | boolean
+  amountPaid?: Prisma.DecimalWithAggregatesFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
-  endsAt?: Prisma.DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
+  endsAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PackageSubscription"> | Date | string | null
   trialEndsAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PackageSubscription"> | Date | string | null
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"PackageSubscription">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PackageSubscription"> | Date | string | null
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PackageSubscription"> | Date | string
 }
 
 export type PackageSubscriptionCreateInput = {
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutSubscriptionInput
   package: Prisma.PackageCreateNestedOneWithoutSubscriptionInput
 }
@@ -372,27 +406,31 @@ export type PackageSubscriptionUncheckedCreateInput = {
   id?: number
   tenantId: string
   packageId: number
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageSubscriptionUpdateInput = {
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSubscriptionNestedInput
   package?: Prisma.PackageUpdateOneRequiredWithoutSubscriptionNestedInput
 }
@@ -401,57 +439,65 @@ export type PackageSubscriptionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   packageId?: Prisma.IntFieldUpdateOperationsInput | number
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageSubscriptionCreateManyInput = {
   id?: number
   tenantId: string
   packageId: number
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageSubscriptionUpdateManyMutationInput = {
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageSubscriptionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   packageId?: Prisma.IntFieldUpdateOperationsInput | number
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageSubscriptionListRelationFilter = {
@@ -468,9 +514,11 @@ export type PackageSubscriptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
+  packageName?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
-  autoRenew?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   trialEndsAt?: Prisma.SortOrder
@@ -482,16 +530,20 @@ export type PackageSubscriptionCountOrderByAggregateInput = {
 export type PackageSubscriptionAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
 }
 
 export type PackageSubscriptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
+  packageName?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
-  autoRenew?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   trialEndsAt?: Prisma.SortOrder
@@ -503,9 +555,11 @@ export type PackageSubscriptionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
+  packageName?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
-  autoRenew?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   trialEndsAt?: Prisma.SortOrder
@@ -516,7 +570,9 @@ export type PackageSubscriptionMinOrderByAggregateInput = {
 export type PackageSubscriptionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   packageId?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
+  packageTrialPrice?: Prisma.SortOrder
+  amountPaid?: Prisma.SortOrder
 }
 
 export type PackageSubscriptionCreateNestedManyWithoutTenantInput = {
@@ -608,30 +664,34 @@ export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
 }
 
 export type PackageSubscriptionCreateWithoutTenantInput = {
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
   package: Prisma.PackageCreateNestedOneWithoutSubscriptionInput
 }
 
 export type PackageSubscriptionUncheckedCreateWithoutTenantInput = {
   id?: number
   packageId: number
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageSubscriptionCreateOrConnectWithoutTenantInput = {
@@ -665,44 +725,50 @@ export type PackageSubscriptionScalarWhereInput = {
   OR?: Prisma.PackageSubscriptionScalarWhereInput[]
   NOT?: Prisma.PackageSubscriptionScalarWhereInput | Prisma.PackageSubscriptionScalarWhereInput[]
   id?: Prisma.IntFilter<"PackageSubscription"> | number
-  tenantId?: Prisma.StringFilter<"PackageSubscription"> | string
+  tenantId?: Prisma.UuidFilter<"PackageSubscription"> | string
   packageId?: Prisma.IntFilter<"PackageSubscription"> | number
+  packageName?: Prisma.EnumpackageNameFilter<"PackageSubscription"> | $Enums.packageName
+  packagePrice?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFilter<"PackageSubscription"> | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFilter<"PackageSubscription"> | number
-  autoRenew?: Prisma.BoolFilter<"PackageSubscription"> | boolean
+  amountPaid?: Prisma.DecimalFilter<"PackageSubscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
-  endsAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
+  endsAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
   trialEndsAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
   metadata?: Prisma.JsonNullableFilter<"PackageSubscription">
   createdAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableFilter<"PackageSubscription"> | Date | string | null
+  updatedAt?: Prisma.DateTimeFilter<"PackageSubscription"> | Date | string
 }
 
 export type PackageSubscriptionCreateWithoutPackageInput = {
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutSubscriptionInput
 }
 
 export type PackageSubscriptionUncheckedCreateWithoutPackageInput = {
   id?: number
   tenantId: string
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageSubscriptionCreateOrConnectWithoutPackageInput = {
@@ -734,111 +800,127 @@ export type PackageSubscriptionUpdateManyWithWhereWithoutPackageInput = {
 export type PackageSubscriptionCreateManyTenantInput = {
   id?: number
   packageId: number
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageSubscriptionUpdateWithoutTenantInput = {
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   package?: Prisma.PackageUpdateOneRequiredWithoutSubscriptionNestedInput
 }
 
 export type PackageSubscriptionUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   packageId?: Prisma.IntFieldUpdateOperationsInput | number
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageSubscriptionUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   packageId?: Prisma.IntFieldUpdateOperationsInput | number
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageSubscriptionCreateManyPackageInput = {
   id?: number
   tenantId: string
+  packageName?: $Enums.packageName
+  packagePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubscriptionStatus
-  seats?: number
-  autoRenew?: boolean
+  amountPaid?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
-  endsAt: Date | string
+  endsAt?: Date | string | null
   trialEndsAt?: Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageSubscriptionUpdateWithoutPackageInput = {
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutSubscriptionNestedInput
 }
 
 export type PackageSubscriptionUncheckedUpdateWithoutPackageInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageSubscriptionUncheckedUpdateManyWithoutPackageInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  packageName?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  packageTrialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
-  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amountPaid?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -847,9 +929,11 @@ export type PackageSubscriptionSelect<ExtArgs extends runtime.Types.Extensions.I
   id?: boolean
   tenantId?: boolean
   packageId?: boolean
+  packageName?: boolean
+  packagePrice?: boolean
+  packageTrialPrice?: boolean
   status?: boolean
-  seats?: boolean
-  autoRenew?: boolean
+  amountPaid?: boolean
   startsAt?: boolean
   endsAt?: boolean
   trialEndsAt?: boolean
@@ -864,9 +948,11 @@ export type PackageSubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   tenantId?: boolean
   packageId?: boolean
+  packageName?: boolean
+  packagePrice?: boolean
+  packageTrialPrice?: boolean
   status?: boolean
-  seats?: boolean
-  autoRenew?: boolean
+  amountPaid?: boolean
   startsAt?: boolean
   endsAt?: boolean
   trialEndsAt?: boolean
@@ -881,9 +967,11 @@ export type PackageSubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   tenantId?: boolean
   packageId?: boolean
+  packageName?: boolean
+  packagePrice?: boolean
+  packageTrialPrice?: boolean
   status?: boolean
-  seats?: boolean
-  autoRenew?: boolean
+  amountPaid?: boolean
   startsAt?: boolean
   endsAt?: boolean
   trialEndsAt?: boolean
@@ -898,9 +986,11 @@ export type PackageSubscriptionSelectScalar = {
   id?: boolean
   tenantId?: boolean
   packageId?: boolean
+  packageName?: boolean
+  packagePrice?: boolean
+  packageTrialPrice?: boolean
   status?: boolean
-  seats?: boolean
-  autoRenew?: boolean
+  amountPaid?: boolean
   startsAt?: boolean
   endsAt?: boolean
   trialEndsAt?: boolean
@@ -909,7 +999,7 @@ export type PackageSubscriptionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PackageSubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "packageId" | "status" | "seats" | "autoRenew" | "startsAt" | "endsAt" | "trialEndsAt" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["packageSubscription"]>
+export type PackageSubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "packageId" | "packageName" | "packagePrice" | "packageTrialPrice" | "status" | "amountPaid" | "startsAt" | "endsAt" | "trialEndsAt" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["packageSubscription"]>
 export type PackageSubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   package?: boolean | Prisma.PackageDefaultArgs<ExtArgs>
@@ -933,15 +1023,17 @@ export type $PackageSubscriptionPayload<ExtArgs extends runtime.Types.Extensions
     id: number
     tenantId: string
     packageId: number
+    packageName: $Enums.packageName
+    packagePrice: runtime.Decimal
+    packageTrialPrice: runtime.Decimal
     status: $Enums.SubscriptionStatus
-    seats: number
-    autoRenew: boolean
+    amountPaid: runtime.Decimal
     startsAt: Date
-    endsAt: Date
+    endsAt: Date | null
     trialEndsAt: Date | null
     metadata: runtime.JsonValue | null
     createdAt: Date
-    updatedAt: Date | null
+    updatedAt: Date
   }, ExtArgs["result"]["packageSubscription"]>
   composites: {}
 }
@@ -1370,9 +1462,11 @@ export interface PackageSubscriptionFieldRefs {
   readonly id: Prisma.FieldRef<"PackageSubscription", 'Int'>
   readonly tenantId: Prisma.FieldRef<"PackageSubscription", 'String'>
   readonly packageId: Prisma.FieldRef<"PackageSubscription", 'Int'>
+  readonly packageName: Prisma.FieldRef<"PackageSubscription", 'packageName'>
+  readonly packagePrice: Prisma.FieldRef<"PackageSubscription", 'Decimal'>
+  readonly packageTrialPrice: Prisma.FieldRef<"PackageSubscription", 'Decimal'>
   readonly status: Prisma.FieldRef<"PackageSubscription", 'SubscriptionStatus'>
-  readonly seats: Prisma.FieldRef<"PackageSubscription", 'Int'>
-  readonly autoRenew: Prisma.FieldRef<"PackageSubscription", 'Boolean'>
+  readonly amountPaid: Prisma.FieldRef<"PackageSubscription", 'Decimal'>
   readonly startsAt: Prisma.FieldRef<"PackageSubscription", 'DateTime'>
   readonly endsAt: Prisma.FieldRef<"PackageSubscription", 'DateTime'>
   readonly trialEndsAt: Prisma.FieldRef<"PackageSubscription", 'DateTime'>

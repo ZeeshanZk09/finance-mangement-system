@@ -58,12 +58,12 @@ export type Customer = Prisma.CustomerModel
 export type Item = Prisma.ItemModel
 /**
  * Model Package
- * PACKAGES (previously "Packages")
+ * 
  */
 export type Package = Prisma.PackageModel
 /**
  * Model PackageSubscription
- * PACKAGE SUBSCRIPTIONS (which tenant is on which package)
+ * 
  */
 export type PackageSubscription = Prisma.PackageSubscriptionModel
 /**

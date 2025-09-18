@@ -310,8 +310,8 @@ export type UploadWhereInput = {
   OR?: Prisma.UploadWhereInput[]
   NOT?: Prisma.UploadWhereInput | Prisma.UploadWhereInput[]
   id?: Prisma.IntFilter<"Upload"> | number
-  tenantId?: Prisma.StringFilter<"Upload"> | string
-  userId?: Prisma.StringFilter<"Upload"> | string
+  tenantId?: Prisma.UuidFilter<"Upload"> | string
+  userId?: Prisma.UuidFilter<"Upload"> | string
   purpose?: Prisma.StringFilter<"Upload"> | string
   originalName?: Prisma.StringFilter<"Upload"> | string
   filename?: Prisma.StringFilter<"Upload"> | string
@@ -361,8 +361,8 @@ export type UploadWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UploadWhereInput | Prisma.UploadWhereInput[]
   OR?: Prisma.UploadWhereInput[]
   NOT?: Prisma.UploadWhereInput | Prisma.UploadWhereInput[]
-  tenantId?: Prisma.StringFilter<"Upload"> | string
-  userId?: Prisma.StringFilter<"Upload"> | string
+  tenantId?: Prisma.UuidFilter<"Upload"> | string
+  userId?: Prisma.UuidFilter<"Upload"> | string
   purpose?: Prisma.StringFilter<"Upload"> | string
   originalName?: Prisma.StringFilter<"Upload"> | string
   filename?: Prisma.StringFilter<"Upload"> | string
@@ -414,8 +414,8 @@ export type UploadScalarWhereWithAggregatesInput = {
   OR?: Prisma.UploadScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UploadScalarWhereWithAggregatesInput | Prisma.UploadScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Upload"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"Upload"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Upload"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"Upload"> | string
+  userId?: Prisma.UuidWithAggregatesFilter<"Upload"> | string
   purpose?: Prisma.StringWithAggregatesFilter<"Upload"> | string
   originalName?: Prisma.StringWithAggregatesFilter<"Upload"> | string
   filename?: Prisma.StringWithAggregatesFilter<"Upload"> | string
@@ -843,8 +843,8 @@ export type UploadScalarWhereInput = {
   OR?: Prisma.UploadScalarWhereInput[]
   NOT?: Prisma.UploadScalarWhereInput | Prisma.UploadScalarWhereInput[]
   id?: Prisma.IntFilter<"Upload"> | number
-  tenantId?: Prisma.StringFilter<"Upload"> | string
-  userId?: Prisma.StringFilter<"Upload"> | string
+  tenantId?: Prisma.UuidFilter<"Upload"> | string
+  userId?: Prisma.UuidFilter<"Upload"> | string
   purpose?: Prisma.StringFilter<"Upload"> | string
   originalName?: Prisma.StringFilter<"Upload"> | string
   filename?: Prisma.StringFilter<"Upload"> | string

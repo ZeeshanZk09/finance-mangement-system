@@ -6,10 +6,11 @@ import {
   ensureTenantExists,
   prismaErrorHandler,
   // requireActor,
-  requireSuperAdmin,
-} from '@/utils/helpers/userHelper';
+  requireAdmin,
+} from '@/utils/helpers/userHelpers';
 import { createTenantSchema, updateTenantSchema } from '@/utils/validators/userValidator';
 import { ApiError } from '@/utils/NextApiError';
+import { TenantCreateInput } from '@/app/generated/prisma/client/models';
 
 /**
  * Actor = caller identity (optional) used to enforce tenant boundaries and Admin checks.
@@ -28,21 +29,13 @@ import { ApiError } from '@/utils/NextApiError';
  * - Only Super_Admin (if actor provided) may create tenants.
  * - Ensures tenant name uniqueness.
  */
-export async function createTenant(
-  data: { name: string; email: string; slug: string },
-  actor?: Actor
-) {
+export async function createTenant(data: TenantCreateInput) {
   try {
     const parsed = createTenantSchema.parse(data);
 
-    if (actor) {
-      // Only super-Admins should create top-level tenants
-      requireSuperAdmin(actor);
-    }
-
     // Check uniqueness of name (best-effort; consider unique DB constraint if required)
     const existing = await prisma.tenant.findFirst({ where: { name: parsed.name } });
-    if (existing) throw new Error('A tenant with this name already exists.');
+    if (existing) throw new ApiError(400, 'A tenant with this name already exists.');
 
     const tenant = await prisma.tenant.create({
       data: {
@@ -75,7 +68,7 @@ export async function getTenantById(
     if (!tenant) return null;
 
     // If caller provided, ensure they either belong to tenant or are Super_Admin
-    if (actor && actor.role !== 'Super_Admin' && actor.tenantId !== id) {
+    if (actor && actor.role !== 'Admin' && actor.tenantId !== id) {
       throw new Error('Access denied: tenant mismatch.');
     }
 
@@ -148,7 +141,7 @@ export async function getAllTenants(options?: {
 
     // If an actor is provided and is not Super_Admin, restrict visibility to their tenant only.
     const where: any = {};
-    if (actor && actor.role !== 'Super_Admin') {
+    if (actor && actor.role !== 'Admin') {
       where.id = actor.tenantId;
     } else if (search) {
       where.name = { contains: search, mode: 'insensitive' };
@@ -208,9 +201,9 @@ export async function updateTenant(id: string, data: { name?: string }, actor?: 
 
     if (actor) {
       // allow Super_Admin to update any tenant; otherwise only allow if actor.tenantId matches and actor is Admin
-      if (actor.role !== 'Super_Admin') {
+      if (actor.role !== 'Admin') {
         if (actor.tenantId !== id) throw new ApiError(401, 'Access denied: tenant mismatch.');
-        if (actor.role !== 'Admin')
+        if (actor.role !== 'Approver')
           throw new ApiError(401, 'Admin privileges required to update tenant.');
       }
     }
@@ -241,16 +234,16 @@ export async function deleteTenant(id: string, options?: { force?: boolean; acto
 
     // Security: only Super_Admin can force-delete; tenant-level Admins cannot force-delete their own tenant.
     if (force && actor) {
-      requireSuperAdmin(actor);
+      requireAdmin(actor);
     } else if (!actor) {
       // if no actor (script), allow delete if force true
       if (!force) throw new Error('Authentication required for deletions.');
     } else {
       // actor provided but not force: ensure actor belongs to tenant and is Admin or Super_Admin
-      if (actor.role !== 'Super_Admin' && actor.tenantId !== id) {
+      if (actor.role !== 'Admin' && actor.tenantId !== id) {
         throw new Error('Access denied: tenant mismatch.');
       }
-      if (actor.role !== 'Admin' && actor.role !== 'Super_Admin') {
+      if (actor.role !== 'Admin') {
         throw new Error('Admin privileges required to delete tenant.');
       }
     }
@@ -312,7 +305,7 @@ export async function getTenantsUpdatedSince(since: Date, options?: { actor?: Ac
   try {
     const { actor } = options || {};
     const where: any = { updatedAt: { gt: since } };
-    if (actor && actor.role !== 'Super_Admin') {
+    if (actor && actor.role !== 'Admin') {
       // restrict to actor tenant only
       where.id = actor.tenantId;
     }
@@ -333,9 +326,9 @@ export async function exportTenantData(tenantId: string, actor?: Actor) {
   try {
     // permission check
     if (actor) {
-      if (actor.role !== 'Super_Admin') {
+      if (actor.role !== 'Admin') {
         if (actor.tenantId !== tenantId) throw new Error('Access denied: tenant mismatch.');
-        if (actor.role !== 'Admin') {
+        if (actor.role !== 'Approver') {
           throw new Error('Admin privileges required to export tenant data.');
         }
       }
@@ -385,7 +378,7 @@ export async function exportTenantData(tenantId: string, actor?: Actor) {
 export async function tenantSanityCheck(tenantId: string, actor?: Actor) {
   try {
     if (actor) {
-      if (actor.role !== 'Super_Admin' && actor.tenantId !== tenantId) {
+      if (actor.role !== 'Admin' && actor.tenantId !== tenantId) {
         throw new Error('Access denied: tenant mismatch.');
       }
     } else {

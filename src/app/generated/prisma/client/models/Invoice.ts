@@ -337,7 +337,7 @@ export type InvoiceWhereInput = {
   OR?: Prisma.InvoiceWhereInput[]
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
   id?: Prisma.IntFilter<"Invoice"> | number
-  tenantId?: Prisma.StringFilter<"Invoice"> | string
+  tenantId?: Prisma.UuidFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
   invoicePrefix?: Prisma.StringNullableFilter<"Invoice"> | string | null
   date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -393,7 +393,7 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
   OR?: Prisma.InvoiceWhereInput[]
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
-  tenantId?: Prisma.StringFilter<"Invoice"> | string
+  tenantId?: Prisma.UuidFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
   invoicePrefix?: Prisma.StringNullableFilter<"Invoice"> | string | null
   date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -449,7 +449,7 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   OR?: Prisma.InvoiceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InvoiceScalarWhereWithAggregatesInput | Prisma.InvoiceScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Invoice"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   invoicePrefix?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   date?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
@@ -934,7 +934,7 @@ export type InvoiceScalarWhereInput = {
   OR?: Prisma.InvoiceScalarWhereInput[]
   NOT?: Prisma.InvoiceScalarWhereInput | Prisma.InvoiceScalarWhereInput[]
   id?: Prisma.IntFilter<"Invoice"> | number
-  tenantId?: Prisma.StringFilter<"Invoice"> | string
+  tenantId?: Prisma.UuidFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
   invoicePrefix?: Prisma.StringNullableFilter<"Invoice"> | string | null
   date?: Prisma.DateTimeFilter<"Invoice"> | Date | string

@@ -9,9 +9,22 @@
 */
 
 export const UserType = {
-  Super_Admin: 'Super_Admin',
+  Developer: 'Developer',
   Admin: 'Admin',
-  User: 'User'
+  CFO: 'CFO',
+  AccountingManager: 'AccountingManager',
+  Bookkeeper: 'Bookkeeper',
+  APClerk: 'APClerk',
+  ARClerk: 'ARClerk',
+  Treasury: 'Treasury',
+  PayrollManager: 'PayrollManager',
+  PurchasingOfficer: 'PurchasingOfficer',
+  Approver: 'Approver',
+  InternalAuditor: 'InternalAuditor',
+  DataAnalyst: 'DataAnalyst',
+  CustomerSupportAgent: 'CustomerSupportAgent',
+  ExternalAuditor: 'ExternalAuditor',
+  ServiceAccount: 'ServiceAccount'
 } as const
 
 export type UserType = (typeof UserType)[keyof typeof UserType]
@@ -82,29 +95,23 @@ export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof Subscr
 
 
 export const packageName = {
-  Free: 'Free',
-  Basic: 'Basic',
-  Pro: 'Pro',
+  Starter: 'Starter',
+  Essentials: 'Essentials',
+  Professional: 'Professional',
   Enterprise: 'Enterprise'
 } as const
 
 export type packageName = (typeof packageName)[keyof typeof packageName]
 
 
-export const FreeFeatures = {
+export const Features = {
   Invoicing: 'Invoicing',
   Customer_Management: 'Customer_Management',
   Vendor_Management: 'Vendor_Management',
   Notifications_and_Reminders: 'Notifications_and_Reminders',
   Mobile_Access: 'Mobile_Access',
   Free_Trials: 'Free_Trials',
-  Money_Back_Guarantees: 'Money_Back_Guarantees'
-} as const
-
-export type FreeFeatures = (typeof FreeFeatures)[keyof typeof FreeFeatures]
-
-
-export const BasicFeatures = {
+  Money_Back_Guarantees: 'Money_Back_Guarantees',
   Inventory_Management: 'Inventory_Management',
   Payment_Tracking: 'Payment_Tracking',
   Tax_Management: 'Tax_Management',
@@ -113,13 +120,7 @@ export const BasicFeatures = {
   Purchase_Orders: 'Purchase_Orders',
   User_Roles_and_Permissions: 'User_Roles_and_Permissions',
   Data_Import_and_Export: 'Data_Import_and_Export',
-  Community_Access: 'Community_Access'
-} as const
-
-export type BasicFeatures = (typeof BasicFeatures)[keyof typeof BasicFeatures]
-
-
-export const ProFeatures = {
+  Community_Access: 'Community_Access',
   Multi_Currency_Support: 'Multi_Currency_Support',
   Recurring_Invoices: 'Recurring_Invoices',
   Project_Management: 'Project_Management',
@@ -135,13 +136,7 @@ export const ProFeatures = {
   E_Commerce_Integration: 'E_Commerce_Integration',
   CRM_Integration: 'CRM_Integration',
   Budgeting: 'Budgeting',
-  Forecasting: 'Forecasting'
-} as const
-
-export type ProFeatures = (typeof ProFeatures)[keyof typeof ProFeatures]
-
-
-export const EnterpriseFeatures = {
+  Forecasting: 'Forecasting',
   Role_Based_Access_Control: 'Role_Based_Access_Control',
   Single_Sign_On: 'Single_Sign_On',
   Two_Factor_Authentication: 'Two_Factor_Authentication',
@@ -163,4 +158,4 @@ export const EnterpriseFeatures = {
   Uptime_Guarantees: 'Uptime_Guarantees'
 } as const
 
-export type EnterpriseFeatures = (typeof EnterpriseFeatures)[keyof typeof EnterpriseFeatures]
+export type Features = (typeof Features)[keyof typeof Features]

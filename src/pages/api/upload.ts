@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs/promises';
 import path from 'path';
 import { upload } from '@/middlewares/upload'; // multer instance
-import runMiddleware from '@/lib/helpers/runMiddleware'; // your helper
-import prisma from '@/lib/prisma';
-import { uploadQueue } from '@/lib/helpers/queues'; // BullMQ producer
+import runMiddleware from '@/utils/helpers/runMiddleware'; // your helper
+import prisma, { Prisma } from '@/lib/prisma';
+import { uploadQueue } from '@/queues/uploadQueues'; // BullMQ producer
 import { existsSync } from 'fs';
 import { ApiError } from '@/utils/NextApiError';
 
@@ -14,16 +14,10 @@ export const config = {
     sizeLimit: '10mb',
   },
 };
+
 // Configuration
 const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'public/temp');
 const MAX_FILES = 10;
-
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//     sizeLimit: '10mb',
-//   },
-// };
 
 // Type safety
 interface UploadedFile {
@@ -41,7 +35,10 @@ interface UploadResponse {
   };
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<UploadResponse | unknown>
+) {
   const startTime = Date.now();
   try {
     // 1. Method check
@@ -80,11 +77,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'No valid files uploaded' });
     }
 
-    const created: any[] = [];
+    const created = [];
     // Start transaction for DB create + enqueue to ensure consistency
     for (const f of files) {
       const localRelPath = path.relative(process.cwd(), f.path);
       // create DB record
+
       const db = await prisma.upload.create({
         data: {
           tenantId,
@@ -130,11 +128,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
   } catch (err) {
-    console.error('Upload Error:', {
+    console.error('Upload Error: \n', {
       timestamp: new Date().toISOString(),
-      error: err instanceof Error ? err.message : 'Unknown error',
+      error: err instanceof ApiError ? err.message : `Unknown error: ${err}`,
     });
-    if (err instanceof Error) {
+    if (err instanceof ApiError) {
       // Specific error handling
       // TypeScript ko nahi pata ke 'err' pe 'code' property ho sakti hai, is liye type guard use karo
       if (

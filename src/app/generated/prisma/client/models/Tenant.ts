@@ -193,7 +193,7 @@ export type TenantWhereInput = {
   AND?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
-  id?: Prisma.StringFilter<"Tenant"> | string
+  id?: Prisma.UuidFilter<"Tenant"> | string
   name?: Prisma.StringFilter<"Tenant"> | string
   email?: Prisma.StringFilter<"Tenant"> | string
   slug?: Prisma.StringFilter<"Tenant"> | string
@@ -205,7 +205,6 @@ export type TenantWhereInput = {
   files?: Prisma.UploadListRelationFilter
   uploads?: Prisma.UploadAuditListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
-  packages?: Prisma.PackageListRelationFilter
   vendors?: Prisma.VendorListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
   items?: Prisma.ItemListRelationFilter
@@ -229,7 +228,6 @@ export type TenantOrderByWithRelationInput = {
   files?: Prisma.UploadOrderByRelationAggregateInput
   uploads?: Prisma.UploadAuditOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
-  packages?: Prisma.PackageOrderByRelationAggregateInput
   vendors?: Prisma.VendorOrderByRelationAggregateInput
   customers?: Prisma.CustomerOrderByRelationAggregateInput
   items?: Prisma.ItemOrderByRelationAggregateInput
@@ -256,7 +254,6 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   files?: Prisma.UploadListRelationFilter
   uploads?: Prisma.UploadAuditListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
-  packages?: Prisma.PackageListRelationFilter
   vendors?: Prisma.VendorListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
   items?: Prisma.ItemListRelationFilter
@@ -285,7 +282,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   AND?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
   OR?: Prisma.TenantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"Tenant"> | string
   name?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   email?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
@@ -308,7 +305,6 @@ export type TenantCreateInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -332,7 +328,6 @@ export type TenantUncheckedCreateInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -356,7 +351,6 @@ export type TenantUpdateInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -380,7 +374,6 @@ export type TenantUncheckedUpdateInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -570,20 +563,6 @@ export type TenantUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutItemsInput, Prisma.TenantUpdateWithoutItemsInput>, Prisma.TenantUncheckedUpdateWithoutItemsInput>
 }
 
-export type TenantCreateNestedOneWithoutPackagesInput = {
-  create?: Prisma.XOR<Prisma.TenantCreateWithoutPackagesInput, Prisma.TenantUncheckedCreateWithoutPackagesInput>
-  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutPackagesInput
-  connect?: Prisma.TenantWhereUniqueInput
-}
-
-export type TenantUpdateOneRequiredWithoutPackagesNestedInput = {
-  create?: Prisma.XOR<Prisma.TenantCreateWithoutPackagesInput, Prisma.TenantUncheckedCreateWithoutPackagesInput>
-  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutPackagesInput
-  upsert?: Prisma.TenantUpsertWithoutPackagesInput
-  connect?: Prisma.TenantWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutPackagesInput, Prisma.TenantUpdateWithoutPackagesInput>, Prisma.TenantUncheckedUpdateWithoutPackagesInput>
-}
-
 export type TenantCreateNestedOneWithoutSubscriptionInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutSubscriptionInput, Prisma.TenantUncheckedCreateWithoutSubscriptionInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutSubscriptionInput
@@ -666,7 +645,6 @@ export type TenantCreateWithoutUsersInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -689,7 +667,6 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -728,7 +705,6 @@ export type TenantUpdateWithoutUsersInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -751,7 +727,6 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -775,7 +750,6 @@ export type TenantCreateWithoutUserSessionInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -798,7 +772,6 @@ export type TenantUncheckedCreateWithoutUserSessionInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -837,7 +810,6 @@ export type TenantUpdateWithoutUserSessionInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -860,7 +832,6 @@ export type TenantUncheckedUpdateWithoutUserSessionInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -882,7 +853,6 @@ export type TenantCreateWithoutFilesInput = {
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -905,7 +875,6 @@ export type TenantUncheckedCreateWithoutFilesInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -944,7 +913,6 @@ export type TenantUpdateWithoutFilesInput = {
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -967,7 +935,6 @@ export type TenantUncheckedUpdateWithoutFilesInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -990,7 +957,6 @@ export type TenantCreateWithoutUploadsInput = {
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -1013,7 +979,6 @@ export type TenantUncheckedCreateWithoutUploadsInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -1052,7 +1017,6 @@ export type TenantUpdateWithoutUploadsInput = {
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -1075,7 +1039,6 @@ export type TenantUncheckedUpdateWithoutUploadsInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -1099,7 +1062,6 @@ export type TenantCreateWithoutVendorsInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
@@ -1122,7 +1084,6 @@ export type TenantUncheckedCreateWithoutVendorsInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
@@ -1161,7 +1122,6 @@ export type TenantUpdateWithoutVendorsInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
@@ -1184,7 +1144,6 @@ export type TenantUncheckedUpdateWithoutVendorsInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
@@ -1207,7 +1166,6 @@ export type TenantCreateWithoutCustomersInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
@@ -1230,7 +1188,6 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
@@ -1269,7 +1226,6 @@ export type TenantUpdateWithoutCustomersInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
@@ -1292,7 +1248,6 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
@@ -1315,7 +1270,6 @@ export type TenantCreateWithoutItemsInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
@@ -1338,7 +1292,6 @@ export type TenantUncheckedCreateWithoutItemsInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
@@ -1377,7 +1330,6 @@ export type TenantUpdateWithoutItemsInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
@@ -1400,117 +1352,8 @@ export type TenantUncheckedUpdateWithoutItemsInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
-  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
-  subscription?: Prisma.PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
-  userSession?: Prisma.SessionUncheckedUpdateManyWithoutTenantNestedInput
-  InvoiceItem?: Prisma.InvoiceItemUncheckedUpdateManyWithoutTenantNestedInput
-}
-
-export type TenantCreateWithoutPackagesInput = {
-  id?: string
-  name: string
-  email: string
-  slug: string
-  settings?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  deletedAt?: Date | string | null
-  users?: Prisma.UserCreateNestedManyWithoutTenantInput
-  files?: Prisma.UploadCreateNestedManyWithoutTenantInput
-  uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
-  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
-  items?: Prisma.ItemCreateNestedManyWithoutTenantInput
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
-  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
-  subscription?: Prisma.PackageSubscriptionCreateNestedManyWithoutTenantInput
-  userSession?: Prisma.SessionCreateNestedManyWithoutTenantInput
-  InvoiceItem?: Prisma.InvoiceItemCreateNestedManyWithoutTenantInput
-}
-
-export type TenantUncheckedCreateWithoutPackagesInput = {
-  id?: string
-  name: string
-  email: string
-  slug: string
-  settings?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  deletedAt?: Date | string | null
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
-  files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
-  uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
-  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
-  items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
-  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
-  subscription?: Prisma.PackageSubscriptionUncheckedCreateNestedManyWithoutTenantInput
-  userSession?: Prisma.SessionUncheckedCreateNestedManyWithoutTenantInput
-  InvoiceItem?: Prisma.InvoiceItemUncheckedCreateNestedManyWithoutTenantInput
-}
-
-export type TenantCreateOrConnectWithoutPackagesInput = {
-  where: Prisma.TenantWhereUniqueInput
-  create: Prisma.XOR<Prisma.TenantCreateWithoutPackagesInput, Prisma.TenantUncheckedCreateWithoutPackagesInput>
-}
-
-export type TenantUpsertWithoutPackagesInput = {
-  update: Prisma.XOR<Prisma.TenantUpdateWithoutPackagesInput, Prisma.TenantUncheckedUpdateWithoutPackagesInput>
-  create: Prisma.XOR<Prisma.TenantCreateWithoutPackagesInput, Prisma.TenantUncheckedCreateWithoutPackagesInput>
-  where?: Prisma.TenantWhereInput
-}
-
-export type TenantUpdateToOneWithWhereWithoutPackagesInput = {
-  where?: Prisma.TenantWhereInput
-  data: Prisma.XOR<Prisma.TenantUpdateWithoutPackagesInput, Prisma.TenantUncheckedUpdateWithoutPackagesInput>
-}
-
-export type TenantUpdateWithoutPackagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  settings?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
-  files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
-  uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
-  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
-  items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
-  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
-  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
-  subscription?: Prisma.PackageSubscriptionUpdateManyWithoutTenantNestedInput
-  userSession?: Prisma.SessionUpdateManyWithoutTenantNestedInput
-  InvoiceItem?: Prisma.InvoiceItemUpdateManyWithoutTenantNestedInput
-}
-
-export type TenantUncheckedUpdateWithoutPackagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  settings?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
-  files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
-  uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
-  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
-  items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   subscription?: Prisma.PackageSubscriptionUncheckedUpdateManyWithoutTenantNestedInput
@@ -1531,7 +1374,6 @@ export type TenantCreateWithoutSubscriptionInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -1554,7 +1396,6 @@ export type TenantUncheckedCreateWithoutSubscriptionInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -1593,7 +1434,6 @@ export type TenantUpdateWithoutSubscriptionInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -1616,7 +1456,6 @@ export type TenantUncheckedUpdateWithoutSubscriptionInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -1639,7 +1478,6 @@ export type TenantCreateWithoutInvoicesInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -1662,7 +1500,6 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -1701,7 +1538,6 @@ export type TenantUpdateWithoutInvoicesInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -1724,7 +1560,6 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -1747,7 +1582,6 @@ export type TenantCreateWithoutInvoiceItemInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -1770,7 +1604,6 @@ export type TenantUncheckedCreateWithoutInvoiceItemInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -1809,7 +1642,6 @@ export type TenantUpdateWithoutInvoiceItemInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -1832,7 +1664,6 @@ export type TenantUncheckedUpdateWithoutInvoiceItemInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -1855,7 +1686,6 @@ export type TenantCreateWithoutPaymentsInput = {
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -1878,7 +1708,6 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -1917,7 +1746,6 @@ export type TenantUpdateWithoutPaymentsInput = {
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -1940,7 +1768,6 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -1962,7 +1789,6 @@ export type TenantCreateWithoutAuditLogsInput = {
   users?: Prisma.UserCreateNestedManyWithoutTenantInput
   files?: Prisma.UploadCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemCreateNestedManyWithoutTenantInput
@@ -1985,7 +1811,6 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
   files?: Prisma.UploadUncheckedCreateNestedManyWithoutTenantInput
   uploads?: Prisma.UploadAuditUncheckedCreateNestedManyWithoutTenantInput
-  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutTenantInput
   vendors?: Prisma.VendorUncheckedCreateNestedManyWithoutTenantInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutTenantInput
@@ -2024,7 +1849,6 @@ export type TenantUpdateWithoutAuditLogsInput = {
   users?: Prisma.UserUpdateManyWithoutTenantNestedInput
   files?: Prisma.UploadUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUpdateManyWithoutTenantNestedInput
@@ -2047,7 +1871,6 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
   files?: Prisma.UploadUncheckedUpdateManyWithoutTenantNestedInput
   uploads?: Prisma.UploadAuditUncheckedUpdateManyWithoutTenantNestedInput
-  packages?: Prisma.PackageUncheckedUpdateManyWithoutTenantNestedInput
   vendors?: Prisma.VendorUncheckedUpdateManyWithoutTenantNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutTenantNestedInput
@@ -2068,7 +1891,6 @@ export type TenantCountOutputType = {
   files: number
   uploads: number
   auditLogs: number
-  packages: number
   vendors: number
   customers: number
   items: number
@@ -2084,7 +1906,6 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   files?: boolean | TenantCountOutputTypeCountFilesArgs
   uploads?: boolean | TenantCountOutputTypeCountUploadsArgs
   auditLogs?: boolean | TenantCountOutputTypeCountAuditLogsArgs
-  packages?: boolean | TenantCountOutputTypeCountPackagesArgs
   vendors?: boolean | TenantCountOutputTypeCountVendorsArgs
   customers?: boolean | TenantCountOutputTypeCountCustomersArgs
   items?: boolean | TenantCountOutputTypeCountItemsArgs
@@ -2131,13 +1952,6 @@ export type TenantCountOutputTypeCountUploadsArgs<ExtArgs extends runtime.Types.
  */
 export type TenantCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AuditLogWhereInput
-}
-
-/**
- * TenantCountOutputType without action
- */
-export type TenantCountOutputTypeCountPackagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PackageWhereInput
 }
 
 /**
@@ -2210,7 +2024,6 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   files?: boolean | Prisma.Tenant$filesArgs<ExtArgs>
   uploads?: boolean | Prisma.Tenant$uploadsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.Tenant$auditLogsArgs<ExtArgs>
-  packages?: boolean | Prisma.Tenant$packagesArgs<ExtArgs>
   vendors?: boolean | Prisma.Tenant$vendorsArgs<ExtArgs>
   customers?: boolean | Prisma.Tenant$customersArgs<ExtArgs>
   items?: boolean | Prisma.Tenant$itemsArgs<ExtArgs>
@@ -2261,7 +2074,6 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   files?: boolean | Prisma.Tenant$filesArgs<ExtArgs>
   uploads?: boolean | Prisma.Tenant$uploadsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.Tenant$auditLogsArgs<ExtArgs>
-  packages?: boolean | Prisma.Tenant$packagesArgs<ExtArgs>
   vendors?: boolean | Prisma.Tenant$vendorsArgs<ExtArgs>
   customers?: boolean | Prisma.Tenant$customersArgs<ExtArgs>
   items?: boolean | Prisma.Tenant$itemsArgs<ExtArgs>
@@ -2282,7 +2094,6 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     files: Prisma.$UploadPayload<ExtArgs>[]
     uploads: Prisma.$UploadAuditPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
-    packages: Prisma.$PackagePayload<ExtArgs>[]
     vendors: Prisma.$VendorPayload<ExtArgs>[]
     customers: Prisma.$CustomerPayload<ExtArgs>[]
     items: Prisma.$ItemPayload<ExtArgs>[]
@@ -2699,7 +2510,6 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   files<T extends Prisma.Tenant$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploads<T extends Prisma.Tenant$uploadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UploadAuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.Tenant$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  packages<T extends Prisma.Tenant$packagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$packagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PackagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   vendors<T extends Prisma.Tenant$vendorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$vendorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customers<T extends Prisma.Tenant$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   items<T extends Prisma.Tenant$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3226,30 +3036,6 @@ export type Tenant$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
-}
-
-/**
- * Tenant.packages
- */
-export type Tenant$packagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Package
-   */
-  select?: Prisma.PackageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Package
-   */
-  omit?: Prisma.PackageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PackageInclude<ExtArgs> | null
-  where?: Prisma.PackageWhereInput
-  orderBy?: Prisma.PackageOrderByWithRelationInput | Prisma.PackageOrderByWithRelationInput[]
-  cursor?: Prisma.PackageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PackageScalarFieldEnum | Prisma.PackageScalarFieldEnum[]
 }
 
 /**

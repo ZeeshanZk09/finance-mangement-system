@@ -13,7 +13,7 @@ import {
   prismaErrorHandler,
   requireAdmin,
   requireTenantMatch,
-} from '@/utils/helpers/userHelper';
+} from '@/utils/helpers/userHelpers';
 
 /**
  * Actor type used for tenant scoping and permission checks.

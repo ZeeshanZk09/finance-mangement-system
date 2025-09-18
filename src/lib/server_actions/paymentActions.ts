@@ -2,7 +2,7 @@
 
 import { createPaymentSchema, updatePaymentSchema } from '@/utils/validators/paymentValidator';
 import prisma from '@/lib/prisma';
-import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelper';
+import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelpers';
 import { Actor } from '@/types/userTypes';
 import { PaymentMethod } from '@/app/generated/prisma';
 import type { PrismaClient } from '@/app/generated/prisma/client';

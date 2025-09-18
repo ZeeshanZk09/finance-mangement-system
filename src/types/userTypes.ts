@@ -1,1 +1,3 @@
-export type Actor = { id: number; tenantId: string; role: 'User' | 'Admin' | 'Super_Admin' } | null;
+import { User } from '@/app/generated/prisma/client/client';
+
+export type Actor = User;

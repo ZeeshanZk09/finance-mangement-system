@@ -3,7 +3,7 @@
 import { Actor } from '@/types/userTypes';
 import prisma from '@/lib/prisma';
 import { createInvoiceSchema, updateInvoiceSchema } from '@/utils/validators/invoiceValidator';
-import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelper';
+import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelpers';
 import { recalcInvoiceTotals } from '@/utils/helpers/invoiceItemHelper';
 import type { PrismaClient } from '@/app/generated/prisma/client';
 

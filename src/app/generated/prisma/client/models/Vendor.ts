@@ -246,7 +246,7 @@ export type VendorWhereInput = {
   OR?: Prisma.VendorWhereInput[]
   NOT?: Prisma.VendorWhereInput | Prisma.VendorWhereInput[]
   id?: Prisma.IntFilter<"Vendor"> | number
-  tenantId?: Prisma.StringFilter<"Vendor"> | string
+  tenantId?: Prisma.UuidFilter<"Vendor"> | string
   name?: Prisma.StringFilter<"Vendor"> | string
   email?: Prisma.StringNullableFilter<"Vendor"> | string | null
   phone?: Prisma.StringNullableFilter<"Vendor"> | string | null
@@ -277,7 +277,7 @@ export type VendorWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.VendorWhereInput | Prisma.VendorWhereInput[]
   OR?: Prisma.VendorWhereInput[]
   NOT?: Prisma.VendorWhereInput | Prisma.VendorWhereInput[]
-  tenantId?: Prisma.StringFilter<"Vendor"> | string
+  tenantId?: Prisma.UuidFilter<"Vendor"> | string
   name?: Prisma.StringFilter<"Vendor"> | string
   email?: Prisma.StringNullableFilter<"Vendor"> | string | null
   phone?: Prisma.StringNullableFilter<"Vendor"> | string | null
@@ -312,7 +312,7 @@ export type VendorScalarWhereWithAggregatesInput = {
   OR?: Prisma.VendorScalarWhereWithAggregatesInput[]
   NOT?: Prisma.VendorScalarWhereWithAggregatesInput | Prisma.VendorScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Vendor"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"Vendor"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"Vendor"> | string
   name?: Prisma.StringWithAggregatesFilter<"Vendor"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Vendor"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Vendor"> | string | null
@@ -563,7 +563,7 @@ export type VendorScalarWhereInput = {
   OR?: Prisma.VendorScalarWhereInput[]
   NOT?: Prisma.VendorScalarWhereInput | Prisma.VendorScalarWhereInput[]
   id?: Prisma.IntFilter<"Vendor"> | number
-  tenantId?: Prisma.StringFilter<"Vendor"> | string
+  tenantId?: Prisma.UuidFilter<"Vendor"> | string
   name?: Prisma.StringFilter<"Vendor"> | string
   email?: Prisma.StringNullableFilter<"Vendor"> | string | null
   phone?: Prisma.StringNullableFilter<"Vendor"> | string | null

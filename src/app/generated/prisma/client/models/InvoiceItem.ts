@@ -273,7 +273,7 @@ export type InvoiceItemWhereInput = {
   OR?: Prisma.InvoiceItemWhereInput[]
   NOT?: Prisma.InvoiceItemWhereInput | Prisma.InvoiceItemWhereInput[]
   id?: Prisma.IntFilter<"InvoiceItem"> | number
-  tenantId?: Prisma.StringFilter<"InvoiceItem"> | string
+  tenantId?: Prisma.UuidFilter<"InvoiceItem"> | string
   invoiceId?: Prisma.IntFilter<"InvoiceItem"> | number
   itemId?: Prisma.IntFilter<"InvoiceItem"> | number
   description?: Prisma.StringNullableFilter<"InvoiceItem"> | string | null
@@ -310,7 +310,7 @@ export type InvoiceItemWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InvoiceItemWhereInput | Prisma.InvoiceItemWhereInput[]
   OR?: Prisma.InvoiceItemWhereInput[]
   NOT?: Prisma.InvoiceItemWhereInput | Prisma.InvoiceItemWhereInput[]
-  tenantId?: Prisma.StringFilter<"InvoiceItem"> | string
+  tenantId?: Prisma.UuidFilter<"InvoiceItem"> | string
   invoiceId?: Prisma.IntFilter<"InvoiceItem"> | number
   itemId?: Prisma.IntFilter<"InvoiceItem"> | number
   description?: Prisma.StringNullableFilter<"InvoiceItem"> | string | null
@@ -349,7 +349,7 @@ export type InvoiceItemScalarWhereWithAggregatesInput = {
   OR?: Prisma.InvoiceItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InvoiceItemScalarWhereWithAggregatesInput | Prisma.InvoiceItemScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"InvoiceItem"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"InvoiceItem"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"InvoiceItem"> | string
   invoiceId?: Prisma.IntWithAggregatesFilter<"InvoiceItem"> | number
   itemId?: Prisma.IntWithAggregatesFilter<"InvoiceItem"> | number
   description?: Prisma.StringNullableWithAggregatesFilter<"InvoiceItem"> | string | null
@@ -705,7 +705,7 @@ export type InvoiceItemScalarWhereInput = {
   OR?: Prisma.InvoiceItemScalarWhereInput[]
   NOT?: Prisma.InvoiceItemScalarWhereInput | Prisma.InvoiceItemScalarWhereInput[]
   id?: Prisma.IntFilter<"InvoiceItem"> | number
-  tenantId?: Prisma.StringFilter<"InvoiceItem"> | string
+  tenantId?: Prisma.UuidFilter<"InvoiceItem"> | string
   invoiceId?: Prisma.IntFilter<"InvoiceItem"> | number
   itemId?: Prisma.IntFilter<"InvoiceItem"> | number
   description?: Prisma.StringNullableFilter<"InvoiceItem"> | string | null

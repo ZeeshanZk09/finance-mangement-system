@@ -3,12 +3,10 @@
 import { Actor } from '@/types/userTypes';
 import prisma from '@/lib/prisma';
 import { createCustomerSchema, updateCustomerSchema } from '@/utils/validators/customerValidator';
-import {
-  ensureTenantExists,
-  prismaErrorHandler,
-  requireAdmin,
-  requireTenantMatch,
-} from '@/utils/helpers/userHelper';
+import { requireAdmin } from '@/utils/helpers/userHelpers';
+import { requireTenantMatch, ensureTenantExists } from '@/utils/helpers/tenantHelpers';
+import { CustomerWhereInput } from '@/app/generated/prisma/client/models';
+import { prismaErrorHandler } from '@/utils/helpers/errorHelper';
 
 /**
  * Actor type for permission/tenant scoping and role checks.
@@ -119,7 +117,7 @@ export async function getCustomers(options?: {
     if (actor && typeof tenantId === 'number' && tenantId !== actor.tenantId)
       requireTenantMatch(actor, tenantId);
 
-    const where: any = { tenantId: effectiveTenantId };
+    const where: CustomerWhereInput = { tenantId: effectiveTenantId };
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -214,7 +212,7 @@ export async function deleteCustomer(id: number, options?: { force?: boolean; ac
 
     if (force) {
       if (!actor) throw new Error('Authentication required for force delete.');
-      if (actor.role !== 'Super_Admin')
+      if (actor.role !== 'Admin')
         throw new Error('Only Super_Admin may force-delete customers with invoices.');
     } else {
       if (actor) requireAdmin(actor);
@@ -423,12 +421,15 @@ export async function applyRemoteCustomers(
  */
 export async function getCustomersUpdatedSince(
   since: Date,
-  options?: { tenantId?: number; actor?: Actor }
+  options: { tenantId?: string; actor: Actor }
 ) {
   try {
     const { tenantId, actor } = options || {};
-    const where: any = { updatedAt: { gt: since } };
-    if (actor && actor.role !== 'Super_Admin') where.tenantId = actor.tenantId;
+    const where: CustomerWhereInput = { updatedAt: { gt: since } };
+
+    requireAdmin(actor);
+
+    if (actor && actor.role !== 'Admin') where.tenantId = actor.tenantId;
     else if (tenantId) where.tenantId = tenantId;
 
     const rows = await prisma.customer.findMany({ where, orderBy: { updatedAt: 'asc' } });

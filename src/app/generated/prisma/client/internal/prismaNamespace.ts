@@ -87,11 +87,11 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.16.1
+ * Prisma Client JS version: 6.16.2
  * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.16.1",
+  client: "6.16.2",
   engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
@@ -1521,6 +1521,7 @@ export const UserScalarFieldEnum = {
   lastSeenAt: 'lastSeenAt',
   locale: 'locale',
   isActive: 'isActive',
+  ip: 'ip',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
@@ -1636,14 +1637,9 @@ export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof Item
 export const PackageScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  tenantId: 'tenantId',
   price: 'price',
-  durationDays: 'durationDays',
-  freeFeatures: 'freeFeatures',
-  basicFeatures: 'basicFeatures',
-  proFeatures: 'proFeatures',
-  enterpriseFeatures: 'enterpriseFeatures',
-  metadata: 'metadata',
+  trialPrice: 'trialPrice',
+  Features: 'Features',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1655,9 +1651,11 @@ export const PackageSubscriptionScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
   packageId: 'packageId',
+  packageName: 'packageName',
+  packagePrice: 'packagePrice',
+  packageTrialPrice: 'packageTrialPrice',
   status: 'status',
-  seats: 'seats',
-  autoRenew: 'autoRenew',
+  amountPaid: 'amountPaid',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   trialEndsAt: 'trialEndsAt',
@@ -1925,58 +1923,16 @@ export type ListEnumpackageNameFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
- * Reference to a field of type 'FreeFeatures[]'
+ * Reference to a field of type 'Features[]'
  */
-export type ListEnumFreeFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FreeFeatures[]'>
+export type ListEnumFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Features[]'>
     
 
 
 /**
- * Reference to a field of type 'FreeFeatures'
+ * Reference to a field of type 'Features'
  */
-export type EnumFreeFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FreeFeatures'>
-    
-
-
-/**
- * Reference to a field of type 'BasicFeatures[]'
- */
-export type ListEnumBasicFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BasicFeatures[]'>
-    
-
-
-/**
- * Reference to a field of type 'BasicFeatures'
- */
-export type EnumBasicFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BasicFeatures'>
-    
-
-
-/**
- * Reference to a field of type 'ProFeatures[]'
- */
-export type ListEnumProFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProFeatures[]'>
-    
-
-
-/**
- * Reference to a field of type 'ProFeatures'
- */
-export type EnumProFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProFeatures'>
-    
-
-
-/**
- * Reference to a field of type 'EnterpriseFeatures[]'
- */
-export type ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnterpriseFeatures[]'>
-    
-
-
-/**
- * Reference to a field of type 'EnterpriseFeatures'
- */
-export type EnumEnterpriseFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnterpriseFeatures'>
+export type EnumFeaturesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Features'>
     
 
 
