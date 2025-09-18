@@ -1,13 +1,15 @@
 'use server';
 
 import { Actor } from '@/types/userTypes';
-import prisma from '../prisma';
+import prisma from '@/lib/prisma';
+import type { PrismaClient } from '@/app/generated/prisma/client';
 import {
   createInvoiceItemSchema,
   updateInvoiceItemSchema,
 } from '@/utils/validators/invoiceItemValidator';
-import { prismaErrorHandler, requireTenantMatch } from '@/utils/helpers/userHelper';
+import { prismaErrorHandler, requireTenantMatch } from '@/utils/helpers/userHelpers';
 import { recalcInvoiceTotals } from '@/utils/helpers/invoiceItemHelper';
+import { ApiError } from '@/utils/NextApiError';
 
 /**
  * Actor type for permission/tenant scoping checks.
@@ -54,7 +56,7 @@ export async function createInvoiceItem(
     if (actor) requireTenantMatch(actor, parsed.tenantId);
 
     // Transaction: create invoiceItem, adjust item qty, recalc invoice total
-    const created = await prisma.$transaction(async (tx) => {
+    const created = await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
       // verify invoice
       const invoice = await tx.invoice.findUnique({ where: { id: parsed.invoiceId } });
       if (!invoice) throw new Error('Invoice not found.');
@@ -69,7 +71,7 @@ export async function createInvoiceItem(
       const computedLineTotal = parsed.lineTotal ?? parsed.unitPrice * parsed.quantity;
 
       // adjust stock: reduce quantity for sale; disallow negative stock unless Admin
-      const resultingQty = (item.quantity ?? 0) - parsed.quantity;
+      const resultingQty = +(item.quantity ?? 0) - parsed.quantity;
       if (resultingQty < 0 && actor && actor.role !== 'Admin' && actor.role !== 'Super_Admin') {
         throw new Error('Insufficient stock for this operation. Admins can override.');
       }
@@ -95,7 +97,7 @@ export async function createInvoiceItem(
       });
 
       // recalc invoice totals & status
-      await recalcInvoiceTotals(tx, parsed.invoiceId, parsed.tenantId);
+      await recalcInvoiceTotals(tx as any, parsed.invoiceId, parsed.tenantId);
 
       return invoiceItem;
     });
@@ -200,23 +202,25 @@ export async function updateInvoiceItem(
 
     if (actor) requireTenantMatch(actor, existing.tenantId);
 
-    const updated = await prisma.$transaction(async (tx) => {
+    const updated = await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
       // if quantity is changing, compute delta and apply to item
-      if (parsed.quantity !== undefined && parsed.quantity !== existing.quantity) {
-        const item = await tx.item.findUnique({ where: { id: existing.itemId } });
-        if (!item) throw new Error('Associated item not found.');
+      if (parsed.quantity && existing.quantity) {
+        if (+parsed.quantity !== +existing.quantity) {
+          const item = await tx.item.findUnique({ where: { id: existing.itemId } });
+          if (!item) throw new ApiError(404, 'Associated item not found.');
 
-        const delta = parsed.quantity - existing.quantity; // positive means increase in invoice quantity (reduce stock)
-        const resultingQty = (item.quantity ?? 0) - delta;
-        if (resultingQty < 0 && actor && actor.role !== 'Admin' && actor.role !== 'Super_Admin') {
-          throw new Error('Insufficient stock for this update. Admins can override.');
+          const delta = parsed.quantity - +existing.quantity; // positive means increase in invoice quantity (reduce stock)
+          const resultingQty = +(item.quantity ?? 0) - delta;
+          if (resultingQty < 0 && actor && actor.role !== 'Admin' && actor.role !== 'Super_Admin') {
+            throw new Error('Insufficient stock for this update. Admins can override.');
+          }
+
+          // update item quantity and mark pending
+          await tx.item.update({
+            where: { id: item.id },
+            data: { quantity: resultingQty, syncStatus: 'PENDING' },
+          });
         }
-
-        // update item quantity and mark pending
-        await tx.item.update({
-          where: { id: item.id },
-          data: { quantity: resultingQty, syncStatus: 'PENDING' },
-        });
       }
 
       // apply invoiceItem update
@@ -226,9 +230,9 @@ export async function updateInvoiceItem(
           : parsed.unitPrice !== undefined && parsed.quantity !== undefined
           ? parsed.unitPrice * parsed.quantity
           : parsed.unitPrice !== undefined
-          ? parsed.unitPrice * existing.quantity
+          ? +parsed.unitPrice * +existing.quantity
           : parsed.quantity !== undefined
-          ? existing.unitPrice * parsed.quantity
+          ? +existing.unitPrice * +parsed.quantity
           : existing.lineTotal;
 
       const u = await tx.invoiceItem.update({
@@ -243,7 +247,7 @@ export async function updateInvoiceItem(
       });
 
       // recalc invoice totals
-      await recalcInvoiceTotals(tx, existing.invoiceId, existing.tenantId);
+      await recalcInvoiceTotals(tx as any, existing.invoiceId, existing.tenantId);
 
       return u;
     });
@@ -278,21 +282,21 @@ export async function deleteInvoiceItem(id: number, options?: { force?: boolean;
       throw new Error('Only Super_Admin can force-delete invoice items from PAID invoices.');
     }
 
-    const deleted = await prisma.$transaction(async (tx) => {
+    const deleted = await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
       // restore item quantity
       const item = await tx.item.findUnique({ where: { id: existing.itemId } });
       if (!item) throw new Error('Associated item not found during delete.');
 
       await tx.item.update({
         where: { id: item.id },
-        data: { quantity: (item.quantity ?? 0) + existing.quantity, syncStatus: 'PENDING' },
+        data: { quantity: +(item.quantity ?? 0) + +existing.quantity, syncStatus: 'PENDING' },
       });
 
       // delete the invoice item
       const d = await tx.invoiceItem.delete({ where: { id } });
 
       // recalc invoice totals
-      await recalcInvoiceTotals(tx, existing.invoiceId, existing.tenantId);
+      await recalcInvoiceTotals(tx as any, existing.invoiceId, existing.tenantId);
 
       return d;
     });
@@ -308,7 +312,7 @@ export async function deleteInvoiceItem(id: number, options?: { force?: boolean;
 /**
  * Get unsynced invoice items for a tenant (client sync engine).
  */
-export async function getUnsyncedInvoiceItems(tenantId: number, limit = 200, actor?: Actor) {
+export async function getUnsyncedInvoiceItems(tenantId: string, limit = 200, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 
@@ -358,7 +362,7 @@ export async function applyRemoteInvoiceItems(
   remoteItems: Array<
     Partial<{
       id: number;
-      tenantId: number;
+      tenantId: string;
       invoiceId: number;
       itemId: number;
       quantity: number;
@@ -399,7 +403,7 @@ export async function applyRemoteInvoiceItems(
           const local = await prisma.invoiceItem.findUnique({ where: { id: ri.id } });
           if (!local) {
             // create new (and adjust stock)
-            await prisma.$transaction(async (tx) => {
+            await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
               await tx.invoiceItem.create({
                 data: {
                   tenantId: ri.tenantId!,
@@ -418,7 +422,7 @@ export async function applyRemoteInvoiceItems(
                 data: { quantity: { decrement: ri.quantity }, syncStatus: 'PENDING' } as any,
               });
               // recalc invoice totals
-              await recalcInvoiceTotals(tx, ri.invoiceId!, ri.tenantId!);
+              await recalcInvoiceTotals(tx as any, ri.invoiceId!, ri.tenantId!);
             });
             applied++;
             continue;
@@ -427,8 +431,8 @@ export async function applyRemoteInvoiceItems(
             const localUpdated = (local.updatedAt ?? local.createdAt).getTime();
             if (remoteUpdated > localUpdated) {
               // Update fields and adjust item qty by delta
-              await prisma.$transaction(async (tx) => {
-                const delta = ri.quantity! - local.quantity; // positive => reduce stock
+              await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
+                const delta = +ri.quantity! - +local.quantity; // positive => reduce stock
                 if (delta !== 0) {
                   // adjust item quantity (decrement for positive delta)
                   await tx.item.update({
@@ -446,7 +450,7 @@ export async function applyRemoteInvoiceItems(
                     syncStatus: ri.syncStatus ?? 'SYNCED',
                   },
                 });
-                await recalcInvoiceTotals(tx, local.invoiceId, ri.tenantId!);
+                await recalcInvoiceTotals(tx as any, local.invoiceId, ri.tenantId!);
               });
               applied++;
             }
@@ -462,8 +466,8 @@ export async function applyRemoteInvoiceItems(
           const remoteUpdated = ri.updatedAt ? new Date(ri.updatedAt).getTime() : 0;
           const localUpdated = (existsLine.updatedAt ?? existsLine.createdAt).getTime();
           if (remoteUpdated > localUpdated) {
-            await prisma.$transaction(async (tx) => {
-              const delta = ri.quantity! - existsLine.quantity;
+            await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
+              const delta = +ri.quantity! - +existsLine.quantity;
               if (delta !== 0) {
                 await tx.item.update({
                   where: { id: existsLine.itemId },
@@ -480,7 +484,7 @@ export async function applyRemoteInvoiceItems(
                   syncStatus: ri.syncStatus ?? 'SYNCED',
                 },
               });
-              await recalcInvoiceTotals(tx, ri.invoiceId!, ri.tenantId!);
+              await recalcInvoiceTotals(tx as any, ri.invoiceId!, ri.tenantId!);
             });
             applied++;
             continue;
@@ -490,7 +494,7 @@ export async function applyRemoteInvoiceItems(
         }
 
         // Create new invoice item (and adjust item qty)
-        await prisma.$transaction(async (tx) => {
+        await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
           await tx.invoiceItem.create({
             data: {
               tenantId: ri.tenantId!,
@@ -507,7 +511,7 @@ export async function applyRemoteInvoiceItems(
             where: { id: ri.itemId },
             data: { quantity: { decrement: ri.quantity } as any, syncStatus: 'PENDING' } as any,
           });
-          await recalcInvoiceTotals(tx, ri.invoiceId!, ri.tenantId!);
+          await recalcInvoiceTotals(tx as any, ri.invoiceId!, ri.tenantId!);
         });
         applied++;
       }

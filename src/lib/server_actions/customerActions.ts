@@ -1,15 +1,12 @@
 'use server';
 
 import { Actor } from '@/types/userTypes';
-import prisma from '../prisma';
-import { z } from 'zod';
+import prisma from '@/lib/prisma';
 import { createCustomerSchema, updateCustomerSchema } from '@/utils/validators/customerValidator';
-import {
-  ensureTenantExists,
-  prismaErrorHandler,
-  requireAdmin,
-  requireTenantMatch,
-} from '@/utils/helpers/userHelper';
+import { requireAdmin } from '@/utils/helpers/userHelpers';
+import { requireTenantMatch, ensureTenantExists } from '@/utils/helpers/tenantHelpers';
+import { CustomerWhereInput } from '@/app/generated/prisma/client/models';
+import { prismaErrorHandler } from '@/utils/helpers/errorHelper';
 
 /**
  * Actor type for permission/tenant scoping and role checks.
@@ -97,7 +94,7 @@ export async function getCustomerById(id: number, actor?: Actor) {
  * - Defaults to actor.tenantId when actor provided.
  */
 export async function getCustomers(options?: {
-  tenantId?: number;
+  tenantId: string;
   page?: number;
   pageSize?: number;
   search?: string;
@@ -120,7 +117,7 @@ export async function getCustomers(options?: {
     if (actor && typeof tenantId === 'number' && tenantId !== actor.tenantId)
       requireTenantMatch(actor, tenantId);
 
-    const where: any = { tenantId: effectiveTenantId };
+    const where: CustomerWhereInput = { tenantId: effectiveTenantId };
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -215,7 +212,7 @@ export async function deleteCustomer(id: number, options?: { force?: boolean; ac
 
     if (force) {
       if (!actor) throw new Error('Authentication required for force delete.');
-      if (actor.role !== 'Super_Admin')
+      if (actor.role !== 'Admin')
         throw new Error('Only Super_Admin may force-delete customers with invoices.');
     } else {
       if (actor) requireAdmin(actor);
@@ -233,7 +230,7 @@ export async function deleteCustomer(id: number, options?: { force?: boolean; ac
 /**
  * Get unsynced customers for client sync engine.
  */
-export async function getUnsyncedCustomers(tenantId: number, limit = 200, actor?: Actor) {
+export async function getUnsyncedCustomers(tenantId: string, limit = 200, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 
@@ -282,7 +279,7 @@ export async function applyRemoteCustomers(
   remoteCustomers: Array<
     Partial<{
       id: number;
-      tenantId: number;
+      tenantId: string;
       name: string;
       email?: string;
       phone?: string;
@@ -304,7 +301,7 @@ export async function applyRemoteCustomers(
 
       if (actor) {
         const mismatch = chunk.some(
-          (r) => typeof r.tenantId === 'number' && r.tenantId !== actor.tenantId
+          (r) => typeof r.tenantId === 'string' && r.tenantId !== actor.tenantId
         );
         if (mismatch) throw new Error('Tenant mismatch in remote payload.');
       }
@@ -424,12 +421,15 @@ export async function applyRemoteCustomers(
  */
 export async function getCustomersUpdatedSince(
   since: Date,
-  options?: { tenantId?: number; actor?: Actor }
+  options: { tenantId?: string; actor: Actor }
 ) {
   try {
     const { tenantId, actor } = options || {};
-    const where: any = { updatedAt: { gt: since } };
-    if (actor && actor.role !== 'Super_Admin') where.tenantId = actor.tenantId;
+    const where: CustomerWhereInput = { updatedAt: { gt: since } };
+
+    requireAdmin(actor);
+
+    if (actor && actor.role !== 'Admin') where.tenantId = actor.tenantId;
     else if (tenantId) where.tenantId = tenantId;
 
     const rows = await prisma.customer.findMany({ where, orderBy: { updatedAt: 'asc' } });
@@ -445,7 +445,7 @@ export async function getCustomersUpdatedSince(
  * Export customers for a tenant (optional search).
  */
 export async function exportCustomersForTenant(
-  tenantId: number,
+  tenantId: string,
   options?: { search?: string; actor?: Actor }
 ) {
   try {
@@ -471,7 +471,7 @@ export async function exportCustomersForTenant(
 /**
  * Basic customer sanity check for tenant health dashboards.
  */
-export async function customerSanityCheck(tenantId: number, actor?: Actor) {
+export async function customerSanityCheck(tenantId: string, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
     await ensureTenantExists(tenantId);

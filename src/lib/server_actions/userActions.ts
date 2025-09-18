@@ -4,34 +4,14 @@ import { Actor } from '@/types/userTypes';
 import prisma from '../prisma';
 import bcrypt from 'bcryptjs';
 import { createUserSchema, updateUserSchema } from '@/utils/validators/userValidator';
-import {
-  prismaErrorHandler,
-  requireActor,
-  requireAdmin,
-  requireTenantMatch,
-} from '@/utils/helpers/userHelper';
+import { getIpAddress, requireActor, requireAdmin } from '@/utils/helpers/userHelpers';
+import { ApiError } from '@/utils/NextApiError';
+import { UserType } from '@/app/generated/prisma/client/enums';
+import { requireTenantMatch } from '@/utils/helpers/tenantHelpers';
+import { prismaErrorHandler } from '@/utils/helpers/errorHelper';
+import { UserCreateInput } from '@/app/generated/prisma/client/models';
 
-/**
- * Helpful types
- */
-
-/**
- * Validation schemas (Zod)
- */
-
-/**
- * Helpers
- */
-
-/**
- * Standardized error wrapper for prisma calls
- */
-// function prismaErrorHandler(err: any) {
-//   // In production you might map prisma errors to friendly messages.
-//   // Keep the full error available for logs but throw a simpler message to clients.
-//   // (Do not leak internal database details in real prod.)
-//   throw new Error(err?.message ?? 'Database operation failed');
-// }
+const ip = await getIpAddress();
 
 /**
  * Create a new user.
@@ -41,13 +21,7 @@ import {
  * - Optionally require the calling actor to be an Admin on the tenant (if provided).
  */
 export async function createUser(
-  data: {
-    name: string;
-    email: string;
-    password: string;
-    role: 'User' | 'Admin' | 'Super_Admin';
-    tenantId: number;
-  },
+  data: UserCreateInput,
   actor?: Actor // optional: the caller (used to enforce tenant boundaries / Admin rights)
 ) {
   try {
@@ -65,15 +39,15 @@ export async function createUser(
       where: { id: parsed.tenantId },
       select: { id: true },
     });
-    if (!tenant) throw new Error('Tenant does not exist.');
+    if (!tenant) throw new ApiError(404, 'Tenant does not exist.');
 
     // ensure email uniqueness (schema has a global unique constraint on email, so catch early)
     const existing = await prisma.user.findUnique({ where: { email: parsed.email } });
-    if (existing) throw new Error('Email already in use.');
+    if (existing) throw new ApiError(400, 'Email already in use.');
 
     const hashed = await bcrypt.hash(parsed.password, 10);
 
-    if (parsed.role !== 'User' && parsed.role !== 'Super_Admin' && parsed.role !== 'Admin') {
+    if (parsed.role !== 'Admin') {
       throw new Error('Invalid role specified.');
     }
 
@@ -82,8 +56,9 @@ export async function createUser(
         name: parsed.name,
         email: parsed.email,
         password: hashed,
-        role: parsed.role as 'User' | 'Admin' | 'Super_Admin',
+        role: parsed.role,
         tenantId: parsed.tenantId,
+        ip: ip!,
         // syncStatus defaults to PENDING via schema
       },
     });
@@ -103,12 +78,12 @@ export async function createUser(
  * Get a user by id.
  * - If actor is provided, it enforces tenant scoping (no cross-tenant reads).
  */
-export async function getUserById(id: number, actor?: Actor) {
+export async function getUserById(id: string, actor?: Actor) {
   try {
     const user = await prisma.user.findUnique({ where: { id } });
     if (!user) return null;
 
-    if (actor) requireTenantMatch(actor, user.tenantId);
+    if (actor) requireTenantMatch(actor, user.tenantId as string);
 
     const { password, ...safe } = user as any;
     return safe;
@@ -123,7 +98,7 @@ export async function getUserById(id: number, actor?: Actor) {
  * - Supports page & pageSize for pagination.
  */
 export async function getUsers(options?: {
-  tenantId?: number;
+  tenantId: string;
   page?: number;
   pageSize?: number;
   search?: string;
@@ -156,7 +131,7 @@ export async function getUsers(options?: {
     if (role) where.role = role;
 
     // Enforce tenant scoping: if actor provided and tenantId is provided which does not match actor, deny
-    if (actor && typeof tenantId === 'number') requireTenantMatch(actor, tenantId);
+    if (actor && typeof tenantId === 'string') requireTenantMatch(actor, tenantId);
 
     const users = await prisma.user.findMany({
       where,
@@ -184,7 +159,7 @@ export async function getUsers(options?: {
  * - Enforces tenant scoping when actor provided.
  */
 export async function updateUser(
-  id: number,
+  id: string,
   data: {
     name?: string;
     email?: string;
@@ -199,7 +174,7 @@ export async function updateUser(
     const existing = await prisma.user.findUnique({ where: { id } });
     if (!existing) throw new Error('User not found.');
 
-    if (actor) requireTenantMatch(actor, existing.tenantId);
+    if (actor) requireTenantMatch(actor, existing.tenantId as string);
 
     // Only Admins can change roles
     if (parsed.role && actor) {
@@ -240,12 +215,12 @@ export async function updateUser(
  * - Only Admins or super-Admins for the tenant can delete.
  * - In many products you may prefer a soft-delete pattern; your schema would need a flag (isActive/deletedAt).
  */
-export async function deleteUser(id: number, actor?: Actor) {
+export async function deleteUser(id: string, actor?: Actor) {
   try {
     const existing = await prisma.user.findUnique({ where: { id } });
     if (!existing) throw new Error('User not found.');
     if (actor) {
-      requireTenantMatch(actor, existing.tenantId);
+      requireTenantMatch(actor, existing.tenantId as string);
       requireAdmin(actor);
     }
 
@@ -262,7 +237,7 @@ export async function deleteUser(id: number, actor?: Actor) {
  * Change password with old password verification.
  */
 export async function changePassword(
-  userId: number,
+  userId: string,
   oldPassword: string,
   newPassword: string,
   actor?: Actor
@@ -271,7 +246,7 @@ export async function changePassword(
     if (!newPassword || newPassword.length < 6) throw new Error('New password too short.');
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new Error('User not found.');
-    if (actor) requireTenantMatch(actor, user.tenantId);
+    if (actor) requireTenantMatch(actor, user.tenantId as string);
 
     const ok = await bcrypt.compare(oldPassword, user.password);
     if (!ok) throw new Error('Old password does not match.');
@@ -287,7 +262,7 @@ export async function changePassword(
 /**
  * Get unsynced users (for client sync engine)
  */
-export async function getUnsyncedUsers(tenantId: number, limit = 200, actor?: Actor) {
+export async function getUnsyncedUsers(tenantId: string, limit = 200, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 
@@ -306,7 +281,7 @@ export async function getUnsyncedUsers(tenantId: number, limit = 200, actor?: Ac
 /**
  * Mark users as synced (bulk)
  */
-export async function markUsersAsSynced(ids: number[], actor?: Actor) {
+export async function markUsersAsSynced(ids: string[], actor?: Actor) {
   try {
     if (!ids || ids.length === 0) return { count: 0 };
 
@@ -341,12 +316,12 @@ export async function markUsersAsSynced(ids: number[], actor?: Actor) {
 export async function applyRemoteUsers(
   remoteUsers: Array<
     Partial<{
-      id: number;
+      id: string;
       name: string;
       email: string;
       password?: string; // hashed on client? normally clients shouldn't send raw passwords
-      role: 'User' | 'Admin' | 'Super_Admin';
-      tenantId: number;
+      role: UserType;
+      tenantId: string;
       updatedAt: string | Date;
       syncStatus?: 'PENDING' | 'SYNCED' | 'FAILED';
     }>
@@ -366,9 +341,9 @@ export async function applyRemoteUsers(
       // validate tenant boundaries if actor provided
       if (actor) {
         const tenantMismatch = chunk.some(
-          (r) => typeof r.tenantId === 'number' && r.tenantId !== actor.tenantId
+          (r) => typeof r.tenantId === 'string' && r.tenantId !== actor.tenantId
         );
-        if (tenantMismatch) throw new Error('Tenant mismatch in remote payload.');
+        if (tenantMismatch) throw new ApiError(401, 'Tenant mismatch in remote payload.');
       }
 
       // We will upsert by id when provided, otherwise create if no id/email exists.
@@ -391,8 +366,9 @@ export async function applyRemoteUsers(
                 name: ru.name ?? 'Unnamed',
                 email: ru.email ?? `unknown+${Date.now()}@local.invalid`,
                 password: ru.password ?? '', // In practice, clients should not send raw passwords. Handle carefully.
-                role: (ru.role as 'User' | 'Admin' | 'Super_Admin') ?? 'USER',
+                role: ru.role,
                 tenantId: ru.tenantId,
+                ip: ip!,
                 syncStatus: ru.syncStatus ?? 'SYNCED',
               },
             });
@@ -449,7 +425,8 @@ export async function applyRemoteUsers(
                 name: ru.name ?? 'Unnamed',
                 email: ru.email,
                 password: ru.password ?? '', // be careful with plaintext passwords
-                role: (ru.role as 'User' | 'Admin' | 'Super_Admin') ?? 'USER',
+                role: ru.role,
+                ip: ip!,
                 tenantId: ru.tenantId,
                 syncStatus: ru.syncStatus ?? 'SYNCED',
               },
@@ -469,19 +446,20 @@ export async function applyRemoteUsers(
 /**
  * Get user counts by role for dashboard/tenant metrics.
  */
-export async function getUserCountsByRole(tenantId: number, actor?: Actor) {
+export async function getUserCountsByRole(tenantId: string, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 
-    // group by role
-    const roles = await prisma.user.groupBy({
-      by: ['role'],
+    // Get all users and group by role manually
+    const users = await prisma.user.findMany({
       where: { tenantId },
-      _count: { role: true },
+      select: { role: true },
     });
 
     const result: Record<string, number> = {};
-    roles.forEach((r: any) => (result[r.role] = r._count.role));
+    users.forEach((user) => {
+      result[user.role] = (result[user.role] || 0) + 1;
+    });
     return result;
   } catch (err) {
     prismaErrorHandler(err);
@@ -492,17 +470,17 @@ export async function getUserCountsByRole(tenantId: number, actor?: Actor) {
  * Set sync status of a user (explicit).
  */
 export async function setUserSyncStatus(
-  id: number,
+  id: string,
   status: 'PENDING' | 'SYNCED' | 'FAILED',
   actor?: Actor
 ) {
   try {
     const u = await prisma.user.findUnique({ where: { id } });
-    if (!u) throw new Error('User not found.');
-    if (actor) requireTenantMatch(actor, u.tenantId);
+    if (!u) throw new ApiError(404, 'User not found.');
+    if (actor) requireTenantMatch(actor, u.tenantId as string);
 
     const updated = await prisma.user.update({ where: { id }, data: { syncStatus: status } });
-    const { password, ...safe } = updated as any;
+    const { password, ...safe } = updated;
     return safe;
   } catch (err) {
     prismaErrorHandler(err);

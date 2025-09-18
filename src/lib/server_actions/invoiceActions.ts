@@ -1,11 +1,11 @@
 'use server';
 
 import { Actor } from '@/types/userTypes';
-import prisma from '../prisma';
-import { z } from 'zod';
-import { createInvoiceSchema, updateInvoiceSchema } from '@/utils/invoiceValidator';
-import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelper';
+import prisma from '@/lib/prisma';
+import { createInvoiceSchema, updateInvoiceSchema } from '@/utils/validators/invoiceValidator';
+import { prismaErrorHandler, requireAdmin, requireTenantMatch } from '@/utils/helpers/userHelpers';
 import { recalcInvoiceTotals } from '@/utils/helpers/invoiceItemHelper';
+import type { PrismaClient } from '@/app/generated/prisma/client';
 
 /**
  * Actor type for permission/tenant scoping checks.
@@ -69,7 +69,7 @@ export async function createInvoice(
     if (existingInvoiceNumber) throw new Error('Invoice number already used for this tenant.');
 
     // Transactional creation: invoice, invoiceItems (if any), inventory adjustments, recalc totals
-    const created = await prisma.$transaction(async (tx) => {
+    const created = await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
       const invoice = await tx.invoice.create({
         data: {
           tenantId: parsed.tenantId,
@@ -78,6 +78,8 @@ export async function createInvoice(
           dueDate: parsed.dueDate ? new Date(parsed.dueDate) : null,
           currency: parsed.currency,
           total: parsed.total ?? 0, // may be recalculated below
+          subtotal: parsed.total ?? 0, // same as total for now
+          balanceDue: parsed.total ?? 0, // same as total for now
           customerId: parsed.customerId,
           status: parsed.status ?? 'DRAFT',
           syncStatus: parsed.syncStatus ?? 'PENDING',
@@ -108,7 +110,7 @@ export async function createInvoice(
           });
 
           // decrement item quantity (allow negative only for Admin/Super_Admin)
-          const newQty = (item.quantity ?? 0) - it.quantity;
+          const newQty = +(item.quantity ?? 0) - +it.quantity;
           if (newQty < 0 && actor && actor.role !== 'Admin' && actor.role !== 'Super_Admin') {
             throw new Error(`Insufficient stock for item ${item.name} (${item.id}).`);
           }
@@ -120,7 +122,7 @@ export async function createInvoice(
         }
 
         // recalc totals from items
-        await recalcInvoiceTotals(tx, invoice.id, parsed.tenantId);
+        await recalcInvoiceTotals(tx as any, invoice.id, parsed.tenantId);
       } else if (parsed.total !== undefined) {
         // if no items but total provided, ensure status logic
         if (parsed.total > 0 && (parsed.status === undefined || parsed.status === 'DRAFT')) {
@@ -161,7 +163,7 @@ export async function getInvoiceById(id: number, actor?: Actor) {
  * - When actor provided, tenant defaults to actor.tenantId.
  */
 export async function getInvoices(options?: {
-  tenantId?: number;
+  tenantId: string;
   invoiceNumber?: string;
   customerId?: number;
   status?: 'DRAFT' | 'SENT' | 'PAID';
@@ -230,13 +232,14 @@ export async function getInvoices(options?: {
     if (unpaidOnly && invoices.length > 0) {
       // fetch payments sums for returned invoices
       const invoiceIds = invoices.map((inv) => inv.id);
-      const payments = await prisma.payment.groupBy({
-        by: ['invoiceId'],
+      const payments = await prisma.payment.findMany({
         where: { invoiceId: { in: invoiceIds } },
-        _sum: { amount: true },
+        select: { invoiceId: true, amount: true },
       });
       const paidMap: Record<number, number> = {};
-      payments.forEach((p: any) => (paidMap[p.invoiceId] = p._sum.amount ?? 0));
+      payments.forEach((p) => {
+        paidMap[p.invoiceId] = +(paidMap[p.invoiceId] || 0) + +(p.amount ?? 0);
+      });
       const filtered = invoices.filter((inv: any) => (paidMap[inv.id] ?? 0) < (inv.total ?? 0));
       return filtered;
     }
@@ -331,7 +334,7 @@ export async function deleteInvoice(id: number, options?: { force?: boolean; act
     }
 
     // When deleting, restore item quantities for invoice items (transactional)
-    const deleted = await prisma.$transaction(async (tx) => {
+    const deleted = await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
       const items = await tx.invoiceItem.findMany({ where: { invoiceId: id } });
       for (const ii of items) {
         // restore stock
@@ -359,7 +362,7 @@ export async function deleteInvoice(id: number, options?: { force?: boolean; act
 /**
  * Get unsynced invoices for client sync engine.
  */
-export async function getUnsyncedInvoices(tenantId: number, limit = 200, actor?: Actor) {
+export async function getUnsyncedInvoices(tenantId: string, limit = 200, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
     const rows = await prisma.invoice.findMany({
@@ -406,7 +409,7 @@ export async function applyRemoteInvoices(
   remoteInvoices: Array<
     Partial<{
       id: number;
-      tenantId: number;
+      tenantId: string;
       customerId: number;
       invoiceNumber: string;
       date: string | Date;
@@ -432,7 +435,7 @@ export async function applyRemoteInvoices(
 
       if (actor) {
         const mismatch = chunk.some(
-          (r) => typeof r.tenantId === 'number' && r.tenantId !== actor.tenantId
+          (r) => typeof r.tenantId === 'string' && r.tenantId !== actor.tenantId
         );
         if (mismatch) throw new Error('Tenant mismatch in remote payload.');
       }
@@ -450,7 +453,7 @@ export async function applyRemoteInvoices(
           const local = await prisma.invoice.findUnique({ where: { id: ri.id } });
           if (!local) {
             // create invoice (and optionally items)
-            await prisma.$transaction(async (tx) => {
+            await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
               const inv = await tx.invoice.create({
                 data: {
                   tenantId: ri.tenantId!,
@@ -460,6 +463,8 @@ export async function applyRemoteInvoices(
                   dueDate: ri.dueDate ? new Date(ri.dueDate) : null,
                   currency: ri.currency ?? 'USD',
                   total: ri.total ?? 0,
+                  subtotal: ri.total ?? 0,
+                  balanceDue: ri.total ?? 0,
                   status: ri.status ?? 'DRAFT',
                   syncStatus: ri.syncStatus ?? 'SYNCED',
                 },
@@ -495,7 +500,7 @@ export async function applyRemoteInvoices(
                     })
                     .catch(() => {});
                 }
-                await recalcInvoiceTotals(tx, inv.id, ri.tenantId!);
+                await recalcInvoiceTotals(tx as any, inv.id, ri.tenantId!);
               }
             });
             applied++;
@@ -505,7 +510,7 @@ export async function applyRemoteInvoices(
             const remoteUpdated = ri.updatedAt ? new Date(ri.updatedAt).getTime() : 0;
             const localUpdated = (local.updatedAt ?? local.createdAt).getTime();
             if (remoteUpdated > localUpdated) {
-              await prisma.$transaction(async (tx) => {
+              await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
                 await tx.invoice.update({
                   where: { id: local.id },
                   data: {
@@ -571,7 +576,7 @@ export async function applyRemoteInvoices(
                 }
 
                 // recalc totals
-                await recalcInvoiceTotals(tx, local.id, ri.tenantId!);
+                await recalcInvoiceTotals(tx as any, local.id, ri.tenantId!);
               });
               applied++;
             }
@@ -615,6 +620,8 @@ export async function applyRemoteInvoices(
             dueDate: ri.dueDate ? new Date(ri.dueDate) : null,
             currency: ri.currency ?? 'USD',
             total: ri.total ?? 0,
+            subtotal: ri.total ?? 0,
+            balanceDue: ri.total ?? 0,
             status: ri.status ?? 'DRAFT',
             syncStatus: ri.syncStatus ?? 'SYNCED',
           },
@@ -677,7 +684,7 @@ export async function exportInvoiceById(invoiceId: number, actor?: Actor) {
  * Get outstanding invoices (for reminders / reconciliations)
  */
 export async function getOutstandingInvoices(
-  tenantId: number,
+  tenantId: string,
   options?: { daysOverdue?: number; actor?: Actor }
 ) {
   try {

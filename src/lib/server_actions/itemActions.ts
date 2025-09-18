@@ -1,14 +1,19 @@
 'use server';
 
 import { Actor } from '@/types/userTypes';
-import prisma from '../prisma';
-import { adjustStockSchema, createItemSchema, updateItemSchema } from '@/utils/itemValidator';
+import prisma from '@/lib/prisma';
+import type { PrismaClient } from '@/app/generated/prisma/client';
+import {
+  adjustStockSchema,
+  createItemSchema,
+  updateItemSchema,
+} from '@/utils/validators/itemValidator';
 import {
   ensureTenantExists,
   prismaErrorHandler,
   requireAdmin,
   requireTenantMatch,
-} from '@/utils/helpers/userHelper';
+} from '@/utils/helpers/userHelpers';
 
 /**
  * Actor type used for tenant scoping and permission checks.
@@ -95,7 +100,7 @@ export async function getItemById(id: number, actor?: Actor) {
  * - Supports search by name/sku, price range, low-stock filter.
  */
 export async function getItems(options?: {
-  tenantId?: number;
+  tenantId: string;
   page?: number;
   pageSize?: number;
   search?: string;
@@ -230,9 +235,9 @@ export async function adjustStock(
     // Only Admin can reduce stock arbitrarily (for example write-offs)
     if (parsed.delta < 0 && actor) requireAdmin(actor);
 
-    const updated = await prisma.$transaction(async (tx) => {
+    const updated = await (prisma as unknown as PrismaClient).$transaction(async (tx) => {
       // compute new quantity
-      const newQty = (item.quantity ?? 0) + parsed.delta;
+      const newQty = +(item.quantity ?? 0) + +parsed.delta;
       if (newQty < 0) throw new Error('Resulting quantity would be negative.');
 
       const u = await tx.item.update({
@@ -293,7 +298,7 @@ export async function deleteItem(id: number, options?: { force?: boolean; actor?
 /**
  * Get unsynced items for client sync engine.
  */
-export async function getUnsyncedItems(tenantId: number, limit = 200, actor?: Actor) {
+export async function getUnsyncedItems(tenantId: string, limit = 200, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
 
@@ -342,7 +347,7 @@ export async function applyRemoteItems(
   remoteItems: Array<
     Partial<{
       id: number;
-      tenantId: number;
+      tenantId: string;
       name: string;
       sku?: string;
       description?: string;
@@ -365,7 +370,7 @@ export async function applyRemoteItems(
 
       if (actor) {
         const mismatch = chunk.some(
-          (r) => typeof r.tenantId === 'number' && r.tenantId !== actor.tenantId
+          (r) => typeof r.tenantId === 'string' && r.tenantId !== actor.tenantId
         );
         if (mismatch) throw new Error('Tenant mismatch in remote payload.');
       }
@@ -499,7 +504,7 @@ export async function getItemsUpdatedSince(
  * - Returns summary counts.
  */
 export async function importItemsBulk(
-  tenantId: number,
+  tenantId: string,
   rows: Array<{
     name: string;
     sku?: string;
@@ -582,7 +587,7 @@ export async function importItemsBulk(
  * Export items for a tenant (optionally filter low-stock).
  */
 export async function exportItemsForTenant(
-  tenantId: number,
+  tenantId: string,
   options?: { lowStockOnly?: boolean; lowStockThreshold?: number; actor?: Actor }
 ) {
   try {
@@ -602,7 +607,7 @@ export async function exportItemsForTenant(
 /**
  * Basic item sanity check (tenant).
  */
-export async function itemSanityCheck(tenantId: number, actor?: Actor) {
+export async function itemSanityCheck(tenantId: string, actor?: Actor) {
   try {
     if (actor) requireTenantMatch(actor, tenantId);
     await ensureTenantExists(tenantId);

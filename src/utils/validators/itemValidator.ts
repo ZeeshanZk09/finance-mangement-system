@@ -1,6 +1,6 @@
 import { z } from 'zod';
 const createItemSchema = z.object({
-  tenantId: z.number().int().positive(),
+  tenantId: z.string(),
   name: z.string().min(1),
   sku: z.string().optional(),
   description: z.string().optional(),

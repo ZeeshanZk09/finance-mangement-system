@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/app/generated/prisma"
+  provider   = "prisma-client"
+  engineType = "client"
+  output     = "../src/app/generated/prisma/client"
 }
 
 datasource db {
@@ -10,9 +11,22 @@ datasource db {
 
 /// Generic enums
 enum UserType {
-  Super_Admin
+  Developer
   Admin
-  User
+  CFO                  @map("Chief Financial Officer (CFO)")
+  AccountingManager    @map("Accounting Manager")
+  Bookkeeper           @map("Bookkeeper")
+  APClerk              @map("Accounts Payable (AP) Clerk")
+  ARClerk              @map("Accounts Receivable (AR)")
+  Treasury             @map("Treasury")
+  PayrollManager       @map("Payroll Manager")
+  PurchasingOfficer    @map("Purchasing Officer")
+  Approver             @map("Approver")
+  InternalAuditor      @map("Internal Auditor")
+  DataAnalyst          @map("Data Analyst")
+  CustomerSupportAgent @map("Customer Support Agent")
+  ExternalAuditor      @map("External Auditor")
+  ServiceAccount       @map("Service Account")
 }
 
 enum SyncStatus {
@@ -63,14 +77,14 @@ enum SubscriptionStatus {
 }
 
 enum packageName {
-  Free
-  Basic
-  Pro
+  Starter
+  Essentials
+  Professional
   Enterprise
 }
 
 /// Feature enums (kept as-is; arrays used in Package)
-enum FreeFeatures {
+enum Features {
   Invoicing
   Customer_Management
   Vendor_Management
@@ -78,9 +92,6 @@ enum FreeFeatures {
   Mobile_Access
   Free_Trials
   Money_Back_Guarantees
-}
-
-enum BasicFeatures {
   Inventory_Management
   Payment_Tracking
   Tax_Management
@@ -90,9 +101,6 @@ enum BasicFeatures {
   User_Roles_and_Permissions
   Data_Import_and_Export
   Community_Access
-}
-
-enum ProFeatures {
   Multi_Currency_Support
   Recurring_Invoices
   Project_Management
@@ -109,9 +117,6 @@ enum ProFeatures {
   CRM_Integration
   Budgeting
   Forecasting
-}
-
-enum EnterpriseFeatures {
   Role_Based_Access_Control
   Single_Sign_On
   Two_Factor_Authentication
@@ -135,7 +140,7 @@ enum EnterpriseFeatures {
 
 /// TENANTS
 model Tenant {
-  id           String                @id @default(uuid())
+  id           String                @id @default(uuid()) @db.Uuid
   name         String
   email        String
   slug         String                @unique // friendly unique slug for URL
@@ -144,7 +149,6 @@ model Tenant {
   files        Upload[]
   uploads      UploadAudit[]
   auditLogs    AuditLog[]
-  packages     Package[]
   vendors      Vendor[]
   customers    Customer[]
   items        Item[]
@@ -158,21 +162,21 @@ model Tenant {
   settings     Json?
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime? // soft delete
 
-  @@index([name])
+  @@index([name, id])
 }
 
 /// USERS
 model User {
-  id         String        @id @default(uuid())
-  tenantId   String?
-  tenant     Tenant?       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  id         String        @id @default(uuid()) @db.Uuid
+  tenantId   String        @db.Uuid
+  tenant     Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   name       String
   email      String        @unique // keep global unique — change if you want per-tenant uniqueness
   password   String
-  role       UserType      @default(User)
+  role       UserType      @default(Admin) // user, admin, manager, viewer 
   sessions   Session[]
   files      Upload[]
   uploads    UploadAudit[]
@@ -181,9 +185,10 @@ model User {
   lastSeenAt DateTime?
   locale     String? // e.g. "en", "ur"
   isActive   Boolean       @default(true)
+  ip         String
 
   createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  updatedAt  DateTime?  @updatedAt
   deletedAt  DateTime?
   syncStatus SyncStatus @default(PENDING)
 
@@ -192,31 +197,31 @@ model User {
 
 /// SESSIONS
 model Session {
-  id           Int      @id @default(autoincrement())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenantId     String
-  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  sessionToken String   @unique
+  id           Int       @id @default(autoincrement())
+  userId       String    @db.Uuid
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenantId     String    @db.Uuid
+  tenant       Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  sessionToken String    @unique
   expires      DateTime
   ipAddress    String?
   userAgent    String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
 
   @@index([userId, tenantId, id])
 }
 
 model Upload {
   id       Int    @id @default(autoincrement())
-  tenantId String
+  tenantId String @db.Uuid
   tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  userId   String // uploader user
+  userId   String @db.Uuid // uploader user
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   purpose      String // e.g., "invoice", "receipt", "logo", "bank-statement"
   originalName String
-  filename     String // stored local filename
+  filename     String // stored local filename 
   localPath    String? // absolute/relative path
   mimeType     String
   size         Int
@@ -228,7 +233,7 @@ model Upload {
   errorMessage String?
   uploadAudit  UploadAudit[]
   createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  updatedAt    DateTime?     @updatedAt
   // optional meta json
   meta         Json?
 
@@ -236,19 +241,20 @@ model Upload {
 }
 
 model UploadAudit {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   uploadId       Int
-  upload         Upload   @relation(fields: [uploadId], references: [id], onDelete: Cascade)
-  tenantId       String
-  tenant         Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  userId         String // optional: who performed the action
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  upload         Upload    @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+  tenantId       String    @db.Uuid
+  tenant         Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userId         String    @db.Uuid // optional: who performed the action
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   action         String // e.g., "create", "processing", "uploaded", "failed", "deleted", "retry"
   previousStatus String? // status before action
   newStatus      String? // status after action
   note           String? // optional human-readable note / error message
   meta           Json? // extra metadata (cloudinary response, worker attempt data etc.)
-  createdAt      DateTime @default(now())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
 
   @@index([uploadId])
   @@index([tenantId])
@@ -258,16 +264,16 @@ model UploadAudit {
 /// VENDORS
 model Vendor {
   id         Int        @id @default(autoincrement())
-  tenantId   String
+  tenantId   String     @db.Uuid
   tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   name       String
   email      String?
   phone      String?
   address    String?
   taxId      String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
   syncStatus SyncStatus @default(PENDING)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime?  @updatedAt
 
   @@index([tenantId, id, email, phone])
 }
@@ -275,16 +281,16 @@ model Vendor {
 /// CUSTOMERS
 model Customer {
   id         Int        @id @default(autoincrement())
-  tenantId   String
+  tenantId   String     @db.Uuid
   tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   name       String
   email      String?
   phone      String?
   address    String?
   invoices   Invoice[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
   syncStatus SyncStatus @default(PENDING)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime?  @updatedAt
 
   @@index([tenantId, id])
 }
@@ -292,7 +298,7 @@ model Customer {
 /// ITEMS (inventory)
 model Item {
   id           Int           @id @default(autoincrement())
-  tenantId     String
+  tenantId     String        @db.Uuid
   tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   name         String
   sku          String?
@@ -300,60 +306,60 @@ model Item {
   unitPrice    Decimal       @db.Decimal(12, 2)
   quantity     Decimal       @default(0.0) @db.Decimal(18, 4) // support fractional qty
   invoiceItems InvoiceItem[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
   syncStatus   SyncStatus    @default(PENDING)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime?     @updatedAt
 
   @@unique([tenantId, sku]) // SKU unique per tenant (if present)
   @@index([tenantId, id])
 }
 
-/// PACKAGES (previously "Packages")
 model Package {
-  id                 Int                   @id @default(autoincrement())
-  name               packageName           @unique @default(Free)
-  tenantId           String
-  tenant             Tenant                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  price              Decimal               @db.Decimal(12, 2) // precise money
-  durationDays       Int // length of subscription in days
-  subscription       PackageSubscription[]
-  freeFeatures       FreeFeatures[] // Postgres enum arrays supported
-  basicFeatures      BasicFeatures[]
-  proFeatures        ProFeatures[]
-  enterpriseFeatures EnterpriseFeatures[]
-  metadata           Json? // free-form (e.g. limits, seats, notes)
+  id           Int                   @id @default(autoincrement())
+  name         packageName           @unique @default(Starter)
+  price        Decimal               @db.Decimal(12, 2)
+  trialPrice   Decimal               @db.Decimal(12, 2)
+  Features     Features[]
+  subscription PackageSubscription[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([price, tenantId, name])
+  @@index([price, name])
 }
 
-/// PACKAGE SUBSCRIPTIONS (which tenant is on which package)
 model PackageSubscription {
-  id          Int                @id @default(autoincrement())
-  tenantId    String
-  tenant      Tenant             @relation(fields: [tenantId], references: [id])
-  packageId   Int
-  package     Package            @relation(fields: [packageId], references: [id])
-  status      SubscriptionStatus @default(TRIAL)
-  seats       Int                @default(1)
-  autoRenew   Boolean            @default(true)
+  id       Int    @id @default(autoincrement())
+  tenantId String @db.Uuid
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+
+  packageId Int
+  package   Package @relation(fields: [packageId], references: [id])
+
+  // Snapshot fields (store what the package looked like at purchase time)
+  packageName       packageName @unique @default(Starter)
+  packagePrice      Decimal     @db.Decimal(12, 2)
+  packageTrialPrice Decimal     @db.Decimal(12, 2)
+
+  status     SubscriptionStatus @default(TRIAL)
+  amountPaid Decimal            @default("0.00") @db.Decimal(12, 2)
+
   startsAt    DateTime
-  endsAt      DateTime
+  endsAt      DateTime?
   trialEndsAt DateTime?
   metadata    Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([packageId, tenantId])
+  @@index([tenantId, packageId])
+  @@index([packageId])
 }
 
 /// INVOICES
 model Invoice {
   id            Int           @id @default(autoincrement())
-  tenantId      String
+  tenantId      String        @db.Uuid
   tenant        Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   invoiceNumber String // unique per tenant
   invoicePrefix String? // optional prefix
@@ -373,7 +379,7 @@ model Invoice {
   items         InvoiceItem[]
   payments      Payment[]
   createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  updatedAt     DateTime?     @updatedAt
   syncStatus    SyncStatus    @default(PENDING)
 
   @@unique([invoiceNumber, tenantId])
@@ -384,7 +390,7 @@ model Invoice {
 /// INVOICE ITEMS (line items)
 model InvoiceItem {
   id          Int        @id @default(autoincrement())
-  tenantId    String
+  tenantId    String     @db.Uuid
   tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   invoiceId   Int
   invoice     Invoice    @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
@@ -395,7 +401,7 @@ model InvoiceItem {
   unitPrice   Decimal    @db.Decimal(12, 2)
   lineTotal   Decimal    @db.Decimal(12, 2)
   createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  updatedAt   DateTime?  @updatedAt
   syncStatus  SyncStatus @default(PENDING)
 
   @@index([tenantId])
@@ -405,18 +411,18 @@ model InvoiceItem {
 /// PAYMENTS
 model Payment {
   id         Int           @id @default(autoincrement())
-  tenantId   String
+  tenantId   String        @db.Uuid
   tenant     Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   invoiceId  Int
   invoice    Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   date       DateTime
   paidDate   DateTime
   amount     Decimal       @db.Decimal(12, 2)
-  method     PaymentMethod
+  method     PaymentMethod @default(CREDIT_CARD)
   status     PaymentStatus @default(COMPLETED)
   reference  String? // gateway transaction id, check number etc.
   createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  updatedAt  DateTime?     @updatedAt
   syncStatus SyncStatus    @default(PENDING)
 
   @@index([tenantId])
@@ -426,16 +432,17 @@ model Payment {
 
 /// AUDIT LOG (for security / admin tracking)
 model AuditLog {
-  id        Int      @id @default(autoincrement())
-  tenantId  String
-  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int       @id @default(autoincrement())
+  tenantId  String    @db.Uuid
+  tenant    Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userId    String    @db.Uuid
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   actor     String? // e.g. "system", "user:123"
   action    String // e.g. "invoice.create", "user.login"
   meta      Json? // arbitrary metadata
   ipAddress String?
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 
   @@index([tenantId])
   @@index([userId])

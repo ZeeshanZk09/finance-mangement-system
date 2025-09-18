@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const createInvoiceSchema = z.object({
-  tenantId: z.number().int().positive(),
+  tenantId: z.string(),
   // vendorId is optional depending on schema; if your Prisma model includes it, pass it in the payload.
   // We won't assume vendorId exists in DB schema; we will only check for customerId which is present in the schema above.
   customerId: z.number().int().positive(),

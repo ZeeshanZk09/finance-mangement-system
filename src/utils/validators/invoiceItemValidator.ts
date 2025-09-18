@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const createInvoiceItemSchema = z.object({
-  tenantId: z.number().int().positive(),
+  tenantId: z.string(),
   invoiceId: z.number().int().positive(),
   itemId: z.number().int().positive(),
   quantity: z.number().positive(),
