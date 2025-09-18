@@ -1,5 +1,5 @@
 // lib/prisma.ts
-import { PrismaClient } from '@/app/generated/prisma/client';
+import { PrismaClient } from '@/app/generated/prisma/client/client';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import { withOptimize } from '@prisma/extension-optimize';
 
