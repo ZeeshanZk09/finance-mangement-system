@@ -24,3 +24,38 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.SkuContainer_skuQboContainer__qEgrr {
+  display: flex;
+  width: 59.625rem;
+  min-height: 100vh;
+  font-family: 'AvenirNext forINTUIT', Helvetica, Arial, sans-serif;
+  line-height: 1.5rem;
+  transition: all 0.3s ease;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  gap: 1.25rem;
+  grid-gap: 1.25rem;
+}
+
+.Sku_skuCard__zxzhv {
+  width: 20rem;
+  min-height: 100vh;
+  padding: 1.25rem;
+  border: 0.125rem solid rgb(236, 238, 241);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  font-family: 'AvenirNext forINTUIT', Helvetica, Arial, sans-serif;
+  line-height: 1.5rem;
+  box-shadow: rgba(36, 28, 21, 0.12) 0rem 0.25rem 0.75rem 0rem;
+  transition: all 0.3s ease;
+  border-width: 0.125rem;
+  border-style: solid;
+}
+
+.Sku_skuCard__zxzhv:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: currentColor;
+}

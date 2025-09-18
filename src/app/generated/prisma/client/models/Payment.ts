@@ -268,7 +268,7 @@ export type PaymentWhereInput = {
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   id?: Prisma.IntFilter<"Payment"> | number
-  tenantId?: Prisma.StringFilter<"Payment"> | string
+  tenantId?: Prisma.UuidFilter<"Payment"> | string
   invoiceId?: Prisma.IntFilter<"Payment"> | number
   date?: Prisma.DateTimeFilter<"Payment"> | Date | string
   paidDate?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -305,7 +305,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
-  tenantId?: Prisma.StringFilter<"Payment"> | string
+  tenantId?: Prisma.UuidFilter<"Payment"> | string
   invoiceId?: Prisma.IntFilter<"Payment"> | number
   date?: Prisma.DateTimeFilter<"Payment"> | Date | string
   paidDate?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -345,7 +345,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
   OR?: Prisma.PaymentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PaymentScalarWhereWithAggregatesInput | Prisma.PaymentScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Payment"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"Payment"> | string
   invoiceId?: Prisma.IntWithAggregatesFilter<"Payment"> | number
   date?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   paidDate?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -362,7 +362,7 @@ export type PaymentCreateInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -379,7 +379,7 @@ export type PaymentUncheckedCreateInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -423,7 +423,7 @@ export type PaymentCreateManyInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -621,7 +621,7 @@ export type PaymentCreateWithoutTenantInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -636,7 +636,7 @@ export type PaymentUncheckedCreateWithoutTenantInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -675,7 +675,7 @@ export type PaymentScalarWhereInput = {
   OR?: Prisma.PaymentScalarWhereInput[]
   NOT?: Prisma.PaymentScalarWhereInput | Prisma.PaymentScalarWhereInput[]
   id?: Prisma.IntFilter<"Payment"> | number
-  tenantId?: Prisma.StringFilter<"Payment"> | string
+  tenantId?: Prisma.UuidFilter<"Payment"> | string
   invoiceId?: Prisma.IntFilter<"Payment"> | number
   date?: Prisma.DateTimeFilter<"Payment"> | Date | string
   paidDate?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -692,7 +692,7 @@ export type PaymentCreateWithoutInvoiceInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -707,7 +707,7 @@ export type PaymentUncheckedCreateWithoutInvoiceInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -747,7 +747,7 @@ export type PaymentCreateManyTenantInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string
@@ -802,7 +802,7 @@ export type PaymentCreateManyInvoiceInput = {
   date: Date | string
   paidDate: Date | string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  method: $Enums.PaymentMethod
+  method?: $Enums.PaymentMethod
   status?: $Enums.PaymentStatus
   reference?: string | null
   createdAt?: Date | string

@@ -4,6 +4,7 @@ const createTenantSchema = z.object({
   name: z.string().min(2).max(200),
   email: z.string().email(),
   slug: z.string(),
+  settings: z.json(),
 });
 
 const updateTenantSchema = z.object({
@@ -14,7 +15,7 @@ const createUserSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   password: z.string().min(6),
-  role: z.string().min(1),
+  role: z.string().min(1).default('Admin').optional(),
   tenantId: z.string(),
 });
 

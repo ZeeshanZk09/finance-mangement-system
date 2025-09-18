@@ -13,7 +13,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Package
- * PACKAGES (previously "Packages")
+ * 
  */
 export type PackageModel = runtime.Types.Result.DefaultSelection<Prisma.$PackagePayload>
 
@@ -28,21 +28,20 @@ export type AggregatePackage = {
 export type PackageAvgAggregateOutputType = {
   id: number | null
   price: runtime.Decimal | null
-  durationDays: number | null
+  trialPrice: runtime.Decimal | null
 }
 
 export type PackageSumAggregateOutputType = {
   id: number | null
   price: runtime.Decimal | null
-  durationDays: number | null
+  trialPrice: runtime.Decimal | null
 }
 
 export type PackageMinAggregateOutputType = {
   id: number | null
   name: $Enums.packageName | null
-  tenantId: string | null
   price: runtime.Decimal | null
-  durationDays: number | null
+  trialPrice: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,9 +49,8 @@ export type PackageMinAggregateOutputType = {
 export type PackageMaxAggregateOutputType = {
   id: number | null
   name: $Enums.packageName | null
-  tenantId: string | null
   price: runtime.Decimal | null
-  durationDays: number | null
+  trialPrice: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,14 +58,9 @@ export type PackageMaxAggregateOutputType = {
 export type PackageCountAggregateOutputType = {
   id: number
   name: number
-  tenantId: number
   price: number
-  durationDays: number
-  freeFeatures: number
-  basicFeatures: number
-  proFeatures: number
-  enterpriseFeatures: number
-  metadata: number
+  trialPrice: number
+  Features: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -77,21 +70,20 @@ export type PackageCountAggregateOutputType = {
 export type PackageAvgAggregateInputType = {
   id?: true
   price?: true
-  durationDays?: true
+  trialPrice?: true
 }
 
 export type PackageSumAggregateInputType = {
   id?: true
   price?: true
-  durationDays?: true
+  trialPrice?: true
 }
 
 export type PackageMinAggregateInputType = {
   id?: true
   name?: true
-  tenantId?: true
   price?: true
-  durationDays?: true
+  trialPrice?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,9 +91,8 @@ export type PackageMinAggregateInputType = {
 export type PackageMaxAggregateInputType = {
   id?: true
   name?: true
-  tenantId?: true
   price?: true
-  durationDays?: true
+  trialPrice?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -109,14 +100,9 @@ export type PackageMaxAggregateInputType = {
 export type PackageCountAggregateInputType = {
   id?: true
   name?: true
-  tenantId?: true
   price?: true
-  durationDays?: true
-  freeFeatures?: true
-  basicFeatures?: true
-  proFeatures?: true
-  enterpriseFeatures?: true
-  metadata?: true
+  trialPrice?: true
+  Features?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -211,16 +197,11 @@ export type PackageGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type PackageGroupByOutputType = {
   id: number
   name: $Enums.packageName
-  tenantId: string
   price: runtime.Decimal
-  durationDays: number
-  freeFeatures: $Enums.FreeFeatures[]
-  basicFeatures: $Enums.BasicFeatures[]
-  proFeatures: $Enums.ProFeatures[]
-  enterpriseFeatures: $Enums.EnterpriseFeatures[]
-  metadata: runtime.JsonValue | null
+  trialPrice: runtime.Decimal
+  Features: $Enums.Features[]
   createdAt: Date
-  updatedAt: Date | null
+  updatedAt: Date
   _count: PackageCountAggregateOutputType | null
   _avg: PackageAvgAggregateOutputType | null
   _sum: PackageSumAggregateOutputType | null
@@ -249,34 +230,22 @@ export type PackageWhereInput = {
   NOT?: Prisma.PackageWhereInput | Prisma.PackageWhereInput[]
   id?: Prisma.IntFilter<"Package"> | number
   name?: Prisma.EnumpackageNameFilter<"Package"> | $Enums.packageName
-  tenantId?: Prisma.StringFilter<"Package"> | string
   price?: Prisma.DecimalFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFilter<"Package"> | number
-  freeFeatures?: Prisma.EnumFreeFeaturesNullableListFilter<"Package">
-  basicFeatures?: Prisma.EnumBasicFeaturesNullableListFilter<"Package">
-  proFeatures?: Prisma.EnumProFeaturesNullableListFilter<"Package">
-  enterpriseFeatures?: Prisma.EnumEnterpriseFeaturesNullableListFilter<"Package">
-  metadata?: Prisma.JsonNullableFilter<"Package">
+  trialPrice?: Prisma.DecimalFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.EnumFeaturesNullableListFilter<"Package">
   createdAt?: Prisma.DateTimeFilter<"Package"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableFilter<"Package"> | Date | string | null
-  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  updatedAt?: Prisma.DateTimeFilter<"Package"> | Date | string
   subscription?: Prisma.PackageSubscriptionListRelationFilter
 }
 
 export type PackageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
-  freeFeatures?: Prisma.SortOrder
-  basicFeatures?: Prisma.SortOrder
-  proFeatures?: Prisma.SortOrder
-  enterpriseFeatures?: Prisma.SortOrder
-  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
+  Features?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenant?: Prisma.TenantOrderByWithRelationInput
+  updatedAt?: Prisma.SortOrder
   subscription?: Prisma.PackageSubscriptionOrderByRelationAggregateInput
 }
 
@@ -286,33 +255,22 @@ export type PackageWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PackageWhereInput | Prisma.PackageWhereInput[]
   OR?: Prisma.PackageWhereInput[]
   NOT?: Prisma.PackageWhereInput | Prisma.PackageWhereInput[]
-  tenantId?: Prisma.StringFilter<"Package"> | string
   price?: Prisma.DecimalFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFilter<"Package"> | number
-  freeFeatures?: Prisma.EnumFreeFeaturesNullableListFilter<"Package">
-  basicFeatures?: Prisma.EnumBasicFeaturesNullableListFilter<"Package">
-  proFeatures?: Prisma.EnumProFeaturesNullableListFilter<"Package">
-  enterpriseFeatures?: Prisma.EnumEnterpriseFeaturesNullableListFilter<"Package">
-  metadata?: Prisma.JsonNullableFilter<"Package">
+  trialPrice?: Prisma.DecimalFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.EnumFeaturesNullableListFilter<"Package">
   createdAt?: Prisma.DateTimeFilter<"Package"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableFilter<"Package"> | Date | string | null
-  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  updatedAt?: Prisma.DateTimeFilter<"Package"> | Date | string
   subscription?: Prisma.PackageSubscriptionListRelationFilter
 }, "id" | "name">
 
 export type PackageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
-  freeFeatures?: Prisma.SortOrder
-  basicFeatures?: Prisma.SortOrder
-  proFeatures?: Prisma.SortOrder
-  enterpriseFeatures?: Prisma.SortOrder
-  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
+  Features?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.PackageCountOrderByAggregateInput
   _avg?: Prisma.PackageAvgOrderByAggregateInput
   _max?: Prisma.PackageMaxOrderByAggregateInput
@@ -326,176 +284,98 @@ export type PackageScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PackageScalarWhereWithAggregatesInput | Prisma.PackageScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Package"> | number
   name?: Prisma.EnumpackageNameWithAggregatesFilter<"Package"> | $Enums.packageName
-  tenantId?: Prisma.StringWithAggregatesFilter<"Package"> | string
   price?: Prisma.DecimalWithAggregatesFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntWithAggregatesFilter<"Package"> | number
-  freeFeatures?: Prisma.EnumFreeFeaturesNullableListFilter<"Package">
-  basicFeatures?: Prisma.EnumBasicFeaturesNullableListFilter<"Package">
-  proFeatures?: Prisma.EnumProFeaturesNullableListFilter<"Package">
-  enterpriseFeatures?: Prisma.EnumEnterpriseFeaturesNullableListFilter<"Package">
-  metadata?: Prisma.JsonNullableWithAggregatesFilter<"Package">
+  trialPrice?: Prisma.DecimalWithAggregatesFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.EnumFeaturesNullableListFilter<"Package">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Package"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Package"> | Date | string | null
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Package"> | Date | string
 }
 
 export type PackageCreateInput = {
   name?: $Enums.packageName
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageCreateFeaturesInput | $Enums.Features[]
   createdAt?: Date | string
-  updatedAt?: Date | string | null
-  tenant: Prisma.TenantCreateNestedOneWithoutPackagesInput
+  updatedAt?: Date | string
   subscription?: Prisma.PackageSubscriptionCreateNestedManyWithoutPackageInput
 }
 
 export type PackageUncheckedCreateInput = {
   id?: number
   name?: $Enums.packageName
-  tenantId: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageCreateFeaturesInput | $Enums.Features[]
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
   subscription?: Prisma.PackageSubscriptionUncheckedCreateNestedManyWithoutPackageInput
 }
 
 export type PackageUpdateInput = {
   name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageUpdateFeaturesInput | $Enums.Features[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenant?: Prisma.TenantUpdateOneRequiredWithoutPackagesNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscription?: Prisma.PackageSubscriptionUpdateManyWithoutPackageNestedInput
 }
 
 export type PackageUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageUpdateFeaturesInput | $Enums.Features[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscription?: Prisma.PackageSubscriptionUncheckedUpdateManyWithoutPackageNestedInput
 }
 
 export type PackageCreateManyInput = {
   id?: number
   name?: $Enums.packageName
-  tenantId: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageCreateFeaturesInput | $Enums.Features[]
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageUpdateManyMutationInput = {
   name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageUpdateFeaturesInput | $Enums.Features[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageUpdateFeaturesInput | $Enums.Features[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type PackageListRelationFilter = {
-  every?: Prisma.PackageWhereInput
-  some?: Prisma.PackageWhereInput
-  none?: Prisma.PackageWhereInput
-}
-
-export type PackageOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
-export type EnumFreeFeaturesNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.FreeFeatures[] | Prisma.ListEnumFreeFeaturesFieldRefInput<$PrismaModel> | null
-  has?: $Enums.FreeFeatures | Prisma.EnumFreeFeaturesFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.FreeFeatures[] | Prisma.ListEnumFreeFeaturesFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.FreeFeatures[] | Prisma.ListEnumFreeFeaturesFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
-export type EnumBasicFeaturesNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.BasicFeatures[] | Prisma.ListEnumBasicFeaturesFieldRefInput<$PrismaModel> | null
-  has?: $Enums.BasicFeatures | Prisma.EnumBasicFeaturesFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.BasicFeatures[] | Prisma.ListEnumBasicFeaturesFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.BasicFeatures[] | Prisma.ListEnumBasicFeaturesFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
-export type EnumProFeaturesNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProFeatures[] | Prisma.ListEnumProFeaturesFieldRefInput<$PrismaModel> | null
-  has?: $Enums.ProFeatures | Prisma.EnumProFeaturesFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.ProFeatures[] | Prisma.ListEnumProFeaturesFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.ProFeatures[] | Prisma.ListEnumProFeaturesFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
-export type EnumEnterpriseFeaturesNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.EnterpriseFeatures[] | Prisma.ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel> | null
-  has?: $Enums.EnterpriseFeatures | Prisma.EnumEnterpriseFeaturesFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.EnterpriseFeatures[] | Prisma.ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.EnterpriseFeatures[] | Prisma.ListEnumEnterpriseFeaturesFieldRefInput<$PrismaModel>
+export type EnumFeaturesNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.Features[] | Prisma.ListEnumFeaturesFieldRefInput<$PrismaModel> | null
+  has?: $Enums.Features | Prisma.EnumFeaturesFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.Features[] | Prisma.ListEnumFeaturesFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.Features[] | Prisma.ListEnumFeaturesFieldRefInput<$PrismaModel>
   isEmpty?: boolean
 }
 
 export type PackageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
-  freeFeatures?: Prisma.SortOrder
-  basicFeatures?: Prisma.SortOrder
-  proFeatures?: Prisma.SortOrder
-  enterpriseFeatures?: Prisma.SortOrder
-  metadata?: Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
+  Features?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -503,15 +383,14 @@ export type PackageCountOrderByAggregateInput = {
 export type PackageAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
 }
 
 export type PackageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -519,9 +398,8 @@ export type PackageMaxOrderByAggregateInput = {
 export type PackageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -529,7 +407,7 @@ export type PackageMinOrderByAggregateInput = {
 export type PackageSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   price?: Prisma.SortOrder
-  durationDays?: Prisma.SortOrder
+  trialPrice?: Prisma.SortOrder
 }
 
 export type PackageScalarRelationFilter = {
@@ -537,86 +415,17 @@ export type PackageScalarRelationFilter = {
   isNot?: Prisma.PackageWhereInput
 }
 
-export type PackageCreateNestedManyWithoutTenantInput = {
-  create?: Prisma.XOR<Prisma.PackageCreateWithoutTenantInput, Prisma.PackageUncheckedCreateWithoutTenantInput> | Prisma.PackageCreateWithoutTenantInput[] | Prisma.PackageUncheckedCreateWithoutTenantInput[]
-  connectOrCreate?: Prisma.PackageCreateOrConnectWithoutTenantInput | Prisma.PackageCreateOrConnectWithoutTenantInput[]
-  createMany?: Prisma.PackageCreateManyTenantInputEnvelope
-  connect?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-}
-
-export type PackageUncheckedCreateNestedManyWithoutTenantInput = {
-  create?: Prisma.XOR<Prisma.PackageCreateWithoutTenantInput, Prisma.PackageUncheckedCreateWithoutTenantInput> | Prisma.PackageCreateWithoutTenantInput[] | Prisma.PackageUncheckedCreateWithoutTenantInput[]
-  connectOrCreate?: Prisma.PackageCreateOrConnectWithoutTenantInput | Prisma.PackageCreateOrConnectWithoutTenantInput[]
-  createMany?: Prisma.PackageCreateManyTenantInputEnvelope
-  connect?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-}
-
-export type PackageUpdateManyWithoutTenantNestedInput = {
-  create?: Prisma.XOR<Prisma.PackageCreateWithoutTenantInput, Prisma.PackageUncheckedCreateWithoutTenantInput> | Prisma.PackageCreateWithoutTenantInput[] | Prisma.PackageUncheckedCreateWithoutTenantInput[]
-  connectOrCreate?: Prisma.PackageCreateOrConnectWithoutTenantInput | Prisma.PackageCreateOrConnectWithoutTenantInput[]
-  upsert?: Prisma.PackageUpsertWithWhereUniqueWithoutTenantInput | Prisma.PackageUpsertWithWhereUniqueWithoutTenantInput[]
-  createMany?: Prisma.PackageCreateManyTenantInputEnvelope
-  set?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  disconnect?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  delete?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  connect?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  update?: Prisma.PackageUpdateWithWhereUniqueWithoutTenantInput | Prisma.PackageUpdateWithWhereUniqueWithoutTenantInput[]
-  updateMany?: Prisma.PackageUpdateManyWithWhereWithoutTenantInput | Prisma.PackageUpdateManyWithWhereWithoutTenantInput[]
-  deleteMany?: Prisma.PackageScalarWhereInput | Prisma.PackageScalarWhereInput[]
-}
-
-export type PackageUncheckedUpdateManyWithoutTenantNestedInput = {
-  create?: Prisma.XOR<Prisma.PackageCreateWithoutTenantInput, Prisma.PackageUncheckedCreateWithoutTenantInput> | Prisma.PackageCreateWithoutTenantInput[] | Prisma.PackageUncheckedCreateWithoutTenantInput[]
-  connectOrCreate?: Prisma.PackageCreateOrConnectWithoutTenantInput | Prisma.PackageCreateOrConnectWithoutTenantInput[]
-  upsert?: Prisma.PackageUpsertWithWhereUniqueWithoutTenantInput | Prisma.PackageUpsertWithWhereUniqueWithoutTenantInput[]
-  createMany?: Prisma.PackageCreateManyTenantInputEnvelope
-  set?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  disconnect?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  delete?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  connect?: Prisma.PackageWhereUniqueInput | Prisma.PackageWhereUniqueInput[]
-  update?: Prisma.PackageUpdateWithWhereUniqueWithoutTenantInput | Prisma.PackageUpdateWithWhereUniqueWithoutTenantInput[]
-  updateMany?: Prisma.PackageUpdateManyWithWhereWithoutTenantInput | Prisma.PackageUpdateManyWithWhereWithoutTenantInput[]
-  deleteMany?: Prisma.PackageScalarWhereInput | Prisma.PackageScalarWhereInput[]
-}
-
-export type PackageCreatefreeFeaturesInput = {
-  set: $Enums.FreeFeatures[]
-}
-
-export type PackageCreatebasicFeaturesInput = {
-  set: $Enums.BasicFeatures[]
-}
-
-export type PackageCreateproFeaturesInput = {
-  set: $Enums.ProFeatures[]
-}
-
-export type PackageCreateenterpriseFeaturesInput = {
-  set: $Enums.EnterpriseFeatures[]
+export type PackageCreateFeaturesInput = {
+  set: $Enums.Features[]
 }
 
 export type EnumpackageNameFieldUpdateOperationsInput = {
   set?: $Enums.packageName
 }
 
-export type PackageUpdatefreeFeaturesInput = {
-  set?: $Enums.FreeFeatures[]
-  push?: $Enums.FreeFeatures | $Enums.FreeFeatures[]
-}
-
-export type PackageUpdatebasicFeaturesInput = {
-  set?: $Enums.BasicFeatures[]
-  push?: $Enums.BasicFeatures | $Enums.BasicFeatures[]
-}
-
-export type PackageUpdateproFeaturesInput = {
-  set?: $Enums.ProFeatures[]
-  push?: $Enums.ProFeatures | $Enums.ProFeatures[]
-}
-
-export type PackageUpdateenterpriseFeaturesInput = {
-  set?: $Enums.EnterpriseFeatures[]
-  push?: $Enums.EnterpriseFeatures | $Enums.EnterpriseFeatures[]
+export type PackageUpdateFeaturesInput = {
+  set?: $Enums.Features[]
+  push?: $Enums.Features | $Enums.Features[]
 }
 
 export type PackageCreateNestedOneWithoutSubscriptionInput = {
@@ -633,106 +442,23 @@ export type PackageUpdateOneRequiredWithoutSubscriptionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PackageUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.PackageUpdateWithoutSubscriptionInput>, Prisma.PackageUncheckedUpdateWithoutSubscriptionInput>
 }
 
-export type PackageCreateWithoutTenantInput = {
-  name?: $Enums.packageName
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  subscription?: Prisma.PackageSubscriptionCreateNestedManyWithoutPackageInput
-}
-
-export type PackageUncheckedCreateWithoutTenantInput = {
-  id?: number
-  name?: $Enums.packageName
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  subscription?: Prisma.PackageSubscriptionUncheckedCreateNestedManyWithoutPackageInput
-}
-
-export type PackageCreateOrConnectWithoutTenantInput = {
-  where: Prisma.PackageWhereUniqueInput
-  create: Prisma.XOR<Prisma.PackageCreateWithoutTenantInput, Prisma.PackageUncheckedCreateWithoutTenantInput>
-}
-
-export type PackageCreateManyTenantInputEnvelope = {
-  data: Prisma.PackageCreateManyTenantInput | Prisma.PackageCreateManyTenantInput[]
-  skipDuplicates?: boolean
-}
-
-export type PackageUpsertWithWhereUniqueWithoutTenantInput = {
-  where: Prisma.PackageWhereUniqueInput
-  update: Prisma.XOR<Prisma.PackageUpdateWithoutTenantInput, Prisma.PackageUncheckedUpdateWithoutTenantInput>
-  create: Prisma.XOR<Prisma.PackageCreateWithoutTenantInput, Prisma.PackageUncheckedCreateWithoutTenantInput>
-}
-
-export type PackageUpdateWithWhereUniqueWithoutTenantInput = {
-  where: Prisma.PackageWhereUniqueInput
-  data: Prisma.XOR<Prisma.PackageUpdateWithoutTenantInput, Prisma.PackageUncheckedUpdateWithoutTenantInput>
-}
-
-export type PackageUpdateManyWithWhereWithoutTenantInput = {
-  where: Prisma.PackageScalarWhereInput
-  data: Prisma.XOR<Prisma.PackageUpdateManyMutationInput, Prisma.PackageUncheckedUpdateManyWithoutTenantInput>
-}
-
-export type PackageScalarWhereInput = {
-  AND?: Prisma.PackageScalarWhereInput | Prisma.PackageScalarWhereInput[]
-  OR?: Prisma.PackageScalarWhereInput[]
-  NOT?: Prisma.PackageScalarWhereInput | Prisma.PackageScalarWhereInput[]
-  id?: Prisma.IntFilter<"Package"> | number
-  name?: Prisma.EnumpackageNameFilter<"Package"> | $Enums.packageName
-  tenantId?: Prisma.StringFilter<"Package"> | string
-  price?: Prisma.DecimalFilter<"Package"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFilter<"Package"> | number
-  freeFeatures?: Prisma.EnumFreeFeaturesNullableListFilter<"Package">
-  basicFeatures?: Prisma.EnumBasicFeaturesNullableListFilter<"Package">
-  proFeatures?: Prisma.EnumProFeaturesNullableListFilter<"Package">
-  enterpriseFeatures?: Prisma.EnumEnterpriseFeaturesNullableListFilter<"Package">
-  metadata?: Prisma.JsonNullableFilter<"Package">
-  createdAt?: Prisma.DateTimeFilter<"Package"> | Date | string
-  updatedAt?: Prisma.DateTimeNullableFilter<"Package"> | Date | string | null
-}
-
 export type PackageCreateWithoutSubscriptionInput = {
   name?: $Enums.packageName
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageCreateFeaturesInput | $Enums.Features[]
   createdAt?: Date | string
-  updatedAt?: Date | string | null
-  tenant: Prisma.TenantCreateNestedOneWithoutPackagesInput
+  updatedAt?: Date | string
 }
 
 export type PackageUncheckedCreateWithoutSubscriptionInput = {
   id?: number
   name?: $Enums.packageName
-  tenantId: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageCreateFeaturesInput | $Enums.Features[]
   createdAt?: Date | string
-  updatedAt?: Date | string | null
+  updatedAt?: Date | string
 }
 
 export type PackageCreateOrConnectWithoutSubscriptionInput = {
@@ -754,87 +480,20 @@ export type PackageUpdateToOneWithWhereWithoutSubscriptionInput = {
 export type PackageUpdateWithoutSubscriptionInput = {
   name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageUpdateFeaturesInput | $Enums.Features[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenant?: Prisma.TenantUpdateOneRequiredWithoutPackagesNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PackageUncheckedUpdateWithoutSubscriptionInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  trialPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  Features?: Prisma.PackageUpdateFeaturesInput | $Enums.Features[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type PackageCreateManyTenantInput = {
-  id?: number
-  name?: $Enums.packageName
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays: number
-  freeFeatures?: Prisma.PackageCreatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageCreatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageCreateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageCreateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-}
-
-export type PackageUpdateWithoutTenantInput = {
-  name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.PackageSubscriptionUpdateManyWithoutPackageNestedInput
-}
-
-export type PackageUncheckedUpdateWithoutTenantInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.PackageSubscriptionUncheckedUpdateManyWithoutPackageNestedInput
-}
-
-export type PackageUncheckedUpdateManyWithoutTenantInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.EnumpackageNameFieldUpdateOperationsInput | $Enums.packageName
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  durationDays?: Prisma.IntFieldUpdateOperationsInput | number
-  freeFeatures?: Prisma.PackageUpdatefreeFeaturesInput | $Enums.FreeFeatures[]
-  basicFeatures?: Prisma.PackageUpdatebasicFeaturesInput | $Enums.BasicFeatures[]
-  proFeatures?: Prisma.PackageUpdateproFeaturesInput | $Enums.ProFeatures[]
-  enterpriseFeatures?: Prisma.PackageUpdateenterpriseFeaturesInput | $Enums.EnterpriseFeatures[]
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -871,17 +530,11 @@ export type PackageCountOutputTypeCountSubscriptionArgs<ExtArgs extends runtime.
 export type PackageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  tenantId?: boolean
   price?: boolean
-  durationDays?: boolean
-  freeFeatures?: boolean
-  basicFeatures?: boolean
-  proFeatures?: boolean
-  enterpriseFeatures?: boolean
-  metadata?: boolean
+  trialPrice?: boolean
+  Features?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.Package$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.PackageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["package"]>
@@ -889,82 +542,54 @@ export type PackageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type PackageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  tenantId?: boolean
   price?: boolean
-  durationDays?: boolean
-  freeFeatures?: boolean
-  basicFeatures?: boolean
-  proFeatures?: boolean
-  enterpriseFeatures?: boolean
-  metadata?: boolean
+  trialPrice?: boolean
+  Features?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["package"]>
 
 export type PackageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  tenantId?: boolean
   price?: boolean
-  durationDays?: boolean
-  freeFeatures?: boolean
-  basicFeatures?: boolean
-  proFeatures?: boolean
-  enterpriseFeatures?: boolean
-  metadata?: boolean
+  trialPrice?: boolean
+  Features?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["package"]>
 
 export type PackageSelectScalar = {
   id?: boolean
   name?: boolean
-  tenantId?: boolean
   price?: boolean
-  durationDays?: boolean
-  freeFeatures?: boolean
-  basicFeatures?: boolean
-  proFeatures?: boolean
-  enterpriseFeatures?: boolean
-  metadata?: boolean
+  trialPrice?: boolean
+  Features?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PackageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "tenantId" | "price" | "durationDays" | "freeFeatures" | "basicFeatures" | "proFeatures" | "enterpriseFeatures" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["package"]>
+export type PackageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "trialPrice" | "Features" | "createdAt" | "updatedAt", ExtArgs["result"]["package"]>
 export type PackageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.Package$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.PackageCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type PackageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
-}
-export type PackageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
-}
+export type PackageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type PackageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $PackagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Package"
   objects: {
-    tenant: Prisma.$TenantPayload<ExtArgs>
     subscription: Prisma.$PackageSubscriptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: $Enums.packageName
-    tenantId: string
     price: runtime.Decimal
-    durationDays: number
-    freeFeatures: $Enums.FreeFeatures[]
-    basicFeatures: $Enums.BasicFeatures[]
-    proFeatures: $Enums.ProFeatures[]
-    enterpriseFeatures: $Enums.EnterpriseFeatures[]
-    metadata: runtime.JsonValue | null
+    trialPrice: runtime.Decimal
+    Features: $Enums.Features[]
     createdAt: Date
-    updatedAt: Date | null
+    updatedAt: Date
   }, ExtArgs["result"]["package"]>
   composites: {}
 }
@@ -1359,7 +984,6 @@ readonly fields: PackageFieldRefs;
  */
 export interface Prisma__PackageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subscription<T extends Prisma.Package$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Package$subscriptionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PackageSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1392,14 +1016,9 @@ export interface Prisma__PackageClient<T, Null = never, ExtArgs extends runtime.
 export interface PackageFieldRefs {
   readonly id: Prisma.FieldRef<"Package", 'Int'>
   readonly name: Prisma.FieldRef<"Package", 'packageName'>
-  readonly tenantId: Prisma.FieldRef<"Package", 'String'>
   readonly price: Prisma.FieldRef<"Package", 'Decimal'>
-  readonly durationDays: Prisma.FieldRef<"Package", 'Int'>
-  readonly freeFeatures: Prisma.FieldRef<"Package", 'FreeFeatures[]'>
-  readonly basicFeatures: Prisma.FieldRef<"Package", 'BasicFeatures[]'>
-  readonly proFeatures: Prisma.FieldRef<"Package", 'ProFeatures[]'>
-  readonly enterpriseFeatures: Prisma.FieldRef<"Package", 'EnterpriseFeatures[]'>
-  readonly metadata: Prisma.FieldRef<"Package", 'Json'>
+  readonly trialPrice: Prisma.FieldRef<"Package", 'Decimal'>
+  readonly Features: Prisma.FieldRef<"Package", 'Features[]'>
   readonly createdAt: Prisma.FieldRef<"Package", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Package", 'DateTime'>
 }
@@ -1651,10 +1270,6 @@ export type PackageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.PackageCreateManyInput | Prisma.PackageCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PackageIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1725,10 +1340,6 @@ export type PackageUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Packages to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PackageIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

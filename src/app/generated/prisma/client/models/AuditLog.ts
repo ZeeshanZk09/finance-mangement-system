@@ -235,8 +235,8 @@ export type AuditLogWhereInput = {
   OR?: Prisma.AuditLogWhereInput[]
   NOT?: Prisma.AuditLogWhereInput | Prisma.AuditLogWhereInput[]
   id?: Prisma.IntFilter<"AuditLog"> | number
-  tenantId?: Prisma.StringFilter<"AuditLog"> | string
-  userId?: Prisma.StringFilter<"AuditLog"> | string
+  tenantId?: Prisma.UuidFilter<"AuditLog"> | string
+  userId?: Prisma.UuidFilter<"AuditLog"> | string
   actor?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   action?: Prisma.StringFilter<"AuditLog"> | string
   meta?: Prisma.JsonNullableFilter<"AuditLog">
@@ -266,8 +266,8 @@ export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AuditLogWhereInput | Prisma.AuditLogWhereInput[]
   OR?: Prisma.AuditLogWhereInput[]
   NOT?: Prisma.AuditLogWhereInput | Prisma.AuditLogWhereInput[]
-  tenantId?: Prisma.StringFilter<"AuditLog"> | string
-  userId?: Prisma.StringFilter<"AuditLog"> | string
+  tenantId?: Prisma.UuidFilter<"AuditLog"> | string
+  userId?: Prisma.UuidFilter<"AuditLog"> | string
   actor?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   action?: Prisma.StringFilter<"AuditLog"> | string
   meta?: Prisma.JsonNullableFilter<"AuditLog">
@@ -300,8 +300,8 @@ export type AuditLogScalarWhereWithAggregatesInput = {
   OR?: Prisma.AuditLogScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AuditLogScalarWhereWithAggregatesInput | Prisma.AuditLogScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AuditLog"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"AuditLog"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"AuditLog"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"AuditLog"> | string
+  userId?: Prisma.UuidWithAggregatesFilter<"AuditLog"> | string
   actor?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
   action?: Prisma.StringWithAggregatesFilter<"AuditLog"> | string
   meta?: Prisma.JsonNullableWithAggregatesFilter<"AuditLog">
@@ -577,8 +577,8 @@ export type AuditLogScalarWhereInput = {
   OR?: Prisma.AuditLogScalarWhereInput[]
   NOT?: Prisma.AuditLogScalarWhereInput | Prisma.AuditLogScalarWhereInput[]
   id?: Prisma.IntFilter<"AuditLog"> | number
-  tenantId?: Prisma.StringFilter<"AuditLog"> | string
-  userId?: Prisma.StringFilter<"AuditLog"> | string
+  tenantId?: Prisma.UuidFilter<"AuditLog"> | string
+  userId?: Prisma.UuidFilter<"AuditLog"> | string
   actor?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   action?: Prisma.StringFilter<"AuditLog"> | string
   meta?: Prisma.JsonNullableFilter<"AuditLog">

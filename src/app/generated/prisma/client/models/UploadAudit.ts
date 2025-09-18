@@ -254,8 +254,8 @@ export type UploadAuditWhereInput = {
   NOT?: Prisma.UploadAuditWhereInput | Prisma.UploadAuditWhereInput[]
   id?: Prisma.IntFilter<"UploadAudit"> | number
   uploadId?: Prisma.IntFilter<"UploadAudit"> | number
-  tenantId?: Prisma.StringFilter<"UploadAudit"> | string
-  userId?: Prisma.StringFilter<"UploadAudit"> | string
+  tenantId?: Prisma.UuidFilter<"UploadAudit"> | string
+  userId?: Prisma.UuidFilter<"UploadAudit"> | string
   action?: Prisma.StringFilter<"UploadAudit"> | string
   previousStatus?: Prisma.StringNullableFilter<"UploadAudit"> | string | null
   newStatus?: Prisma.StringNullableFilter<"UploadAudit"> | string | null
@@ -291,8 +291,8 @@ export type UploadAuditWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UploadAuditWhereInput[]
   NOT?: Prisma.UploadAuditWhereInput | Prisma.UploadAuditWhereInput[]
   uploadId?: Prisma.IntFilter<"UploadAudit"> | number
-  tenantId?: Prisma.StringFilter<"UploadAudit"> | string
-  userId?: Prisma.StringFilter<"UploadAudit"> | string
+  tenantId?: Prisma.UuidFilter<"UploadAudit"> | string
+  userId?: Prisma.UuidFilter<"UploadAudit"> | string
   action?: Prisma.StringFilter<"UploadAudit"> | string
   previousStatus?: Prisma.StringNullableFilter<"UploadAudit"> | string | null
   newStatus?: Prisma.StringNullableFilter<"UploadAudit"> | string | null
@@ -330,8 +330,8 @@ export type UploadAuditScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UploadAuditScalarWhereWithAggregatesInput | Prisma.UploadAuditScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"UploadAudit"> | number
   uploadId?: Prisma.IntWithAggregatesFilter<"UploadAudit"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"UploadAudit"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"UploadAudit"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"UploadAudit"> | string
+  userId?: Prisma.UuidWithAggregatesFilter<"UploadAudit"> | string
   action?: Prisma.StringWithAggregatesFilter<"UploadAudit"> | string
   previousStatus?: Prisma.StringNullableWithAggregatesFilter<"UploadAudit"> | string | null
   newStatus?: Prisma.StringNullableWithAggregatesFilter<"UploadAudit"> | string | null
@@ -676,8 +676,8 @@ export type UploadAuditScalarWhereInput = {
   NOT?: Prisma.UploadAuditScalarWhereInput | Prisma.UploadAuditScalarWhereInput[]
   id?: Prisma.IntFilter<"UploadAudit"> | number
   uploadId?: Prisma.IntFilter<"UploadAudit"> | number
-  tenantId?: Prisma.StringFilter<"UploadAudit"> | string
-  userId?: Prisma.StringFilter<"UploadAudit"> | string
+  tenantId?: Prisma.UuidFilter<"UploadAudit"> | string
+  userId?: Prisma.UuidFilter<"UploadAudit"> | string
   action?: Prisma.StringFilter<"UploadAudit"> | string
   previousStatus?: Prisma.StringNullableFilter<"UploadAudit"> | string | null
   newStatus?: Prisma.StringNullableFilter<"UploadAudit"> | string | null

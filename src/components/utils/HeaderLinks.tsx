@@ -3,8 +3,8 @@ import React from 'react';
 
 export default function HeaderLinks() {
   const headerLinks = [
-    { name: 'Dashboard', href: '/' },
-    { name: 'Invoices', href: '/invoices' },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
     { name: 'Vendors', href: '/vendors' },
     { name: 'Customers', href: '/customers' },
     { name: 'Reports', href: '/reports' },

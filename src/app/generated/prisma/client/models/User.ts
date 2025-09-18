@@ -33,6 +33,7 @@ export type UserMinAggregateOutputType = {
   lastSeenAt: Date | null
   locale: string | null
   isActive: boolean | null
+  ip: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -49,6 +50,7 @@ export type UserMaxAggregateOutputType = {
   lastSeenAt: Date | null
   locale: string | null
   isActive: boolean | null
+  ip: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -65,6 +67,7 @@ export type UserCountAggregateOutputType = {
   lastSeenAt: number
   locale: number
   isActive: number
+  ip: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -83,6 +86,7 @@ export type UserMinAggregateInputType = {
   lastSeenAt?: true
   locale?: true
   isActive?: true
+  ip?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -99,6 +103,7 @@ export type UserMaxAggregateInputType = {
   lastSeenAt?: true
   locale?: true
   isActive?: true
+  ip?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -115,6 +120,7 @@ export type UserCountAggregateInputType = {
   lastSeenAt?: true
   locale?: true
   isActive?: true
+  ip?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -204,6 +210,7 @@ export type UserGroupByOutputType = {
   lastSeenAt: Date | null
   locale: string | null
   isActive: boolean
+  ip: string
   createdAt: Date
   updatedAt: Date | null
   deletedAt: Date | null
@@ -232,8 +239,8 @@ export type UserWhereInput = {
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  id?: Prisma.StringFilter<"User"> | string
-  tenantId?: Prisma.StringFilter<"User"> | string
+  id?: Prisma.UuidFilter<"User"> | string
+  tenantId?: Prisma.UuidFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
@@ -241,6 +248,7 @@ export type UserWhereInput = {
   lastSeenAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   locale?: Prisma.StringNullableFilter<"User"> | string | null
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  ip?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -262,6 +270,7 @@ export type UserOrderByWithRelationInput = {
   lastSeenAt?: Prisma.SortOrderInput | Prisma.SortOrder
   locale?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -279,13 +288,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  tenantId?: Prisma.StringFilter<"User"> | string
+  tenantId?: Prisma.UuidFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserTypeFilter<"User"> | $Enums.UserType
   lastSeenAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   locale?: Prisma.StringNullableFilter<"User"> | string | null
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  ip?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -307,6 +317,7 @@ export type UserOrderByWithAggregationInput = {
   lastSeenAt?: Prisma.SortOrderInput | Prisma.SortOrder
   locale?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -320,8 +331,8 @@ export type UserScalarWhereWithAggregatesInput = {
   AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  tenantId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"User"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
@@ -329,6 +340,7 @@ export type UserScalarWhereWithAggregatesInput = {
   lastSeenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   locale?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  ip?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -344,6 +356,7 @@ export type UserCreateInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -365,6 +378,7 @@ export type UserUncheckedCreateInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -384,6 +398,7 @@ export type UserUpdateInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -405,6 +420,7 @@ export type UserUncheckedUpdateInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -425,6 +441,7 @@ export type UserCreateManyInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -440,6 +457,7 @@ export type UserUpdateManyMutationInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -456,6 +474,7 @@ export type UserUncheckedUpdateManyInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -482,6 +501,7 @@ export type UserCountOrderByAggregateInput = {
   lastSeenAt?: Prisma.SortOrder
   locale?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -498,6 +518,7 @@ export type UserMaxOrderByAggregateInput = {
   lastSeenAt?: Prisma.SortOrder
   locale?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -514,6 +535,7 @@ export type UserMinOrderByAggregateInput = {
   lastSeenAt?: Prisma.SortOrder
   locale?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -655,6 +677,7 @@ export type UserCreateWithoutTenantInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -674,6 +697,7 @@ export type UserUncheckedCreateWithoutTenantInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -714,8 +738,8 @@ export type UserScalarWhereInput = {
   AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
   OR?: Prisma.UserScalarWhereInput[]
   NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.StringFilter<"User"> | string
-  tenantId?: Prisma.StringFilter<"User"> | string
+  id?: Prisma.UuidFilter<"User"> | string
+  tenantId?: Prisma.UuidFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
@@ -723,6 +747,7 @@ export type UserScalarWhereInput = {
   lastSeenAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   locale?: Prisma.StringNullableFilter<"User"> | string | null
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  ip?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -738,6 +763,7 @@ export type UserCreateWithoutSessionsInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -758,6 +784,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -792,6 +819,7 @@ export type UserUpdateWithoutSessionsInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -812,6 +840,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -830,6 +859,7 @@ export type UserCreateWithoutFilesInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -850,6 +880,7 @@ export type UserUncheckedCreateWithoutFilesInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -884,6 +915,7 @@ export type UserUpdateWithoutFilesInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -904,6 +936,7 @@ export type UserUncheckedUpdateWithoutFilesInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -922,6 +955,7 @@ export type UserCreateWithoutUploadsInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -942,6 +976,7 @@ export type UserUncheckedCreateWithoutUploadsInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -976,6 +1011,7 @@ export type UserUpdateWithoutUploadsInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -996,6 +1032,7 @@ export type UserUncheckedUpdateWithoutUploadsInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1014,6 +1051,7 @@ export type UserCreateWithoutAuditLogsInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -1034,6 +1072,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -1068,6 +1107,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1088,6 +1128,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1106,6 +1147,7 @@ export type UserCreateManyTenantInput = {
   lastSeenAt?: Date | string | null
   locale?: string | null
   isActive?: boolean
+  ip: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -1121,6 +1163,7 @@ export type UserUpdateWithoutTenantInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1140,6 +1183,7 @@ export type UserUncheckedUpdateWithoutTenantInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1159,6 +1203,7 @@ export type UserUncheckedUpdateManyWithoutTenantInput = {
   lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ip?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1233,6 +1278,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   lastSeenAt?: boolean
   locale?: boolean
   isActive?: boolean
+  ip?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1255,6 +1301,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   lastSeenAt?: boolean
   locale?: boolean
   isActive?: boolean
+  ip?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1272,6 +1319,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   lastSeenAt?: boolean
   locale?: boolean
   isActive?: boolean
+  ip?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1289,13 +1337,14 @@ export type UserSelectScalar = {
   lastSeenAt?: boolean
   locale?: boolean
   isActive?: boolean
+  ip?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   syncStatus?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "name" | "email" | "password" | "role" | "lastSeenAt" | "locale" | "isActive" | "createdAt" | "updatedAt" | "deletedAt" | "syncStatus", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "name" | "email" | "password" | "role" | "lastSeenAt" | "locale" | "isActive" | "ip" | "createdAt" | "updatedAt" | "deletedAt" | "syncStatus", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1330,6 +1379,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     lastSeenAt: Date | null
     locale: string | null
     isActive: boolean
+    ip: string
     createdAt: Date
     updatedAt: Date | null
     deletedAt: Date | null
@@ -1771,6 +1821,7 @@ export interface UserFieldRefs {
   readonly lastSeenAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly locale: Prisma.FieldRef<"User", 'String'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly ip: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>

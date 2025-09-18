@@ -7,7 +7,7 @@ import {
   createInvoiceItemSchema,
   updateInvoiceItemSchema,
 } from '@/utils/validators/invoiceItemValidator';
-import { prismaErrorHandler, requireTenantMatch } from '@/utils/helpers/userHelper';
+import { prismaErrorHandler, requireTenantMatch } from '@/utils/helpers/userHelpers';
 import { recalcInvoiceTotals } from '@/utils/helpers/invoiceItemHelper';
 import { ApiError } from '@/utils/NextApiError';
 

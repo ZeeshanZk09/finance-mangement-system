@@ -8,7 +8,7 @@ import {
   prismaErrorHandler,
   requireAdmin,
   requireTenantMatch,
-} from '@/utils/helpers/userHelper';
+} from '@/utils/helpers/userHelpers';
 
 /**
  * Actor = calling user identity (optional). Used for tenant scoping and role checks.

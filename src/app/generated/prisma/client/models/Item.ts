@@ -254,7 +254,7 @@ export type ItemWhereInput = {
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   id?: Prisma.IntFilter<"Item"> | number
-  tenantId?: Prisma.StringFilter<"Item"> | string
+  tenantId?: Prisma.UuidFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   sku?: Prisma.StringNullableFilter<"Item"> | string | null
   description?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -288,7 +288,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
-  tenantId?: Prisma.StringFilter<"Item"> | string
+  tenantId?: Prisma.UuidFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   sku?: Prisma.StringNullableFilter<"Item"> | string | null
   description?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -324,7 +324,7 @@ export type ItemScalarWhereWithAggregatesInput = {
   OR?: Prisma.ItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ItemScalarWhereWithAggregatesInput | Prisma.ItemScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Item"> | number
-  tenantId?: Prisma.StringWithAggregatesFilter<"Item"> | string
+  tenantId?: Prisma.UuidWithAggregatesFilter<"Item"> | string
   name?: Prisma.StringWithAggregatesFilter<"Item"> | string
   sku?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
@@ -617,7 +617,7 @@ export type ItemScalarWhereInput = {
   OR?: Prisma.ItemScalarWhereInput[]
   NOT?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
   id?: Prisma.IntFilter<"Item"> | number
-  tenantId?: Prisma.StringFilter<"Item"> | string
+  tenantId?: Prisma.UuidFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   sku?: Prisma.StringNullableFilter<"Item"> | string | null
   description?: Prisma.StringNullableFilter<"Item"> | string | null

@@ -12,18 +12,17 @@ import { withOptimize } from '@prisma/extension-optimize';
  */
 
 // create the base client with explicit branch so TS can infer model types
-function createBasePrisma() {
+function createBasePrisma(): PrismaClient {
   if (process.env.NODE_ENV === 'production') {
     // if the adapter's types are incompatible in your TS setup,
     // cast it to `any` just for the argument so the PrismaClient type remains intact.
     // This avoids widening the whole expression to `any`, which is the root of your problem.
     const adapter = new PrismaNeon({
       connectionString: process.env.DATABASE_URL!,
-    }) as unknown as any;
+    });
 
     return new PrismaClient({ adapter });
   }
-
   // non-production: plain client
   return new PrismaClient();
 }
